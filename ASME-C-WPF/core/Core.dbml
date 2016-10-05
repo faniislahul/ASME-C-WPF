@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="CoreDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-RRU5OR4\SQLEXPRESS;Integrated Security=True" SettingsObjectName="ASME_C_WPF.Properties.Settings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.abc_log" Member="abc_logs">
+    <Type Name="abc_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="month" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="produk" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cost" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="costdriver" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="unit_produksi" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="cost_driver_abc_log" Member="cost_driver" ThisKey="costdriver" OtherKey="Id" Type="cost_driver" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Produk_abc_log" Member="Produk1" ThisKey="produk" OtherKey="Id" Type="Produk" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Utang" Member="Utangs">
+    <Type Name="Utang">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="detail" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="terbayar" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Bahan_baku" Member="Bahan_bakus">
+    <Type Name="Bahan_baku">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Bahan_baku_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="tipe" Type="bb_stock" />
+      <Association Name="Bahan_baku_p_bb" Member="p_bbs" ThisKey="Id" OtherKey="bb" Type="p_bb" />
+      <Association Name="Satuan_bb_Bahan_baku" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bb_log" Member="bb_logs">
+    <Type Name="bb_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="kode_stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Satuan_bb_bb_log" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bb_stock" Member="bb_stocks">
+    <Type Name="bb_stock">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Bahan_baku_bb_stock" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Satuan_bb_bb_stock" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Beban" Member="Bebans">
+    <Type Name="Beban">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cost_driver" Member="cost_drivers">
+    <Type Name="cost_driver">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="cost_driver_abc_log" Member="abc_logs" ThisKey="Id" OtherKey="costdriver" Type="abc_log" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Karyawan" Member="Karyawans">
+    <Type Name="Karyawan">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="gaji_pokok" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.master_user" Member="master_users">
+    <Type Name="master_user">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="pass" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="role" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="last_login" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="master_user_master_user_log" Member="master_user_logs" ThisKey="Id" OtherKey="user" Type="master_user_log" />
+      <Association Name="master_user_pos_log" Member="pos_logs" ThisKey="Id" OtherKey="user_id" Type="pos_log" />
+      <Association Name="master_user_Transaction" Member="Transactions" ThisKey="Id" OtherKey="user" Type="Transaction" />
+      <Association Name="master_user_pos_order" Member="pos_orders" ThisKey="Id" OtherKey="user" Type="pos_order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.master_user_log" Member="master_user_logs">
+    <Type Name="master_user_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[user]" Member="user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="activity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="master_user_master_user_log" Member="master_user" ThisKey="user" OtherKey="Id" Type="master_user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Modal" Member="Modals">
+    <Type Name="Modal">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="detail" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="sisa" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.p_bb" Member="p_bbs">
+    <Type Name="p_bb">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="produk" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bb" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Bahan_baku_p_bb" Member="Bahan_baku" ThisKey="bb" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Produk_p_bb" Member="Produk1" ThisKey="produk" OtherKey="Id" Type="Produk" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Peralatan" Member="Peralatans">
+    <Type Name="Peralatan">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="harga" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Perlengkapan" Member="Perlengkapans">
+    <Type Name="Perlengkapan">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="harga" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Piutang" Member="Piutangs">
+    <Type Name="Piutang">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="detail" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="terbayar" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pos_log" Member="pos_logs">
+    <Type Name="pos_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="action" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="master_user_pos_log" Member="master_user" ThisKey="user_id" OtherKey="Id" Type="master_user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pos_reservation" Member="pos_reservations">
+    <Type Name="pos_reservation">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="details" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="table_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="pos_table_pos_reservation" Member="pos_table" ThisKey="table_id" OtherKey="Id" Type="pos_table" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pos_table" Member="pos_tables">
+    <Type Name="pos_table">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="is_empty" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="pos_table_pos_reservation" Member="pos_reservations" ThisKey="Id" OtherKey="table_id" Type="pos_reservation" />
+      <Association Name="pos_table_pos_order" Member="pos_orders" ThisKey="Id" OtherKey="table_id" Type="pos_order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Produk" Member="Produks">
+    <Type Name="Produk">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="SKU" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="harga_jual" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Produk_abc_log" Member="abc_logs" ThisKey="Id" OtherKey="produk" Type="abc_log" />
+      <Association Name="Produk_p_bb" Member="p_bbs" ThisKey="Id" OtherKey="produk" Type="p_bb" />
+      <Association Name="Produk_pos_order_list" Member="pos_order_lists" ThisKey="Id" OtherKey="peroduk" Type="pos_order_list" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Satuan_bb" Member="Satuan_bbs">
+    <Type Name="Satuan_bb">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Satuan_bb_Bahan_baku" Member="Bahan_bakus" ThisKey="Id" OtherKey="satuan" Type="Bahan_baku" />
+      <Association Name="Satuan_bb_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="satuan" Type="bb_log" />
+      <Association Name="Satuan_bb_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="satuan" Type="bb_stock" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Transaction]" Member="Transactions">
+    <Type Name="Transaction">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" UpdateCheck="Always" IsVersion="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" UpdateCheck="Always" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="[user]" Member="user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="details" Type="System.String" DbType="VarChar(500)" CanBeNull="true" UpdateCheck="Always" />
+      <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" UpdateCheck="Always" />
+      <Association Name="master_user_Transaction" Member="master_user" ThisKey="user" OtherKey="Id" Type="master_user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pos_order" Member="pos_orders">
+    <Type Name="pos_order">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="details" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="table_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="discount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="disc_amount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="[user]" Member="user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="pembayaran" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Member="service" Type="System.Int64" CanBeNull="false" />
+      <Column Member="ppn" Type="System.Int64" CanBeNull="false" />
+      <Association Name="pos_order_pos_order_list" Member="pos_order_lists" ThisKey="Id" OtherKey="order_id" Type="pos_order_list" />
+      <Association Name="master_user_pos_order" Member="master_user" ThisKey="user" OtherKey="Id" Type="master_user" IsForeignKey="true" />
+      <Association Name="pos_table_pos_order" Member="pos_table" ThisKey="table_id" OtherKey="Id" Type="pos_table" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pos_order_list" Member="pos_order_lists">
+    <Type Name="pos_order_list">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="peroduk" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="order_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="pos_order_pos_order_list" Member="pos_order" ThisKey="order_id" OtherKey="Id" Type="pos_order" IsForeignKey="true" />
+      <Association Name="Produk_pos_order_list" Member="Produk" ThisKey="peroduk" OtherKey="Id" Type="Produk" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

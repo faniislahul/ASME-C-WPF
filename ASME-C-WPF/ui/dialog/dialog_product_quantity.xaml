@@ -1,0 +1,19 @@
+﻿<Window x:Class="ASME_C_WPF.ui.dialog.dialog_product_quantity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui.dialog"
+        mc:Ignorable="d"
+        Title="Kuantitas" Height="170" Width="220" MinWidth="220" MinHeight="170" Background="#FF232323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <Grid>
+        <Label x:Name="label" Content="Kuantitas" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="98"/>
+        <TextBox x:Name="quantity" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="1" Width="68" KeyUp="quantity_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
+        <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>

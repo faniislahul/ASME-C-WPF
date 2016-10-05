@@ -1,0 +1,18 @@
+﻿<Window x:Class="ASME_C_WPF.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF"
+        mc:Ignorable="d"
+        Title="Asme Coffeeshop Login" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FF232323">
+        <Ellipse Fill="#FF404040" Margin="72,54,72,267"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="35,309,0,0" VerticalAlignment="Top" Width="228"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="37,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="226" Foreground="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+        <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="27,221,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="26,284,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Login" Margin="82,379,82,0" VerticalAlignment="Top" Click="clicked"/>
+
+    </Grid>
+</Window>

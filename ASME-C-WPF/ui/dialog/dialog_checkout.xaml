@@ -1,0 +1,52 @@
+﻿<Window x:Class="ASME_C_WPF.ui.dialog.dialog_checkout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui.dialog"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      mc:Ignorable="d"
+      
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      
+      TextElement.FontWeight="Normal"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        
+        Title="Checkout" Height="431" Width="678" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF232323">
+    <Grid>
+        <ListBox x:Name="receipt" Margin="10,63,0,9" HorizontalAlignment="Left" Width="349"/>
+        <Label x:Name="header"  Padding="0,0,0,0"  Content="No Order Selected" FontSize="16" HorizontalAlignment="Left" Height="auto" Margin="15,15,0,0" VerticalAlignment="Top" Width="auto"/>
+        <Label x:Name="detail"  Padding="0,0,0,0"  Content="no details" FontSize="11" HorizontalAlignment="Left" Height="auto" Margin="15,37,0,0" VerticalAlignment="Top" Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <StackPanel Margin="0,60,0,0" Height="244" VerticalAlignment="Top" HorizontalAlignment="Right" Width="296">
+            <Label x:Name="p_m"  Padding="0,0,0,0"  Content="METODE PEMBAYARAN" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,10,0,0">
+                <RadioButton x:Name="cashradio" Content="Cash" IsChecked="True" Checked="cashradio_Checked"></RadioButton>
+                <RadioButton x:Name="cardradio" Content="Debit/Credit Card" IsChecked="False" Margin="15,0,0,0" Checked="cardradio_Checked" ></RadioButton>
+            </StackPanel>
+            <StackPanel x:Name="cardlist" Height="180" Margin="0,10,0,0" Visibility="Collapsed">
+                <Label x:Name="tpie"  Padding="0,0,0,0"  Content="JENIS KARTU" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
+                <RadioButton Content="Debit Card" Margin="15,5,0,0"></RadioButton>
+                <RadioButton Content="Credit Card" Margin="15,5,0,0"></RadioButton>
+                <Label x:Name="nok"  Padding="0,0,0,0"  Content="NOMOR KARTU" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
+                <TextBox x:Name="card_no" HorizontalAlignment="Left"  TextWrapping="Wrap"  Width="213" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
+                <Label x:Name="kode_tx"  Padding="0,0,0,0"  Content="ID TRANSAKSI" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
+                <TextBox x:Name="tx_id" HorizontalAlignment="Left"  TextWrapping="Wrap"  Width="213" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
+
+
+            </StackPanel>
+            <StackPanel x:Name="cashlist" Height="155" Margin="0,50,0,0" >
+                <Label x:Name="detail_Copy"  Padding="0,0,0,0"  Content="PEMBAYARAN" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
+                <TextBox x:Name="payment" HorizontalAlignment="Left"  TextWrapping="Wrap"  Width="213" FontSize="15" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
+                <Label x:Name="detail_Copy1"  Padding="0,0,0,0"  Content="KEMBALIAN" FontSize="11" HorizontalAlignment="Left"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="15" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
+                <Label x:Name="kembalian"  Padding="0,0,0,0"  Content="" FontSize="15"  Foreground="White" Height="39" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="65" Margin="0,0,15,0"/>
+
+            </StackPanel>
+
+        </StackPanel>
+        <Button x:Name="OK" Content="OK" Margin="0,0,21,22" IsDefault="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+        <Button x:Name="Print" Content="Print" Margin="0,0,107,22" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+        <Button x:Name="Batal" Content="Batal" Margin="0,0,213,22" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" IsCancel="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>
