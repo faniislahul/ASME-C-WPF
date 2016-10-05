@@ -249,14 +249,12 @@ namespace ASME_C_WPF.ui.dialog
 
         private void cashradio_Checked(object sender, RoutedEventArgs e)
         {
-            cardlist.Visibility = Visibility.Collapsed;
-            cashlist.Visibility = Visibility.Visible;
+            
         }
 
         private void cardradio_Checked(object sender, RoutedEventArgs e)
         {
-            cashlist.Visibility = Visibility.Collapsed;
-            cardlist.Visibility = Visibility.Visible;
+            
         }
     }
 }
