@@ -21,7 +21,7 @@
         <StackPanel Margin="0,60,0,0" Height="244" VerticalAlignment="Top" HorizontalAlignment="Right" Width="296">
             <Label x:Name="p_m"  Padding="0,0,0,0"  Content="METODE PEMBAYARAN" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,10,0,0">
-                <RadioButton x:Name="cashradio" Content="Cash" IsChecked="True" Checked="cashradio_Checked"></RadioButton>
+                <RadioButton x:Name="cashradio" Content="Cash" IsChecked="True" Checked="cashradio_Checked" ></RadioButton>
                 <RadioButton x:Name="cardradio" Content="Debit/Credit Card" IsChecked="False" Margin="15,0,0,0" Checked="cardradio_Checked" ></RadioButton>
             </StackPanel>
             <StackPanel x:Name="cardlist" Height="180" Margin="0,10,0,0" Visibility="Collapsed">
@@ -35,16 +35,19 @@
 
 
             </StackPanel>
-            <StackPanel x:Name="cashlist" Height="155" Margin="0,50,0,0" >
+            <StackPanel x:Name="cashlist" Height="190" Margin="0,5,0,0" >
+                <Label x:Name="total_t"  Padding="0,0,0,0"  Content="TOTAL" FontSize="11" HorizontalAlignment="Left"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="15" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
+                <Label x:Name="total_disp"  Padding="0,0,0,0"  Content="" FontSize="30"  Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,25,0"/>
+
                 <Label x:Name="detail_Copy"  Padding="0,0,0,0"  Content="PEMBAYARAN" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
-                <TextBox x:Name="payment" HorizontalAlignment="Left"  TextWrapping="Wrap"  Width="213" FontSize="15" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
+                <TextBox x:Name="payment" HorizontalAlignment="Left" KeyUp="payment_KeyUp" TextWrapping="Wrap"  Width="213" FontSize="30" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
                 <Label x:Name="detail_Copy1"  Padding="0,0,0,0"  Content="KEMBALIAN" FontSize="11" HorizontalAlignment="Left"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="15" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
-                <Label x:Name="kembalian"  Padding="0,0,0,0"  Content="" FontSize="15"  Foreground="White" Height="39" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="65" Margin="0,0,15,0"/>
+                <Label x:Name="kembalian"  Padding="0,0,0,0"  Content="" FontSize="30"  Foreground="White" VerticalAlignment="Bottom" Margin="0,0,25,0" HorizontalAlignment="Right"/>
 
             </StackPanel>
 
         </StackPanel>
-        <Button x:Name="OK" Content="OK" Margin="0,0,21,22" IsDefault="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+        <Button x:Name="OK" Content="OK" Margin="0,0,21,22" IsDefault="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="OK_Click"/>
         <Button x:Name="Print" Content="Print" Margin="0,0,107,22" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
         <Button x:Name="Batal" Content="Batal" Margin="0,0,213,22" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" IsCancel="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
 

@@ -39,9 +39,6 @@ namespace ASME_C_WPF.core
     partial void InsertBahan_baku(Bahan_baku instance);
     partial void UpdateBahan_baku(Bahan_baku instance);
     partial void DeleteBahan_baku(Bahan_baku instance);
-    partial void Insertbb_log(bb_log instance);
-    partial void Updatebb_log(bb_log instance);
-    partial void Deletebb_log(bb_log instance);
     partial void Insertbb_stock(bb_stock instance);
     partial void Updatebb_stock(bb_stock instance);
     partial void Deletebb_stock(bb_stock instance);
@@ -99,6 +96,9 @@ namespace ASME_C_WPF.core
     partial void Insertpos_order_list(pos_order_list instance);
     partial void Updatepos_order_list(pos_order_list instance);
     partial void Deletepos_order_list(pos_order_list instance);
+    partial void Insertbb_log(bb_log instance);
+    partial void Updatebb_log(bb_log instance);
+    partial void Deletebb_log(bb_log instance);
     #endregion
 		
 		public CoreDataContext() : 
@@ -152,14 +152,6 @@ namespace ASME_C_WPF.core
 			get
 			{
 				return this.GetTable<Bahan_baku>();
-			}
-		}
-		
-		public System.Data.Linq.Table<bb_log> bb_logs
-		{
-			get
-			{
-				return this.GetTable<bb_log>();
 			}
 		}
 		
@@ -312,6 +304,14 @@ namespace ASME_C_WPF.core
 			get
 			{
 				return this.GetTable<pos_order_list>();
+			}
+		}
+		
+		public System.Data.Linq.Table<bb_log> bb_logs
+		{
+			get
+			{
+				return this.GetTable<bb_log>();
 			}
 		}
 	}
@@ -786,6 +786,8 @@ namespace ASME_C_WPF.core
 		
 		private EntitySet<p_bb> _p_bbs;
 		
+		private EntitySet<bb_log> _bb_logs;
+		
 		private EntityRef<Satuan_bb> _Satuan_bb;
 		
     #region Extensibility Method Definitions
@@ -812,6 +814,7 @@ namespace ASME_C_WPF.core
 		{
 			this._bb_stocks = new EntitySet<bb_stock>(new Action<bb_stock>(this.attach_bb_stocks), new Action<bb_stock>(this.detach_bb_stocks));
 			this._p_bbs = new EntitySet<p_bb>(new Action<p_bb>(this.attach_p_bbs), new Action<p_bb>(this.detach_p_bbs));
+			this._bb_logs = new EntitySet<bb_log>(new Action<bb_log>(this.attach_bb_logs), new Action<bb_log>(this.detach_bb_logs));
 			this._Satuan_bb = default(EntityRef<Satuan_bb>);
 			OnCreated();
 		}
@@ -986,6 +989,19 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bahan_baku_bb_log", Storage="_bb_logs", ThisKey="Id", OtherKey="tipe")]
+		public EntitySet<bb_log> bb_logs
+		{
+			get
+			{
+				return this._bb_logs;
+			}
+			set
+			{
+				this._bb_logs.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_Bahan_baku", Storage="_Satuan_bb", ThisKey="satuan", OtherKey="Id", IsForeignKey=true)]
 		public Satuan_bb Satuan_bb
 		{
@@ -1063,300 +1079,17 @@ namespace ASME_C_WPF.core
 			this.SendPropertyChanging();
 			entity.Bahan_baku = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.bb_log")]
-	public partial class bb_log : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _nama;
-		
-		private int _kode_stock;
-		
-		private long _harga_beli;
-		
-		private long _hpp_digunakan;
-		
-		private System.DateTime _date;
-		
-		private int _satuan;
-		
-		private int _add;
-		
-		private int _used;
-		
-		private EntityRef<Satuan_bb> _Satuan_bb;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnnamaChanging(string value);
-    partial void OnnamaChanged();
-    partial void Onkode_stockChanging(int value);
-    partial void Onkode_stockChanged();
-    partial void Onharga_beliChanging(long value);
-    partial void Onharga_beliChanged();
-    partial void Onhpp_digunakanChanging(long value);
-    partial void Onhpp_digunakanChanged();
-    partial void OndateChanging(System.DateTime value);
-    partial void OndateChanged();
-    partial void OnsatuanChanging(int value);
-    partial void OnsatuanChanged();
-    partial void OnaddChanging(int value);
-    partial void OnaddChanged();
-    partial void OnusedChanging(int value);
-    partial void OnusedChanged();
-    #endregion
-		
-		public bb_log()
+		private void attach_bb_logs(bb_log entity)
 		{
-			this._Satuan_bb = default(EntityRef<Satuan_bb>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Bahan_baku = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		private void detach_bb_logs(bb_log entity)
 		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nama", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string nama
-		{
-			get
-			{
-				return this._nama;
-			}
-			set
-			{
-				if ((this._nama != value))
-				{
-					this.OnnamaChanging(value);
-					this.SendPropertyChanging();
-					this._nama = value;
-					this.SendPropertyChanged("nama");
-					this.OnnamaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_kode_stock", DbType="Int NOT NULL")]
-		public int kode_stock
-		{
-			get
-			{
-				return this._kode_stock;
-			}
-			set
-			{
-				if ((this._kode_stock != value))
-				{
-					this.Onkode_stockChanging(value);
-					this.SendPropertyChanging();
-					this._kode_stock = value;
-					this.SendPropertyChanged("kode_stock");
-					this.Onkode_stockChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_harga_beli", DbType="BigInt NOT NULL")]
-		public long harga_beli
-		{
-			get
-			{
-				return this._harga_beli;
-			}
-			set
-			{
-				if ((this._harga_beli != value))
-				{
-					this.Onharga_beliChanging(value);
-					this.SendPropertyChanging();
-					this._harga_beli = value;
-					this.SendPropertyChanged("harga_beli");
-					this.Onharga_beliChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hpp_digunakan", DbType="BigInt NOT NULL")]
-		public long hpp_digunakan
-		{
-			get
-			{
-				return this._hpp_digunakan;
-			}
-			set
-			{
-				if ((this._hpp_digunakan != value))
-				{
-					this.Onhpp_digunakanChanging(value);
-					this.SendPropertyChanging();
-					this._hpp_digunakan = value;
-					this.SendPropertyChanged("hpp_digunakan");
-					this.Onhpp_digunakanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL")]
-		public System.DateTime date
-		{
-			get
-			{
-				return this._date;
-			}
-			set
-			{
-				if ((this._date != value))
-				{
-					this.OndateChanging(value);
-					this.SendPropertyChanging();
-					this._date = value;
-					this.SendPropertyChanged("date");
-					this.OndateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_satuan", DbType="Int NOT NULL")]
-		public int satuan
-		{
-			get
-			{
-				return this._satuan;
-			}
-			set
-			{
-				if ((this._satuan != value))
-				{
-					if (this._Satuan_bb.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnsatuanChanging(value);
-					this.SendPropertyChanging();
-					this._satuan = value;
-					this.SendPropertyChanged("satuan");
-					this.OnsatuanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[add]", Storage="_add", DbType="Int NOT NULL")]
-		public int add
-		{
-			get
-			{
-				return this._add;
-			}
-			set
-			{
-				if ((this._add != value))
-				{
-					this.OnaddChanging(value);
-					this.SendPropertyChanging();
-					this._add = value;
-					this.SendPropertyChanged("add");
-					this.OnaddChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_used", DbType="Int NOT NULL")]
-		public int used
-		{
-			get
-			{
-				return this._used;
-			}
-			set
-			{
-				if ((this._used != value))
-				{
-					this.OnusedChanging(value);
-					this.SendPropertyChanging();
-					this._used = value;
-					this.SendPropertyChanged("used");
-					this.OnusedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_Satuan_bb", ThisKey="satuan", OtherKey="Id", IsForeignKey=true)]
-		public Satuan_bb Satuan_bb
-		{
-			get
-			{
-				return this._Satuan_bb.Entity;
-			}
-			set
-			{
-				Satuan_bb previousValue = this._Satuan_bb.Entity;
-				if (((previousValue != value) 
-							|| (this._Satuan_bb.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Satuan_bb.Entity = null;
-						previousValue.bb_logs.Remove(this);
-					}
-					this._Satuan_bb.Entity = value;
-					if ((value != null))
-					{
-						value.bb_logs.Add(this);
-						this._satuan = value.Id;
-					}
-					else
-					{
-						this._satuan = default(int);
-					}
-					this.SendPropertyChanged("Satuan_bb");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Bahan_baku = null;
 		}
 	}
 	
@@ -3945,9 +3678,9 @@ namespace ASME_C_WPF.core
 		
 		private EntitySet<Bahan_baku> _Bahan_bakus;
 		
-		private EntitySet<bb_log> _bb_logs;
-		
 		private EntitySet<bb_stock> _bb_stocks;
+		
+		private EntitySet<bb_log> _bb_logs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3962,8 +3695,8 @@ namespace ASME_C_WPF.core
 		public Satuan_bb()
 		{
 			this._Bahan_bakus = new EntitySet<Bahan_baku>(new Action<Bahan_baku>(this.attach_Bahan_bakus), new Action<Bahan_baku>(this.detach_Bahan_bakus));
-			this._bb_logs = new EntitySet<bb_log>(new Action<bb_log>(this.attach_bb_logs), new Action<bb_log>(this.detach_bb_logs));
 			this._bb_stocks = new EntitySet<bb_stock>(new Action<bb_stock>(this.attach_bb_stocks), new Action<bb_stock>(this.detach_bb_stocks));
+			this._bb_logs = new EntitySet<bb_log>(new Action<bb_log>(this.attach_bb_logs), new Action<bb_log>(this.detach_bb_logs));
 			OnCreated();
 		}
 		
@@ -4020,19 +3753,6 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_bb_logs", ThisKey="Id", OtherKey="satuan")]
-		public EntitySet<bb_log> bb_logs
-		{
-			get
-			{
-				return this._bb_logs;
-			}
-			set
-			{
-				this._bb_logs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_stock", Storage="_bb_stocks", ThisKey="Id", OtherKey="satuan")]
 		public EntitySet<bb_stock> bb_stocks
 		{
@@ -4043,6 +3763,19 @@ namespace ASME_C_WPF.core
 			set
 			{
 				this._bb_stocks.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_bb_logs", ThisKey="Id", OtherKey="satuan")]
+		public EntitySet<bb_log> bb_logs
+		{
+			get
+			{
+				return this._bb_logs;
+			}
+			set
+			{
+				this._bb_logs.Assign(value);
 			}
 		}
 		
@@ -4078,18 +3811,6 @@ namespace ASME_C_WPF.core
 			entity.Satuan_bb = null;
 		}
 		
-		private void attach_bb_logs(bb_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = this;
-		}
-		
-		private void detach_bb_logs(bb_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = null;
-		}
-		
 		private void attach_bb_stocks(bb_stock entity)
 		{
 			this.SendPropertyChanging();
@@ -4097,6 +3818,18 @@ namespace ASME_C_WPF.core
 		}
 		
 		private void detach_bb_stocks(bb_stock entity)
+		{
+			this.SendPropertyChanging();
+			entity.Satuan_bb = null;
+		}
+		
+		private void attach_bb_logs(bb_log entity)
+		{
+			this.SendPropertyChanging();
+			entity.Satuan_bb = this;
+		}
+		
+		private void detach_bb_logs(bb_log entity)
 		{
 			this.SendPropertyChanging();
 			entity.Satuan_bb = null;
@@ -5017,6 +4750,342 @@ namespace ASME_C_WPF.core
 						this._peroduk = default(int);
 					}
 					this.SendPropertyChanged("Produk");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.bb_log")]
+	public partial class bb_log : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _tipe;
+		
+		private int _kode_stock;
+		
+		private long _harga_beli;
+		
+		private long _hpp_digunakan;
+		
+		private System.DateTime _date;
+		
+		private int _satuan;
+		
+		private int _add;
+		
+		private int _used;
+		
+		private EntityRef<Satuan_bb> _Satuan_bb;
+		
+		private EntityRef<Bahan_baku> _Bahan_baku;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OntipeChanging(int value);
+    partial void OntipeChanged();
+    partial void Onkode_stockChanging(int value);
+    partial void Onkode_stockChanged();
+    partial void Onharga_beliChanging(long value);
+    partial void Onharga_beliChanged();
+    partial void Onhpp_digunakanChanging(long value);
+    partial void Onhpp_digunakanChanged();
+    partial void OndateChanging(System.DateTime value);
+    partial void OndateChanged();
+    partial void OnsatuanChanging(int value);
+    partial void OnsatuanChanged();
+    partial void OnaddChanging(int value);
+    partial void OnaddChanged();
+    partial void OnusedChanging(int value);
+    partial void OnusedChanged();
+    #endregion
+		
+		public bb_log()
+		{
+			this._Satuan_bb = default(EntityRef<Satuan_bb>);
+			this._Bahan_baku = default(EntityRef<Bahan_baku>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipe", DbType="Int NOT NULL")]
+		public int tipe
+		{
+			get
+			{
+				return this._tipe;
+			}
+			set
+			{
+				if ((this._tipe != value))
+				{
+					if (this._Bahan_baku.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OntipeChanging(value);
+					this.SendPropertyChanging();
+					this._tipe = value;
+					this.SendPropertyChanged("tipe");
+					this.OntipeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_kode_stock", DbType="Int NOT NULL")]
+		public int kode_stock
+		{
+			get
+			{
+				return this._kode_stock;
+			}
+			set
+			{
+				if ((this._kode_stock != value))
+				{
+					this.Onkode_stockChanging(value);
+					this.SendPropertyChanging();
+					this._kode_stock = value;
+					this.SendPropertyChanged("kode_stock");
+					this.Onkode_stockChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_harga_beli", DbType="BigInt NOT NULL")]
+		public long harga_beli
+		{
+			get
+			{
+				return this._harga_beli;
+			}
+			set
+			{
+				if ((this._harga_beli != value))
+				{
+					this.Onharga_beliChanging(value);
+					this.SendPropertyChanging();
+					this._harga_beli = value;
+					this.SendPropertyChanged("harga_beli");
+					this.Onharga_beliChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_hpp_digunakan", DbType="BigInt NOT NULL")]
+		public long hpp_digunakan
+		{
+			get
+			{
+				return this._hpp_digunakan;
+			}
+			set
+			{
+				if ((this._hpp_digunakan != value))
+				{
+					this.Onhpp_digunakanChanging(value);
+					this.SendPropertyChanging();
+					this._hpp_digunakan = value;
+					this.SendPropertyChanged("hpp_digunakan");
+					this.Onhpp_digunakanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="DateTime NOT NULL", IsDbGenerated=true)]
+		public System.DateTime date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_satuan", DbType="Int NOT NULL")]
+		public int satuan
+		{
+			get
+			{
+				return this._satuan;
+			}
+			set
+			{
+				if ((this._satuan != value))
+				{
+					if (this._Satuan_bb.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnsatuanChanging(value);
+					this.SendPropertyChanging();
+					this._satuan = value;
+					this.SendPropertyChanged("satuan");
+					this.OnsatuanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[add]", Storage="_add", DbType="Int NOT NULL")]
+		public int add
+		{
+			get
+			{
+				return this._add;
+			}
+			set
+			{
+				if ((this._add != value))
+				{
+					this.OnaddChanging(value);
+					this.SendPropertyChanging();
+					this._add = value;
+					this.SendPropertyChanged("add");
+					this.OnaddChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_used", DbType="Int NOT NULL")]
+		public int used
+		{
+			get
+			{
+				return this._used;
+			}
+			set
+			{
+				if ((this._used != value))
+				{
+					this.OnusedChanging(value);
+					this.SendPropertyChanging();
+					this._used = value;
+					this.SendPropertyChanged("used");
+					this.OnusedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_Satuan_bb", ThisKey="satuan", OtherKey="Id", IsForeignKey=true)]
+		public Satuan_bb Satuan_bb
+		{
+			get
+			{
+				return this._Satuan_bb.Entity;
+			}
+			set
+			{
+				Satuan_bb previousValue = this._Satuan_bb.Entity;
+				if (((previousValue != value) 
+							|| (this._Satuan_bb.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Satuan_bb.Entity = null;
+						previousValue.bb_logs.Remove(this);
+					}
+					this._Satuan_bb.Entity = value;
+					if ((value != null))
+					{
+						value.bb_logs.Add(this);
+						this._satuan = value.Id;
+					}
+					else
+					{
+						this._satuan = default(int);
+					}
+					this.SendPropertyChanged("Satuan_bb");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bahan_baku_bb_log", Storage="_Bahan_baku", ThisKey="tipe", OtherKey="Id", IsForeignKey=true)]
+		public Bahan_baku Bahan_baku
+		{
+			get
+			{
+				return this._Bahan_baku.Entity;
+			}
+			set
+			{
+				Bahan_baku previousValue = this._Bahan_baku.Entity;
+				if (((previousValue != value) 
+							|| (this._Bahan_baku.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bahan_baku.Entity = null;
+						previousValue.bb_logs.Remove(this);
+					}
+					this._Bahan_baku.Entity = value;
+					if ((value != null))
+					{
+						value.bb_logs.Add(this);
+						this._tipe = value.Id;
+					}
+					else
+					{
+						this._tipe = default(int);
+					}
+					this.SendPropertyChanged("Bahan_baku");
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +24,15 @@ namespace ASME_C_WPF.ui.dialog
     public partial class dialog_checkout : Window
     {
         CoreDataContext db = new CoreDataContext();
+        Regex rg = new Regex("^[0-9]+$");
         long total_val = 0;
+        int selected = 0;
+        public bool done = false;
+        public int choice = 0;
+        public long pembayaran = 0;
+        public long change = 0;
+        public String cardnumber = "";
+        public String transaction = "";
         public dialog_checkout()
         {
             InitializeComponent();
@@ -244,17 +252,70 @@ namespace ASME_C_WPF.ui.dialog
             receipt.Items.Add(totlist);
             long total_value = (stotal - discount) + serv_total + ppn_total;
             total_val = total_value;
-            
+            total_disp.Content = total_value.ToString("C");
+            selected = o_id;
+        }
+
+        private void payment_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (payment.Text != "")
+            {
+                if (rg.IsMatch(payment.Text))
+                {
+                        OK.IsEnabled = true;
+                    kembalian.Content = (Int64.Parse(payment.Text) - total_val).ToString("C");
+                    
+                }
+                else
+                {
+                    OK.IsEnabled = false;
+                }
+
+            }
+            else
+            {
+                OK.IsEnabled = false;
+            }
         }
 
         private void cashradio_Checked(object sender, RoutedEventArgs e)
         {
-            
+            if (cardlist != null)
+            {
+                cardlist.Visibility = Visibility.Collapsed;
+                cashlist.Visibility = Visibility.Visible;
+            }
         }
 
         private void cardradio_Checked(object sender, RoutedEventArgs e)
         {
-            
+            if (cashlist != null)
+            {
+                cashlist.Visibility = Visibility.Collapsed;
+                cardlist.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            if (cashradio.IsChecked == true)
+            {
+                done = true;
+                choice = 1;
+                pembayaran = Int64.Parse(payment.Text);
+                change = Int64.Parse(payment.Text) - total_val;
+                this.Close();
+            }
+            else
+            {
+                done = true;
+                choice = 2;
+                pembayaran = total_val;
+                change = 0;
+                cardnumber = card_no.Text;
+                transaction = tx_id.Text;
+                this.Close();
+            }
         }
     }
 }

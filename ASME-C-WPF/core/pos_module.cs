@@ -297,10 +297,11 @@ namespace ASME_C_WPF.core
             int result = 0;
             try
             {
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
                 pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == id);
                 order.status = "VOID";
-                pos_table table = db.pos_tables.FirstOrDefault(c => c.Id == order.table_id);
-                table.is_empty = true;
+                order.pos_table.is_empty = true;
+                db.SubmitChanges();
 
 
                 var listorder = db.pos_order_lists.Where(c=>c.order_id==id&&c.status=="PENDING");
@@ -345,12 +346,13 @@ namespace ASME_C_WPF.core
             int result = 0;
             try
             {
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
                 pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == id);
                 order.status = "HOLD";
-                pos_table table = db.pos_tables.FirstOrDefault(c => c.Id == order.table_id);
-                table.is_empty = true;
+                order.pos_table.is_empty = true;
+                db.SubmitChanges();
 
-                var listorder = db.pos_order_lists.Where(c => c.order_id == id);
+                var listorder = db.pos_order_lists.Where(c => c.order_id == id && c.status == "PENDING");
 
                 foreach (pos_order_list list in listorder)
                 {
@@ -418,12 +420,62 @@ namespace ASME_C_WPF.core
             int result = 0;
             try
             {
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
                 pos_order order = db.pos_orders.FirstOrDefault(c=>c.Id == id);
                 order.status = "COMPLETED";
-                pos_table table = db.pos_tables.FirstOrDefault(c => c.Id == order.table_id);
-                table.is_empty = true;
+                order.pos_table.is_empty = true;
+                db.SubmitChanges();
 
-                var listorder = db.pos_order_lists.Where(c => c.order_id == id);
+                var listorder = db.pos_order_lists.Where(c => c.order_id == id && c.status == "PENDING");
+
+                foreach (pos_order_list list in listorder)
+                {
+                    list.status = "COMPLETED";
+                    Transaction trany = new Transaction();
+                    trany.details = "Kas Penjualan " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk).nama;
+                    trany.jumlah = db.Produks.FirstOrDefault(c => c.Id == list.peroduk).harga_jual * list.quantity;
+                    trany.quantity = list.quantity;
+                    trany.type = "1.1.1";
+                    trany.user = user;
+                    db.Transactions.InsertOnSubmit(trany);
+
+                    Transaction trany2 = new Transaction();
+                    trany2.details = "Piutang Penjualan " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk).nama;
+                    trany2.jumlah = db.Produks.FirstOrDefault(c => c.Id == list.peroduk).harga_jual * list.quantity * -1;
+                    trany2.quantity = list.quantity;
+                    trany2.type = "1.1.5";
+                    trany2.user = user;
+                    db.Transactions.InsertOnSubmit(trany2);
+                }
+
+                pos_log log = new pos_log();
+                log.user_id = user;
+                log.action = "POS CHECKOUT";
+                db.pos_logs.InsertOnSubmit(log);
+
+                db.SubmitChanges();
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return result;
+        }
+
+        public int checkout(int id, String cardnumber, String Transaction)
+        {
+            int result = 0;
+            try
+            {
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
+                pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == id);
+                order.status = "COMPLETED";
+                order.pos_table.is_empty = true;
+                db.SubmitChanges();
+
+                var listorder = db.pos_order_lists.Where(c => c.order_id == id&&c.status=="PENDING");
 
                 foreach (pos_order_list list in listorder)
                 {

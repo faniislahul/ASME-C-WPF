@@ -25,6 +25,7 @@ namespace ASME_C_WPF
         {
             
             InitializeComponent();
+            listBox.SelectedItem = listBox.Items.GetItemAt(1);
         }
 
         private void dash_control(object sender, RoutedEventArgs e)

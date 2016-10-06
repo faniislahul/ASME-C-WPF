@@ -104,6 +104,12 @@
     <Compile Include="ui\dialog\dialog_new_order.xaml.cs">
       <DependentUpon>dialog_new_order.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\dialog\dialog_bb_baru.xaml.cs">
+      <DependentUpon>dialog_bb_baru.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_penambahan_bb.xaml.cs">
+      <DependentUpon>dialog_penambahan_bb.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\dialog\dialog_penggunaan_bb.xaml.cs">
       <DependentUpon>dialog_penggunaan_bb.xaml</DependentUpon>
     </Compile>
@@ -163,6 +169,14 @@
     <Page Include="ui\dialog\dialog_new_order.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_bb_baru.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui\dialog\dialog_penambahan_bb.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ui\dialog\dialog_penggunaan_bb.xaml">
       <SubType>Designer</SubType>

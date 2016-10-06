@@ -17,13 +17,13 @@ namespace ASME_C_WPF.ui.dialog
     /// <summary>
     /// Interaction logic for dialog_penggunaan_bb.xaml
     /// </summary>
-    public partial class dialog_penggunaan_bb : Window
+    public partial class dialog_penambahan_bb : Window
     {
         public int qty = 0;
-        public int count = 0;
+        public long total = 0;
         public bool done = false;
         Regex rg = new Regex("^[0-9]+$");
-        public dialog_penggunaan_bb()
+        public dialog_penambahan_bb()
         {
             InitializeComponent();
             quantity.Focus();
@@ -39,6 +39,7 @@ namespace ASME_C_WPF.ui.dialog
         private void Pesan_Click(object sender, RoutedEventArgs e)
         {
             qty = Int32.Parse(quantity.Text);
+            total = Int64.Parse(jumlah.Text);
             done = true;
             this.Close();
         }
@@ -46,19 +47,34 @@ namespace ASME_C_WPF.ui.dialog
 
         private void quantity_KeyUp(object sender, KeyEventArgs e)
         {
-            if (quantity.Text != "")
+            if (quantity.Text != ""&& jumlah.Text != "")
             {
                 if (rg.IsMatch(quantity.Text))
                 {
-                    if (Int32.Parse(quantity.Text) <= count)
-                    {
-                        Pesan.IsEnabled = true;
-                    }
-                    else
-                    {
-                        Pesan.IsEnabled = false;
-                    }
                     
+                        Pesan.IsEnabled = true;
+                       
+                }
+                else
+                {
+                    Pesan.IsEnabled = false;
+                }
+
+            }
+            else
+            {
+                Pesan.IsEnabled = false;
+            }
+        }
+
+        private void jumlah_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (quantity.Text != "" && jumlah.Text!="")
+            {
+                if (rg.IsMatch(jumlah.Text))
+                {
+                        Pesan.IsEnabled = true;
+                   
                 }
                 else
                 {

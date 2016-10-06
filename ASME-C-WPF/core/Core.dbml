@@ -33,21 +33,8 @@
       <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Bahan_baku_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="tipe" Type="bb_stock" />
       <Association Name="Bahan_baku_p_bb" Member="p_bbs" ThisKey="Id" OtherKey="bb" Type="p_bb" />
+      <Association Name="Bahan_baku_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="tipe" Type="bb_log" />
       <Association Name="Satuan_bb_Bahan_baku" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.bb_log" Member="bb_logs">
-    <Type Name="bb_log">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="kode_stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Satuan_bb_bb_log" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.bb_stock" Member="bb_stocks">
@@ -192,8 +179,8 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Association Name="Satuan_bb_Bahan_baku" Member="Bahan_bakus" ThisKey="Id" OtherKey="satuan" Type="Bahan_baku" />
-      <Association Name="Satuan_bb_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="satuan" Type="bb_log" />
       <Association Name="Satuan_bb_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="satuan" Type="bb_stock" />
+      <Association Name="Satuan_bb_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="satuan" Type="bb_log" />
     </Type>
   </Table>
   <Table Name="dbo.[Transaction]" Member="Transactions">
@@ -220,8 +207,8 @@
       <Column Name="[user]" Member="user" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="total" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="pembayaran" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Member="service" Type="System.Int64" CanBeNull="false" />
-      <Column Member="ppn" Type="System.Int64" CanBeNull="false" />
+      <Column Name="service" Type="System.Int64" CanBeNull="false" />
+      <Column Name="ppn" Type="System.Int64" CanBeNull="false" />
       <Association Name="pos_order_pos_order_list" Member="pos_order_lists" ThisKey="Id" OtherKey="order_id" Type="pos_order_list" />
       <Association Name="master_user_pos_order" Member="master_user" ThisKey="user" OtherKey="Id" Type="master_user" IsForeignKey="true" />
       <Association Name="pos_table_pos_order" Member="pos_table" ThisKey="table_id" OtherKey="Id" Type="pos_table" IsForeignKey="true" />
@@ -237,6 +224,21 @@
       <Column Name="status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
       <Association Name="pos_order_pos_order_list" Member="pos_order" ThisKey="order_id" OtherKey="Id" Type="pos_order" IsForeignKey="true" />
       <Association Name="Produk_pos_order_list" Member="Produk" ThisKey="peroduk" OtherKey="Id" Type="Produk" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bb_log" Member="bb_logs">
+    <Type Name="bb_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="kode_stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Satuan_bb_bb_log" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
+      <Association Name="Bahan_baku_bb_log" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

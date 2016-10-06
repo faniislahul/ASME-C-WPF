@@ -45,12 +45,6 @@
                     <Label Content="Reservasi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_order" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
-                <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="0,0,49,0"/>
-                    <Label Content="Order" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
-                </Grid>
-            </ListBoxItem>
             <ListBoxItem IsEnabled="False">
                 <Label Content="PERSEDIAAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184"/>
             </ListBoxItem>

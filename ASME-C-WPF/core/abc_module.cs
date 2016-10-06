@@ -118,7 +118,7 @@ namespace ASME_C_WPF.core
                 int count = 0;
                
                 double cost = 0.0;
-                var loglist = db.bb_logs.Where(c=> c.nama == bb.nama && c.date.Month == date.Month);
+                var loglist = db.bb_logs.Where(c=> c.tipe == bb.Id && c.date.Month == date.Month);
                 foreach(bb_log log in loglist)
                 {
                     used += log.used*log.hpp_digunakan;

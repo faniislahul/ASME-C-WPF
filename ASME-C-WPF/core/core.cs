@@ -7,9 +7,6 @@ using System.Runtime.ExceptionServices;
 
 namespace ASME_C_WPF.core
 {
-    partial class Transaction
-    {
-    }
 
     class Core
     {
@@ -22,6 +19,7 @@ namespace ASME_C_WPF.core
          * 5 : Not Enough Stock
          */
         CoreDataContext db = new CoreDataContext();
+        public int user = Properties.Settings.Default.Active_user;
         /* Management Pengeluaran
          * 
          */
@@ -40,13 +38,8 @@ namespace ASME_C_WPF.core
             dynamic value;
             String detail = null;
             String id = null;
-            master_user user = null ;
             long jumlah = -1;
 
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
 
             if (Data.TryGetValue("details", out value))
             {
@@ -62,7 +55,7 @@ namespace ASME_C_WPF.core
             {
                 id ="2.1.1."+value;
             };
-            if ((detail != null) && (jumlah >= 0) && (id != null) && (user != null))
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
                 {
@@ -70,7 +63,7 @@ namespace ASME_C_WPF.core
                     trans1.details = detail;
                     trans1.jumlah = jumlah;
                     trans1.type = id;
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -79,14 +72,14 @@ namespace ASME_C_WPF.core
                     trans2.details = detail;
                     trans2.jumlah = jumlah * -1;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch(Exception e){ };
+                catch{ };
 
             }
             else {
@@ -109,14 +102,8 @@ namespace ASME_C_WPF.core
             dynamic result = 0;
             dynamic value;
             String details = null;
-            master_user user = null; 
             long jumlah = -1;
 
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-                Console.WriteLine(user);
-            };
 
             if (Data.TryGetValue("details", out value))
             {
@@ -131,7 +118,7 @@ namespace ASME_C_WPF.core
             };
 
          
-            if ((details != null) && (jumlah >= 0) && (user !=null))
+            if ((details != null) && (jumlah >= 0) && (user > 0))
             {
                 try
                 {
@@ -139,7 +126,7 @@ namespace ASME_C_WPF.core
                     trans1.details = details;
                     trans1.jumlah = jumlah;
                     trans1.type = "3.1.2";
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -148,14 +135,14 @@ namespace ASME_C_WPF.core
                     trans2.details = details;
                     trans2.jumlah = jumlah * -1;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch (Exception e){ };
+                catch{ };
 
             }
             else
@@ -182,13 +169,7 @@ namespace ASME_C_WPF.core
             dynamic value;
             String detail = null;
             String id = null;
-            master_user user = null;
             long jumlah = -1;
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
 
             if (Data.TryGetValue("details", out value))
             {
@@ -204,7 +185,7 @@ namespace ASME_C_WPF.core
             {
                 id = "5.1.1." + value;
             };
-            if ((detail != null) && (jumlah >= 0) && (id != null) && (user != null))
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
                 {
@@ -212,7 +193,7 @@ namespace ASME_C_WPF.core
                     trans1.details = detail;
                     trans1.jumlah = jumlah;
                     trans1.type = id;
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -221,14 +202,14 @@ namespace ASME_C_WPF.core
                     trans2.details = detail;
                     trans2.jumlah = jumlah * -1;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch(Exception e){ };
+                catch{ };
 
             }
             else
@@ -240,119 +221,7 @@ namespace ASME_C_WPF.core
             return result;
         }
 
-        /* Pembelian_bahan_baku 
-        * 
-        * var_input Dictionary<String, dynamic>
-        * user = master_user
-        * id = String
-        * details = String
-        * quantity = int
-        * jumlah = long
-        */
-        public dynamic Pembelian_bahan_baku(Dictionary<String, dynamic> Data)
-        {
-            ///result initialized
-            var result = 0;
-            dynamic value;
-            int bb_id =-1; 
-            String id = null;
-            master_user user = null;
-            long jumlah = -1;
-            int quantity = -1;
-
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
-
-            if (Data.TryGetValue("jumlah", out value))
-            {
-                jumlah = value;
-            };
-
-            if (Data.TryGetValue("quantity", out value))
-            {
-                quantity = value;
-            };
-
-            if (Data.TryGetValue("id", out value))
-            {
-                id = "1.1.3." + value;
-                bb_id = value;
-            };
-            if ((jumlah >= 0) && (id != null) && (user != null)&&(quantity>=0))
-            {
-                try
-                {
-                    Transaction trans1 = new Transaction();
-                    trans1.details = "Pembelian "+db.Bahan_bakus.FirstOrDefault(c=>c.Id==bb_id).nama;
-                    trans1.jumlah = jumlah;
-                    trans1.type = id;
-                    trans1.user = user.Id;
-                    trans1.quantity = quantity;
-                    db.Transactions.InsertOnSubmit(trans1);
-                    db.SubmitChanges();
-
-                    Transaction trans2 = new Transaction();
-                    trans2.details = "Pembelian " + db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id).nama;
-                    trans2.jumlah = jumlah * -1;
-                    trans2.type = "1.1.1";
-                    trans2.user = user.Id;
-                    trans2.quantity = quantity;
-                    db.Transactions.InsertOnSubmit(trans2);
-                    db.SubmitChanges();
-
-                    long hpp = jumlah / quantity;
-                    Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id);
-                    if (bb != null)
-                    {
-                        bb_stock stock = new bb_stock();
-                        stock.tipe = bb.Id;
-                        stock.harga_beli = jumlah;
-                        stock.quantity = quantity;
-                        stock.hpp_digunakan = hpp;
-                        stock.used = 0;
-                        stock.satuan = bb.satuan;
-                        db.bb_stocks.InsertOnSubmit(stock);
-                        db.SubmitChanges();
-
-                        bb_log log = new bb_log();
-                        log.nama = bb.nama;
-                        log.kode_stock = stock.Id;
-                        log.harga_beli = jumlah;
-                        log.hpp_digunakan = hpp;
-                        log.satuan = bb.satuan;
-                        log.add = quantity;
-                        log.used = 0;
-                        db.bb_logs.InsertOnSubmit(log);
-                        db.SubmitChanges();
-
-                        bb.quantity = bb.quantity + quantity;
-                        bb.harga_beli = db.bb_stocks.First(c=>c.tipe == bb.Id).harga_beli;
-                        bb.hpp_digunakan = db.bb_stocks.First(c => c.tipe == bb.Id).hpp_digunakan;
-                        db.SubmitChanges();
-                    }
-                    
-                    ///success
-                    result = 4;
-                }
-                catch(Exception e)
-                {
-
-                    throw e;
-                        }
-
-            }
-            else
-            {
-                ///missing reference
-                result = 2;
-            };
-
-            return result;
-        }
-
+       
         /* Stock Management
          * 
          */
@@ -361,7 +230,6 @@ namespace ASME_C_WPF.core
         /* Pengurangan_stock 
         * 
         * var_input Dictionary<String, dynamic>
-        * user = master_user
         * id = int
         * quantity = int
         */
@@ -371,14 +239,8 @@ namespace ASME_C_WPF.core
             var result = 0;
             dynamic value;
             int bb_id = -1;
-            master_user user = null;
             int quantity = -1;
             
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
 
             if (Data.TryGetValue("quantity", out value))
             {
@@ -389,7 +251,7 @@ namespace ASME_C_WPF.core
             {
                 bb_id = value;
             };
-            if ((bb_id > 0) && (user != null) && (quantity >= 0))
+            if ((bb_id > 0) && (user >0) && (quantity >= 0))
             {
                 try
                 {
@@ -419,7 +281,7 @@ namespace ASME_C_WPF.core
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
-                                    log.nama = db.Bahan_bakus.FirstOrDefault(c=>c.Id == some.tipe).nama;
+                                    log.tipe = db.Bahan_bakus.FirstOrDefault(c=>c.Id == some.tipe).Id;
                                     db.bb_logs.InsertOnSubmit(log);
                                     db.SubmitChanges();
                                     quantity = 0;
@@ -434,18 +296,26 @@ namespace ASME_C_WPF.core
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
-                                    log.nama = db.Bahan_bakus.FirstOrDefault(c => c.Id == some.tipe).nama;
+                                    log.tipe = db.Bahan_bakus.FirstOrDefault(c => c.Id == some.tipe).Id;
                                     db.bb_logs.InsertOnSubmit(log);
                                     db.SubmitChanges();
                                     
                                 }
                                
                             }
+
+                        if( db.bb_stocks.Where(c => c.tipe == bb.Id).Count() == 0){
+                            bb.quantity = 0;
+                            bb.harga_beli = 0;
+                            bb.hpp_digunakan = 0;
+                        }
+                        else
+                        {
+                            bb.quantity = db.bb_stocks.Where(c => c.tipe == bb.Id).Sum(c => c.quantity);
+                            bb.harga_beli = db.bb_stocks.First(c => c.tipe == bb.Id).harga_beli;
+                            bb.hpp_digunakan = db.bb_stocks.First(c => c.tipe == bb.Id).hpp_digunakan;
+                        }
                         
-                      
-                        bb.quantity = db.bb_stocks.Where(c => c.tipe == bb.Id).Sum(c => c.quantity);
-                        bb.harga_beli = db.bb_stocks.First(c => c.tipe == bb.Id).harga_beli;
-                        bb.hpp_digunakan = db.bb_stocks.First(c => c.tipe == bb.Id).hpp_digunakan;
                         db.SubmitChanges();
                     }
                     else
@@ -458,7 +328,7 @@ namespace ASME_C_WPF.core
                     ///success
                     result = 4;
                 }
-                catch(Exception e) {Console.WriteLine(e.ToString()); };
+                catch(Exception e){ throw e; };
 
             }
             else
@@ -469,6 +339,112 @@ namespace ASME_C_WPF.core
 
             return result;
         }
+
+        /* Pembelian_bahan_baku 
+       * 
+       * var_input Dictionary<String, dynamic>
+       * id = String
+       * details = String
+       * quantity = int
+       * jumlah = long
+       */
+        public dynamic Penambahan_stock(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            int bb_id = -1;
+            String id = null;
+            long jumlah = -1;
+            int quantity = -1;
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+            if (Data.TryGetValue("quantity", out value))
+            {
+                quantity = value;
+            };
+
+            if (Data.TryGetValue("id", out value))
+            {
+                id = "1.1.3." + value;
+                bb_id = value;
+            };
+            if ((jumlah >= 0) && (id != null) && (user > 0) && (quantity >= 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = "Pembelian " + db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id).nama;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = quantity;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = "Pembelian " + db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id).nama;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = quantity;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+
+                    long hpp = jumlah / quantity;
+                    Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id);
+                    if (bb != null)
+                    {
+                        bb_stock stock = new bb_stock();
+                        stock.tipe = bb.Id;
+                        stock.harga_beli = jumlah;
+                        stock.quantity = quantity;
+                        stock.hpp_digunakan = hpp;
+                        stock.used = 0;
+                        stock.satuan = bb.satuan;
+                        db.bb_stocks.InsertOnSubmit(stock);
+                        db.SubmitChanges();
+
+                        bb_log log = new bb_log();
+                        log.tipe = bb.Id;
+                        log.kode_stock = stock.Id;
+                        log.harga_beli = jumlah;
+                        log.hpp_digunakan = hpp;
+                        log.satuan = bb.satuan;
+                        log.add = quantity;
+                        log.used = 0;
+                        db.bb_logs.InsertOnSubmit(log);
+                        db.SubmitChanges();
+
+                        bb.quantity += quantity;
+                        bb.harga_beli = db.bb_stocks.First(c => c.tipe == bb.Id).harga_beli;
+                        bb.hpp_digunakan = db.bb_stocks.First(c => c.tipe == bb.Id).hpp_digunakan;
+                        db.SubmitChanges();
+                    }
+
+                    ///success
+                    result = 4;
+                }
+                catch
+                {
+
+                    
+                }
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+
 
         /* Management Pemasukan
          * 
@@ -489,13 +465,8 @@ namespace ASME_C_WPF.core
             String detail = null;
             String id = null;
             int pt_id = -1;
-            master_user user = null;
             long jumlah = -1;
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
+            
 
             if (Data.TryGetValue("details", out value))
             {
@@ -512,7 +483,7 @@ namespace ASME_C_WPF.core
                 id = "1.1.2." + value;
                 pt_id = value;
             };
-            if ((detail != null) && (jumlah >= 0) && (id != null) && (user != null))
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
                 {
@@ -520,7 +491,7 @@ namespace ASME_C_WPF.core
                     trans1.details = detail;
                     trans1.jumlah = jumlah*-1;
                     trans1.type = id;
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -529,14 +500,14 @@ namespace ASME_C_WPF.core
                     trans2.details = detail;
                     trans2.jumlah = jumlah;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch(Exception e){ };
+                catch{ };
 
             }
             else
@@ -563,13 +534,8 @@ namespace ASME_C_WPF.core
             String detail = null;
             String id = null;
             int pt_id = -1;
-            master_user user = null;
             long jumlah = -1;
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
+            
 
             if (Data.TryGetValue("details", out value))
             {
@@ -586,7 +552,7 @@ namespace ASME_C_WPF.core
                 id = "2.1.1." + value;
                 pt_id = value;
             };
-            if ((detail != null) && (jumlah >= 0) && (id != null) && (user != null))
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
                 {
@@ -594,7 +560,7 @@ namespace ASME_C_WPF.core
                     trans1.details = detail;
                     trans1.jumlah = jumlah * -1;
                     trans1.type = id;
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -603,14 +569,14 @@ namespace ASME_C_WPF.core
                     trans2.details = detail;
                     trans2.jumlah = jumlah;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch(Exception e){ };
+                catch{ };
 
             }
             else
@@ -634,14 +600,8 @@ namespace ASME_C_WPF.core
             var result = 0;
             dynamic value;
             String detail = null;
-            master_user user = null;
             long jumlah = -1;
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
-
+            
             if (Data.TryGetValue("details", out value))
             {
                 detail = value;
@@ -653,7 +613,7 @@ namespace ASME_C_WPF.core
             };
 
             
-            if ((detail != null) && (jumlah >= 0) && (user != null))
+            if ((detail != null) && (jumlah >= 0) && (user >0))
             {
                 try
                 {
@@ -661,7 +621,7 @@ namespace ASME_C_WPF.core
                     trans1.details = detail;
                     trans1.jumlah = jumlah * -1;
                     trans1.type = "3.1.1";
-                    trans1.user = user.Id;
+                    trans1.user = user;
                     trans1.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans1);
                     db.SubmitChanges();
@@ -670,14 +630,14 @@ namespace ASME_C_WPF.core
                     trans2.details = detail;
                     trans2.jumlah = jumlah;
                     trans2.type = "1.1.1";
-                    trans2.user = user.Id;
+                    trans2.user = user;
                     trans2.quantity = 1;
                     db.Transactions.InsertOnSubmit(trans2);
                     db.SubmitChanges();
                     ///success
                     result = 4;
                 }
-                catch(Exception e){ };
+                catch{ };
 
             }
             else
@@ -689,73 +649,6 @@ namespace ASME_C_WPF.core
             return result;
         }
 
-        /* Pemasukan penjualan
-        *  
-        * var_input Dictionary<String, dynamic>
-        * user = master_user
-        * id = int
-        * quantity = int
-        * jumlah = long
-        */
-        public dynamic Penerimaan_penjualan(Dictionary<String, dynamic> Data)
-        {
-            var result = 0;
-            dynamic value;
-            String id = null;
-            int pt_id = -1;
-            master_user user = null;
-            int qty = -1;
-
-            if (Data.TryGetValue("user", out value))
-            {
-                user = value;
-            };
-
-            if (Data.TryGetValue("quantity", out value))
-            {
-                qty = value;
-            };
-
-            if (Data.TryGetValue("id", out value))
-            {
-                id = "4.1.1." + value;
-                pt_id = value;
-            };
-            if ((qty >= 0) && (id != null) && (user != null))
-            {
-                try
-                {
-                    Transaction trans1 = new Transaction();
-                    trans1.details = "Penjualan "+db.Produks.FirstOrDefault(c=>c.Id == pt_id).nama;
-                    trans1.jumlah = db.Produks.FirstOrDefault(c => c.Id == pt_id).harga_jual* qty * -1;
-                    trans1.type = id;
-                    trans1.user = user.Id;
-                    trans1.quantity = qty;
-                    db.Transactions.InsertOnSubmit(trans1);
-                    db.SubmitChanges();
-
-                    Transaction trans2 = new Transaction();
-                    trans2.details = "Penjualan " + db.Produks.FirstOrDefault(c => c.Id == pt_id).nama;
-                    trans2.jumlah = db.Produks.FirstOrDefault(c => c.Id == pt_id).harga_jual*qty;
-                    trans2.type = "1.1.1";
-                    trans2.user = user.Id;
-                    trans2.quantity = qty;
-                    db.Transactions.InsertOnSubmit(trans2);
-                    db.SubmitChanges();
-                    ///success
-                    result = 4;
-                }
-                catch(Exception e) {  };
-
-            }
-            else
-            {
-                ///missing reference
-                result = 2;
-            };
-
-            return result;
-        }
-
+        
     }
 }

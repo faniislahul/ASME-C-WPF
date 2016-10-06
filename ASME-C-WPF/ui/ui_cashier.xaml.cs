@@ -28,7 +28,9 @@ namespace ASME_C_WPF
         CoreDataContext db = new CoreDataContext();
         Pos_module pos = new Pos_module();
         private int selected_order = 0;
-       
+        private long total = 0;
+        private long subtotal = 0;
+        private long service_value = 0;
         public ui_cashier()
         {
             InitializeComponent();
@@ -160,7 +162,15 @@ namespace ASME_C_WPF
                 dialog_new_order new_order = new dialog_new_order();
                 new_order.ShowDialog();
                 refresh_order();
-                  
+                if (order_list.Items.Count != 0)
+                {
+                    order_list.SelectedItem = order_list.Items.GetItemAt(order_list.Items.Count - 1);
+                    ListBoxItem selected = order_list.SelectedItem as ListBoxItem;
+                    //reciept_head.Content = selected.Name.ToString();
+                    selected_order = Int32.Parse(selected.Name.Substring(6));
+                    receipt_refresh(selected_order);
+                }
+                
             }
             
         }
@@ -197,7 +207,6 @@ namespace ASME_C_WPF
                 String name = "";
                 long harga = 0;
                 int qty = 0;
-                long st = 0;
                 int p_id = 0;
                 foreach(pos_order_list nested in enlist)
                 {
@@ -249,8 +258,9 @@ namespace ASME_C_WPF
 
                 stotal += harga*qty;
                 
+                
             }
-
+            subtotal = stotal;
 
             ///static portion
             n = new Thickness(0, 0, 3, 0);
@@ -397,6 +407,7 @@ namespace ASME_C_WPF
             receipt_total.Content = total_value.ToString("C");
             if (total_value > 0)
             {
+                total = total_value;
                 checkout_button.IsEnabled = true;
             }else
             {
@@ -516,6 +527,12 @@ namespace ASME_C_WPF
                 bool check = dd.conrfirmed;
                 if (check == true)
                 {
+                    pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
+                    order.disc_amount = order.discount * subtotal;
+                    order.total = total;
+                    order.ppn = (Properties.Settings.Default.tax_ppn * subtotal) / 100;
+                    order.service = service_value;
+                    db.SubmitChanges();
                     pos.void_order(selected_order);
                     refresh_order();
                     if (order_list.Items.Count > 0)
@@ -545,6 +562,12 @@ namespace ASME_C_WPF
                 bool check = dd.conrfirmed;
                 if (check == true)
                 {
+                    pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
+                    order.disc_amount = order.discount * subtotal;
+                    order.total = total;
+                    order.ppn = (Properties.Settings.Default.tax_ppn * subtotal) / 100;
+                    order.service = service_value;
+                    db.SubmitChanges();
                     pos.hold_order(selected_order);
                     refresh_order();
                     if (order_list.Items.Count > 0)
@@ -572,6 +595,35 @@ namespace ASME_C_WPF
                 dialog_checkout dd = new dialog_checkout();
                 dd.receipt_refresh(selected_order);
                 dd.ShowDialog();
+                if (dd.choice == 1)
+                {
+                    pos_order order = db.pos_orders.FirstOrDefault(c=>c.Id==selected_order);
+                    order.disc_amount = (order.discount * subtotal)/100;
+                    order.total = total;
+                    order.ppn = (Properties.Settings.Default.tax_ppn*subtotal)/100;
+                    order.service = service_value;
+                    order.pembayaran = dd.pembayaran;
+                    db.SubmitChanges();
+                    pos.checkout(selected_order);
+                    refresh_order();
+                    receipt_null();
+                }
+                else
+                {
+                    if (dd.choice == 2)
+                    {
+                        pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
+                        order.disc_amount = (order.discount * subtotal)/100;
+                        order.total = total;
+                        order.ppn = (Properties.Settings.Default.tax_ppn * subtotal) / 100;
+                        order.service = service_value;
+                        order.pembayaran = dd.pembayaran;
+                        db.SubmitChanges();
+                        pos.checkout(selected_order,dd.cardnumber,dd.transaction);
+                        refresh_order();
+                        receipt_null();
+                    }
+                }
             }
             
         }

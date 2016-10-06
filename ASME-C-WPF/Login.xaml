@@ -12,7 +12,7 @@
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="37,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="226" Foreground="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
         <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="27,221,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="26,284,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Login" Margin="82,379,82,0" VerticalAlignment="Top" Click="clicked"/>
+        <Button x:Name="button" Content="Login" Margin="82,379,82,0" VerticalAlignment="Top" Click="clicked" IsDefault="True"/>
 
     </Grid>
 </Window>

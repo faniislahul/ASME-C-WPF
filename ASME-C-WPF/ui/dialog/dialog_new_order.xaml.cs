@@ -24,6 +24,7 @@ namespace ASME_C_WPF.ui.dialog
     public partial class dialog_new_order : Window
     {
         CoreDataContext db = new CoreDataContext();
+        
         public int user { set; get; }
 
         public dialog_new_order()
@@ -31,6 +32,7 @@ namespace ASME_C_WPF.ui.dialog
             InitializeComponent();
             try
             {
+                db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
                 var list = db.pos_tables;
                 foreach (pos_table table in list)
                 {

@@ -1,0 +1,25 @@
+﻿<Window x:Class="ASME_C_WPF.ui.dialog.dialog_bb_baru"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui"
+        mc:Ignorable="d"
+        Title="Bahan Baku Baru" Height="170" Width="220" MinWidth="220" MinHeight="250" Background="#FF232323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
+    <Grid>
+        <Label x:Name="label" Content="NAMA" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="98" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <TextBox x:Name="nama_f" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Width="151" KeyUp="nama_f_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="SATUAN" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="98" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        
+        <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left"  Margin="29,102,0,0" VerticalAlignment="Top" Width="151" Foreground="White">
+            
+        </ComboBox>
+
+
+    </Grid>
+</Window>
