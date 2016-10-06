@@ -30,6 +30,11 @@ namespace ASME_C_WPF.ui
         {
             InitializeComponent();
             refresh_bb();
+            if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+            {
+                edit.IsEnabled = true;
+                hapus.IsEnabled = true;
+            }
         }
 
         private void refresh_bb()
@@ -228,6 +233,92 @@ namespace ASME_C_WPF.ui
                 db.Bahan_bakus.InsertOnSubmit(bb);
                 db.SubmitChanges();
                 refresh_bb();
+            }
+        }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+            {
+                Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c=>c.Id == selected_bb);
+                dialog_bb_baru dd = new dialog_bb_baru();
+                dd.nama_f.Text = bb.nama;
+                dd.Pesan.IsEnabled = true;
+                var list = dd.comboBox.Items;
+                foreach(Label s in list)
+                {
+                    string s_id = "_" + bb.satuan;
+                    if(s.Name == s_id)
+                    {
+                        dd.comboBox.SelectedItem = s;
+                    }
+                }
+                dd.ShowDialog();
+                if (dd.done != false)
+                {
+                    
+                    bb.nama = dd.nama;
+                    bb.satuan = dd.satuan;
+                    db.Bahan_bakus.InsertOnSubmit(bb);
+                    db.SubmitChanges();
+                    refresh_bb();
+                }
+            }
+
+        }
+
+        private void hapus_Click(object sender, RoutedEventArgs e)
+        {
+            if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+            {
+                int countstock = db.bb_stocks.Where(c => c.tipe == selected_bb).Count();
+                int count_product = db.p_bbs.Where(c => c.bb == selected_bb).Count();
+                if (countstock > 0)
+                {
+                    dialog_confirm dd = new dialog_confirm();
+                    dd.textBlock.Text = "Bahan baku masih memiliki stok aktif, habiskan stok sebelum melanjutkan";
+                    dd.Batal.Visibility = Visibility.Collapsed;
+                    dd.Title = "Warning";
+                    dd.ShowDialog();
+                }else
+                {
+                    if (count_product > 0)
+                    {
+                        dialog_confirm dd = new dialog_confirm();
+                        dd.textBlock.Text = "Bahan baku masih memiliki produk aktif, produk akan dinonaktifkan";
+                        dd.Title = "Warning";
+                        dd.ShowDialog();
+                        if(dd.conrfirmed == true)
+                        {
+                            Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+                            bb.active = false;
+                            var list_p = db.p_bbs.Where(c => c.bb == selected_bb);
+                            foreach(p_bb pt in list_p)
+                            {
+                                Produk pro = db.Produks.FirstOrDefault(c => c.Id == pt.produk);
+                                pro.active = false;
+                                db.SubmitChanges();
+                            }
+                            db.SubmitChanges();
+                            refresh_bb();
+                        }
+                    }
+                    else
+                    {
+                        dialog_confirm dd = new dialog_confirm();
+                        dd.textBlock.Text = "Bahan baku akan dinonaktifkan";
+                        dd.Title = "Warning";
+                        dd.ShowDialog();
+                        if (dd.conrfirmed == true)
+                        {
+                            Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+                            bb.active = false;
+                            db.SubmitChanges();
+                            refresh_bb();
+                        }
+                    }
+                    
+                }
             }
         }
     }
