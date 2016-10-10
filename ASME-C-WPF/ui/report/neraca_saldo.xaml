@@ -1,0 +1,23 @@
+﻿<Window x:Class="ASME_C_WPF.ui.report.neraca_saldo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui.report"
+        
+        mc:Ignorable="d"
+        x:Name="window1"
+        Title="neraca_saldo" Height="300" Width="300" MinWidth="1366" MinHeight="758">
+    <ScrollViewer>
+
+        <Grid>
+            <TextBox x:Name="horas"></TextBox>
+            <Label Content="Neraca Saldo" Height="43" Foreground="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}" VerticalAlignment="Top" Margin="0,12,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            <DataGrid x:Name="datagrid" Margin="74,65,74,0" Height="660" VerticalAlignment="Top" Background="White" BorderBrush="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.DesktopBrushKey}}" >
+                
+
+            </DataGrid>
+
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.ExceptionServices;
+using System.Security.Cryptography;
 
 namespace ASME_C_WPF.core
 {
@@ -20,6 +21,32 @@ namespace ASME_C_WPF.core
          */
         CoreDataContext db = new CoreDataContext();
         public int user = Properties.Settings.Default.Active_user;
+
+        public static List<MaterialIcons.MaterialIconType> iconlist = new List<MaterialIcons.MaterialIconType>(new MaterialIcons.MaterialIconType[] 
+        {
+            MaterialIcons.MaterialIconType.ic_local_bar,
+            MaterialIcons.MaterialIconType.ic_local_dining,
+            MaterialIcons.MaterialIconType.ic_local_pizza,
+            MaterialIcons.MaterialIconType.ic_local_cafe,
+
+        });
+
+
+        public string calculateMD5(string text)
+        {
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(text);
+            byte[] hash = md5.ComputeHash(inputBytes);
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
         /* Management Pengeluaran
          * 
          */
@@ -36,7 +63,7 @@ namespace ASME_C_WPF.core
         {
             var result = 0;
             dynamic value;
-            String detail = null;
+            String detail = "2.1.1";
             String id = null;
             long jumlah = -1;
 
@@ -51,10 +78,7 @@ namespace ASME_C_WPF.core
                 jumlah = value;
             };
 
-            if (Data.TryGetValue("id", out value))
-            {
-                id ="2.1.1."+value;
-            };
+            
             if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
@@ -162,7 +186,7 @@ namespace ASME_C_WPF.core
          * details = String
          * jumlah = long
          */
-        public dynamic Pembayaran_beban(Dictionary<String, dynamic> Data)
+        public dynamic Pembayaran_beban_umum(Dictionary<String, dynamic> Data)
         {
             ///result initialized
             var result = 0;
@@ -221,7 +245,226 @@ namespace ASME_C_WPF.core
             return result;
         }
 
-       
+        public dynamic Pembayaran_beban_pajak(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            String detail = null;
+            String id = "5.1.5";
+            long jumlah = -1;
+
+            if (Data.TryGetValue("details", out value))
+            {
+                detail = value;
+            };
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user > 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = detail;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = detail;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+                    ///success
+                    result = 4;
+                }
+                catch { };
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+
+        public dynamic Pembayaran_beban_ppn(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            String detail = null;
+            String id = "5.1.4";
+            long jumlah = -1;
+
+            if (Data.TryGetValue("details", out value))
+            {
+                detail = value;
+            };
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+           
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user > 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = detail;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = detail;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+                    ///success
+                    result = 4;
+                }
+                catch { };
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+        public dynamic Pembayaran_beban_pemeliharaan(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            String detail = null;
+            String id = "5.1.6";
+            long jumlah = -1;
+
+            if (Data.TryGetValue("details", out value))
+            {
+                detail = value;
+            };
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+            
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user > 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = detail;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = detail;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+                    ///success
+                    result = 4;
+                }
+                catch { };
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+        public dynamic Pembayaran_beban_lain(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            String detail = null;
+            String id = "5.1.7";
+            long jumlah = -1;
+
+            if (Data.TryGetValue("details", out value))
+            {
+                detail = value;
+            };
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+            
+            if ((detail != null) && (jumlah >= 0) && (id != null) && (user > 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = detail;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = detail;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+                    ///success
+                    result = 4;
+                }
+                catch { };
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+
         /* Stock Management
          * 
          */
@@ -463,7 +706,7 @@ namespace ASME_C_WPF.core
             var result = 0;
             dynamic value;
             String detail = null;
-            String id = null;
+            String id = "1.1.2";
             int pt_id = -1;
             long jumlah = -1;
             
@@ -478,11 +721,7 @@ namespace ASME_C_WPF.core
                 jumlah = value;
             };
 
-            if (Data.TryGetValue("id", out value))
-            {
-                id = "1.1.2." + value;
-                pt_id = value;
-            };
+           
             if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
                 try
@@ -531,7 +770,7 @@ namespace ASME_C_WPF.core
         {
             var result = 0;
             dynamic value;
-            String detail = null;
+            String detail = "2.1.1";
             String id = null;
             int pt_id = -1;
             long jumlah = -1;
@@ -545,12 +784,6 @@ namespace ASME_C_WPF.core
             if (Data.TryGetValue("jumlah", out value))
             {
                 jumlah = value;
-            };
-
-            if (Data.TryGetValue("id", out value))
-            {
-                id = "2.1.1." + value;
-                pt_id = value;
             };
             if ((detail != null) && (jumlah >= 0) && (id != null) && (user >0))
             {
@@ -648,7 +881,59 @@ namespace ASME_C_WPF.core
 
             return result;
         }
+        public dynamic Penerimaan_lain(Dictionary<String, dynamic> Data)
+        {
+            var result = 0;
+            dynamic value;
+            String detail = null;
+            long jumlah = -1;
 
-        
+            if (Data.TryGetValue("details", out value))
+            {
+                detail = value;
+            };
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+
+            if ((detail != null) && (jumlah >= 0) && (user > 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = detail;
+                    trans1.jumlah = jumlah * -1;
+                    trans1.type = "4.1.3";
+                    trans1.user = user;
+                    trans1.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = detail;
+                    trans2.jumlah = jumlah;
+                    trans2.type = "1.1.1";
+                    trans2.user = user;
+                    trans2.quantity = 1;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+                    ///success
+                    result = 4;
+                }
+                catch { };
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+
     }
 }

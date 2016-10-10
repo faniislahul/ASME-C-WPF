@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ASME_C_WPF.ui"
      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-      xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="ASME_C_WPF.ui.ui_bahan_baku" 
+      xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" xmlns:MaterialIcons="clr-namespace:MaterialIcons;assembly=MaterialIcons" x:Class="ASME_C_WPF.ui.ui_bahan_baku" 
       mc:Ignorable="d"
       
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -17,33 +17,42 @@
       Title="ui_bahan_baku">
 
     <Grid Margin="0">
-        <Rectangle x:Name="gridSplitter" Margin="0,-1,329,0" MinWidth="10" MaxWidth="10" Fill="#FF303030" HorizontalAlignment="Right" Width="10"  />
-        <Grid MinWidth="320" HorizontalAlignment="Right" Width="328" Margin="0,0,0,100">
-            <Label x:Name="bb_title" Content="Nothing Selected" HorizontalAlignment="Left" Margin="5,6,0,0" VerticalAlignment="Top" Width="auto" RenderTransformOrigin="0.495,0.469" FontSize="20"/>
-            <Label x:Name="bb_satuan" Content="" HorizontalAlignment="Left" Margin="5,34,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.512,0.519" Width="auto" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-            <Label x:Name="bb_date" Content="" HorizontalAlignment="Left" Margin="5,49,0,0" VerticalAlignment="Top" Width="auto" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-            <StackPanel x:Name="stock_list" Margin="5,78,0,0"></StackPanel>
+
+        <Rectangle x:Name="gridSplitter" Margin="0,-1,328,0" MinWidth="10" MaxWidth="10" Fill="#FF303030" HorizontalAlignment="Right" Width="10"  />
+        <Grid MinWidth="328" HorizontalAlignment="Right" Width="328" Margin="0,0,0,100">
+            <Label x:Name="bb_title" Content="Nothing Selected" HorizontalAlignment="Left" Margin="39,10,0,0" VerticalAlignment="Top" Width="auto" RenderTransformOrigin="0.495,0.469" FontSize="20"/>
+            <Label x:Name="bb_satuan" Content="" HorizontalAlignment="Left" Margin="5,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.512,0.519" Width="auto" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            <Label x:Name="bb_date" Content="" HorizontalAlignment="Left" Margin="5,60,0,0" VerticalAlignment="Top" Width="auto" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            <ScrollViewer Margin="10,86,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="stock_list" Margin="0" />
+            </ScrollViewer>
+            <ToggleButton x:Name="activate" Content="ToggleButton" IsChecked="False" ToolTip="Active" HorizontalAlignment="Right" Margin="0,14,26,0" VerticalAlignment="Top" IsEnabled="False" Unchecked="activate_Unchecked" Checked="activate_Checked"/>
+            <MaterialIcons:MaterialIcon x:Name="edit" MouseLeftButtonUp="edit_MouseLeftButtonUp" MouseEnter="edit_hover" MouseLeave="edit_losthover" ToolTip="Edit" Icon="ic_edit" Height="28" Width="27" Margin="9,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White" Cursor="Hand" Padding="3" Focusable="True"/>
         </Grid>
-        <Grid Margin="0,1,339,101">
-            <TextBox x:Name="search" KeyUp="search_KeyUp" HorizontalAlignment="Left"  Margin="14,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <Grid Margin="0,0,339,101">
+            <TextBox x:Name="search" KeyUp="search_KeyUp" HorizontalAlignment="Left"  Margin="14,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
             <ListBox x:Name="list_bb" Margin="0,78,0,-2" SelectionChanged="on_bb_select" >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" VerticalAlignment="Top"></UniformGrid>
+                        <UniformGrid Columns="2" VerticalAlignment="Top"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
             </ListBox>
             <Button x:Name="baru" Content="Baru" Margin="0,14,24,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="baru_Click"/>
-            <Label Content="DAFTAR BAHAN BAKU" HorizontalAlignment="Left" Margin="11,13,0,0" Padding="0" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="17" VerticalAlignment="Top" />
+            <Label Content="DAFTAR BAHAN BAKU" HorizontalAlignment="Left" Margin="11,14,0,0" Padding="0" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="17" VerticalAlignment="Top" />
+
+
+            <MaterialIcons:MaterialIcon Icon="ic_search" Margin="228,38,0,0" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="23"/>
 
 
         </Grid>
         <Grid Height="59" VerticalAlignment="Bottom" MinHeight="100" MinWidth="300" MaxHeight="100" Background="#FF303030">
             <Button x:Name="tambah" Content="Tambah Stok" Margin="0,0,20,20"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="auto" Click="tambah_Click"/>
             <Button x:Name="penggunaan" Content="Penggunaan" Margin="0,0,148,20"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="auto" Click="penggunaan_Click"/>
-            <Button x:Name="edit" IsEnabled="False" Content="Edit" Margin="20,0,0,20" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="edit_Click"/>
+            
             <Button x:Name="hapus" IsEnabled="False" Content="Deactive" Margin="109,0,0,20" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="96" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" Click="hapus_Click"/>
+            <Button x:Name="button" Content="Tak Terpakai" HorizontalAlignment="Right" Margin="0,0,273,20" Width="109" RenderTransformOrigin="0.627,0.875" Height="32" VerticalAlignment="Bottom"/>
         </Grid>
 
     </Grid>

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ASME_C_WPF.core;
 using ASME_C_WPF.ui.dialog;
 using System.Globalization;
+using System.Windows.Controls.Primitives;
 
 namespace ASME_C_WPF
 {
@@ -34,55 +35,120 @@ namespace ASME_C_WPF
         public ui_cashier()
         {
             InitializeComponent();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-            var list = db.Produks;
-            foreach (Produk produk in list)
-            {
-                Thickness n = new Thickness(0, 0, 0, 0);
-                String nama = produk.nama;
-                int id = produk.Id;
-                long harga = produk.harga_jual;
+            
 
-                Label ln = new Label();
-                ln.Name = "nama_" + id;
-                ln.Content = nama;
-                ln.Padding = n;
-                ln.Margin = n;
-
-                Label ls = new Label();
-                ls.Name = "harga_" + id;
-                ls.Content = harga.ToString("C");
-                ls.FontSize = 10;
-                ls.Foreground = SystemColors.GrayTextBrush;
-                ls.Margin = n;
-                ls.Padding = n;
-
-                StackPanel stp = new StackPanel();
-                stp.Orientation = Orientation.Horizontal;
-
-                Ellipse circle = new Ellipse();
-                circle.Height = 25;
-                circle.Width = 25;
-                circle.Margin = new Thickness(5,0,5,0);
-                circle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF404040"));
-
-                StackPanel st = new StackPanel();
-                st.Children.Add(ln);
-                st.Children.Add(ls);
-
-                stp.Children.Add(circle);
-                stp.Children.Add(st);
-
-                ListBoxItem lbi = new ListBoxItem();
-                lbi.Name = "__"+id+"__"+nama.Replace(' ','_');
-                lbi.Content = stp;
-
-
-                product_list.Items.Add(lbi);
-            }
-
+            refresh_product();
             refresh_order();
             Pos_module.user = Properties.Settings.Default.Active_user;
+        }
+
+        private void refresh_product()
+        {
+            db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Produks);
+            db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Categories);
+            product_list.Items.Clear();
+            Thickness tn = new Thickness(0, 0, 0, 0);
+            var catlist = db.Categories;
+            ItemsPanelTemplate n = new ItemsPanelTemplate();
+            var temp = new FrameworkElementFactory(typeof(UniformGrid));
+            temp.SetValue(UniformGrid.ColumnsProperty, 2);
+            temp.SetValue(UniformGrid.VerticalAlignmentProperty, VerticalAlignment.Top);
+            n.VisualTree = temp;
+            product_list.ItemsPanel = n;
+            foreach (Category cat in catlist)
+            {
+                Label la = new Label();
+                la.Content = cat.nama.ToUpper();
+                la.Foreground = SystemColors.GrayTextBrush;
+                la.FontSize = 11;
+                la.Padding = tn;
+                la.Margin = new Thickness(5, 0, 0, 0);
+
+                ListBoxItem lbcat = new ListBoxItem();
+                lbcat.Name = "__000__" + cat.nama.Replace(' ', '_');
+                lbcat.Content = la;
+                lbcat.IsEnabled = false;
+
+                ListBoxItem empty1 = new ListBoxItem();
+                empty1.Name = "__0000__" + cat.nama.Replace(' ', '_');
+                empty1.Content = "";
+                empty1.IsEnabled = false;
+                ListBoxItem empty2 = new ListBoxItem();
+                empty2.Name = "__00000__" + cat.nama.Replace(' ', '_');
+                empty2.Content = "";
+                empty2.IsEnabled = false;
+
+
+
+
+                product_list.Items.Add(lbcat);
+                product_list.Items.Add(empty1);
+
+                var pt = db.Produks.Where(c => c.category == cat.Id && c.active == true);
+                foreach (Produk product in pt)
+                {
+                    String nama = product.nama;
+                    int id = product.Id;
+                    long harga = product.harga_jual;
+
+                    Label ln = new Label();
+                    ln.Content = nama;
+                    ln.Padding = tn;
+                    ln.Margin = tn;
+
+                    Label ls = new Label();
+                    ls.Content = harga.ToString("C");
+                    ls.FontSize = 10;
+                    ls.Foreground = SystemColors.GrayTextBrush;
+                    ls.Margin = tn;
+                    ls.Padding = tn;
+
+                    
+
+                    StackPanel stp = new StackPanel();
+                    stp.Orientation = Orientation.Horizontal;
+
+                    MaterialIcons.MaterialIcon circle = new MaterialIcons.MaterialIcon();
+                    circle.Icon = Core.iconlist.ElementAt(cat.pic);
+                    circle.Height = 25;
+                    circle.Width = 25;
+                    circle.Margin = new Thickness(5, 0, 5, 0);
+                    circle.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF404040"));
+
+                    StackPanel st = new StackPanel();
+                    st.Children.Add(ln);
+                    st.Children.Add(ls);
+                    
+
+                    stp.Children.Add(circle);
+                    stp.Children.Add(st);
+
+                    ListBoxItem lbi = new ListBoxItem();
+                    lbi.Name = "__" + id + "__" + nama.Replace(' ', '_') + "__" + cat.nama.Replace(' ', '_');
+                    lbi.Content = stp;
+                    
+
+
+                    product_list.Items.Add(lbi);
+                }
+
+                
+                if (db.Produks.Where(c => c.category == cat.Id&&c.active==true).Count() % 2 == 1)
+                {
+                    product_list.Items.Add(empty2);
+                }
+                else
+                {
+
+                }
+
+
+
+
+            }
+
+
+
         }
 
         public static void return_state()

@@ -1,0 +1,53 @@
+﻿<Page x:Class="ASME_C_WPF.ui.ui_pengeluaran"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ASME_C_WPF.ui"
+      mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+      xmlns:mi="clr-namespace:MaterialIcons;assembly=MaterialIcons"
+      xmlns:ct ="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:ctc ="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{x:Null}"
+      TextElement.FontWeight="Normal"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" Foreground="{x:Null}" MinWidth="600" MinHeight="300" d:DesignWidth="713.83" d:DesignHeight="510.638" 
+      
+      Title="ui_pengeluaran">
+
+    <Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="0,0,338,0" MinWidth="328">
+            <Grid  Margin="-1,0,-5,-1" MinHeight="10" VerticalAlignment="Bottom" Height="238" Background="#FF303030"/>
+            <Label x:Name="upcoming" Content="Daftar Pembayaran" HorizontalAlignment="Left" Margin="5,10,0,0" FontSize="20" VerticalAlignment="Top"/>
+            <ListBox x:Name="listBox" Height="221" Margin="0,53,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="baru" Content="Baru" Margin="0,14,25,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" />
+            <Label Content="RIWAYAT PENGELUARAN" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Margin="9,0,47,204" Height="23" VerticalAlignment="Bottom" />
+
+        </Grid>
+        <Rectangle Fill="#FF303030" Margin="0,-2,328,-2" MaxWidth="10" HorizontalAlignment="Right" Width="10"/>
+        <Grid HorizontalAlignment="Right" MinWidth="328" MaxWidth="328">
+
+            <Label x:Name="upcoming_Copy" FontSize="20" Content="Pembayaran" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top"/>
+            <StackPanel Height="228" Margin="8,42,0,0" VerticalAlignment="Top">
+                <Label Content="JENIS" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                <ComboBox x:Name="jenis" Margin="15,0,0,5" HorizontalAlignment="Left" Width="253" Foreground="White"></ComboBox>
+                <Label Content="DETAIL" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                <TextBox x:Name="detail" Margin="15,0,0,5" HorizontalAlignment="Left" Width="253" KeyUp="detail_KeyUp" Foreground="White" ></TextBox>
+                <Label Content="TOTAL BAYAR" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                <TextBox x:Name="total" Margin="15,0,0,5" HorizontalAlignment="Left" Width="180" KeyUp="total_KeyUp" Foreground="White" ></TextBox>
+                <Button x:Name="bayar" Click="bayar_Click" IsEnabled="False" Content="Bayar" Margin="15,20,0,0" HorizontalAlignment="Left" Width="78" />
+            </StackPanel>
+            <Rectangle Fill="#FF303030" Margin="-2,273,-1,0" MinHeight="10" Height="9" VerticalAlignment="Top"/>
+            <ScrollViewer x:Name="history_channel" Margin="0,330,0,1"  ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            <Label x:Name="upcoming_Copy1" FontSize="20" Content="Riwayat Pembayaran" HorizontalAlignment="Left" Margin="8,286,0,0" VerticalAlignment="Top"/>
+        </Grid>
+
+
+    </Grid>
+</Page>

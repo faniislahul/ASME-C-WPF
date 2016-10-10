@@ -51,9 +51,16 @@ namespace ASME_C_WPF.ui.dialog
             {
                 if (rg.IsMatch(quantity.Text))
                 {
-                    
+
+                    if (Int32.Parse(quantity.Text) < 999999999&& Int32.Parse(jumlah.Text) < 999999999)
+                    {
                         Pesan.IsEnabled = true;
-                       
+                    }
+                    else
+                    {
+                        Pesan.IsEnabled = false;
+                    }
+
                 }
                 else
                 {
@@ -73,8 +80,15 @@ namespace ASME_C_WPF.ui.dialog
             {
                 if (rg.IsMatch(jumlah.Text))
                 {
+                    if (Int32.Parse(quantity.Text) < 999999999 && Int32.Parse(jumlah.Text) < 999999999)
+                    {
                         Pesan.IsEnabled = true;
-                   
+                    }
+                    else
+                    {
+                        Pesan.IsEnabled = false;
+                    }
+
                 }
                 else
                 {

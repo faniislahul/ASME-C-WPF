@@ -358,7 +358,7 @@ namespace ASME_C_WPF.core
                 {
                     list.status = "HOLD";
                     Transaction trany = new Transaction();
-                    trany.details = "Beban Tak Tertagih " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk);
+                    trany.details = "Beban Tak Tertagih " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk).nama;
                     trany.jumlah = db.Produks.FirstOrDefault(c => c.Id == list.peroduk).harga_jual * list.quantity;
                     trany.quantity = list.quantity;
                     trany.type = "5.1.3";
@@ -366,7 +366,7 @@ namespace ASME_C_WPF.core
                     db.Transactions.InsertOnSubmit(trany);
 
                     Transaction trany2 = new Transaction();
-                    trany2.details = "Piutang Penjualan " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk);
+                    trany2.details = "Piutang Penjualan " + db.Produks.FirstOrDefault(c => c.Id == list.peroduk).nama;
                     trany2.jumlah = db.Produks.FirstOrDefault(c => c.Id == list.peroduk).harga_jual * list.quantity * -1;
                     trany2.quantity = list.quantity;
                     trany2.type = "1.1.5";

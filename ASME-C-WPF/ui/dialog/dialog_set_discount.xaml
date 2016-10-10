@@ -8,7 +8,7 @@
         Title="Set Discount" Height="170" Width="220" MinWidth="220" MinHeight="170" Background="#FF232323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Label x:Name="label" Content="Discount" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="98"/>
-        <TextBox x:Name="discount" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="10" Width="68" KeyUp="discount_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
+        <TextBox x:Name="discount" MaxLength="3" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="10" Width="68" KeyUp="discount_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
         <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
         <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
         <Label x:Name="label_Copy" Content="%" HorizontalAlignment="Left" Margin="99,43,0,0" VerticalAlignment="Top" Width="98"/>

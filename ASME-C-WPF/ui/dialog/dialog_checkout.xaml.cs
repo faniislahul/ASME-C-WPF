@@ -262,8 +262,17 @@ namespace ASME_C_WPF.ui.dialog
             {
                 if (rg.IsMatch(payment.Text))
                 {
+                    if (Int32.Parse(payment.Text) < 999999999)
+                    {
                         OK.IsEnabled = true;
-                    kembalian.Content = (Int64.Parse(payment.Text) - total_val).ToString("C");
+                        kembalian.Content = (Int64.Parse(payment.Text) - total_val).ToString("C");
+                    }
+                    else
+                    {
+                        OK.IsEnabled = false;
+                    }
+                    
+                    
                     
                 }
                 else

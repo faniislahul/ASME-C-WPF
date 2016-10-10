@@ -11,9 +11,9 @@
     </Window.Effect>
     <Grid>
         <Label x:Name="label" Content="KUANTITAS" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="98" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-        <TextBox x:Name="quantity" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="1" Width="68" KeyUp="quantity_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
+        <TextBox x:Name="quantity" MaxLength="4" HorizontalAlignment="Left" Margin="29,37,0,0" TextWrapping="Wrap" Text="1" Width="68" KeyUp="quantity_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
         <Label x:Name="label2" Content="TOTAL HARGA" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="98" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-        <TextBox x:Name="jumlah" HorizontalAlignment="Left" Margin="29,99,0,0" TextWrapping="Wrap" Width="151" KeyUp="jumlah_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
+        <TextBox x:Name="jumlah" MaxLength="9" HorizontalAlignment="Left" Margin="29,99,0,0" TextWrapping="Wrap" Width="151" KeyUp="jumlah_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
         <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
         <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
 

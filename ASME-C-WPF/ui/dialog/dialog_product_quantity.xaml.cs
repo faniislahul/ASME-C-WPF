@@ -53,7 +53,14 @@ namespace ASME_C_WPF.ui.dialog
             {
                 if (rg.IsMatch(quantity.Text))
                 {
-                    Pesan.IsEnabled = true;
+                    if (Int32.Parse(quantity.Text) < 9999)
+                    {
+                        Pesan.IsEnabled = true;
+                    }
+                    else
+                    {
+                        Pesan.IsEnabled = false;
+                    }
                 }
                 else
                 {

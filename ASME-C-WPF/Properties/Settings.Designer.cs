@@ -26,7 +26,7 @@ namespace ASME_C_WPF.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-RRU5OR4\\SQLEXPRESS;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost\\SQLEXPRESS;Integrated Security=True")]
         public string DataSourceConnectionString {
             get {
                 return ((string)(this["DataSourceConnectionString"]));

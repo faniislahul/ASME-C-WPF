@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASME_C_WPF"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mi="clr-namespace:MaterialIcons;assembly=MaterialIcons"
         x:Name="A_C" x:Class="ASME_C_WPF.MainWindow"
         mc:Ignorable="d"
         Title="ASME-C"
@@ -18,7 +19,14 @@
     <Grid Margin="-3.334,-1.333,-0.833,-2.167" Background="#FF232323">
 
 
-        <Grid Height="51" VerticalAlignment="Top" Margin="294,0,0.167,0" MinHeight="60" Background="#FF303030"/>
+        <Grid Height="51" VerticalAlignment="Top" Margin="294,0,0.167,0" MinHeight="60" Background="#FF303030">
+            <StackPanel ToolTip="Active User" Orientation="Horizontal" Margin="0,27,21.833,0" Height="26" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="auto">
+                <mi:MaterialIcon Icon="ic_account_circle" Foreground="Azure" Margin="0,0,0,2" HorizontalAlignment="Right" Width="23"/>
+                <Label x:Name="user" FontSize="11" Content="User Selected" Margin="5,0,0,0" Padding="0,0,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+                <Ellipse Height="7" Width="7" Fill="#FF32DE32" Margin="5,9,0,10"></Ellipse>
+            </StackPanel>
+
+        </Grid>
         <Grid Margin="0,0,0,22" MinWidth="300" Background="#FF303030" HorizontalAlignment="Left" Width="300"/>
         <ListBox x:Name="listBox" Margin="10,111,0,25.5" MinWidth="230" Background="#FF232323" Width="273" HorizontalAlignment="Left">
             <ListBoxItem IsEnabled="False">
@@ -26,7 +34,7 @@
             </ListBoxItem>
             <ListBoxItem x:Name="ui_control_dash"  Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="dash_control" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="0,0,93,0"/>
+                    <mi:MaterialIcon Icon="ic_dashboard" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,93,0"/>
                     <Label Content="Dashboard" Padding="0,0,0,0" Margin="40,8,7,8"/>
                 </Grid>
             </ListBoxItem>
@@ -35,13 +43,13 @@
             </ListBoxItem>
             <ListBoxItem x:Name="ui_control_kasir" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="ui_kasir" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="0,0,49,0"/>
+                    <mi:MaterialIcon Icon="ic_payment" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Kasir" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
             <ListBoxItem x:Name="ui_control_reservasi" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="0,0,49,0"/>
+                    <mi:MaterialIcon Icon="ic_people" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Reservasi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
@@ -50,33 +58,39 @@
             </ListBoxItem>
             <ListBoxItem x:Name="ui_control_bahan_baku" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="_ui_bb" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0"/>
+                    <mi:MaterialIcon Icon="ic_style" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Bahan Baku" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_product" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_product" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="ui_product" >
                 <Grid Height="30" Width="auto" Margin="0,2,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0"/>
+                    <mi:MaterialIcon Icon="ic_local_bar" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Produk" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
             <ListBoxItem IsEnabled="False">
                 <Label Content="KEUANGAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184"/>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_pengeluaran" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_pengeluaran" Selected="ui_control_pengeluaran_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0"/>
+                    <mi:MaterialIcon Icon="ic_receipt" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Pengeluran" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_pemasukan" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_pemasukan" Selected="ui_control_pemasukan_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0"/>
+                    <mi:MaterialIcon Icon="ic_account_balance_wallet" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Pemasukan" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
             <ListBoxItem IsEnabled="False">
                 <Label Content="LAPORAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184" Selector.IsSelected="False"/>
+            </ListBoxItem>
+            <ListBoxItem x:Name="ui_control_neraca_saldo" Selected="ui_control_neraca_saldo_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+                <Grid Height="30" Width="auto" Margin="0,1,0,0">
+                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
+                    <Label Content="Laporan Laba Rugi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
+                </Grid>
             </ListBoxItem>
             <ListBoxItem x:Name="ui_control_laporan_laba_rugi" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
@@ -108,14 +122,33 @@
                     <Label Content="Laporan Arus Kas" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            
+
 
 
         </ListBox>
 
         <Rectangle Fill="#FF303030" HorizontalAlignment="Right" Margin="0,54,-0.833,4.5" Width="10" MinWidth="10"/>
-        <StatusBar Margin="0" Background="#FF303030" BorderBrush="Gray" MinHeight="25" Height="26" VerticalAlignment="Bottom"/>
-        <Ellipse Fill="#FF404040" Margin="14,30,0,0" HorizontalAlignment="Left" Width="62" Height="62" VerticalAlignment="Top"/>
+        <StatusBar Margin="0"  Background="#FF303030" BorderBrush="Gray" MinHeight="25" Height="25" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" >
+            <StackPanel Margin="15,0,0,0" ToolTip="Database Connected" Orientation="Horizontal" Height="24" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="193">
+                <mi:MaterialIcon Icon="ic_sync" Foreground="Azure" HorizontalAlignment="Right" Width="17" Height="18" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
+                <Label x:Name="user1" FontSize="10" Content="Database Connected" Margin="5,3,0,7" Padding="0,0,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Height="14" />
+                <Ellipse Height="7" Width="7" Fill="#FF32DE32" Margin="5,7,0,10"/>
+            </StackPanel>
+        </StatusBar>
+        <Ellipse Margin="14,30,0,0" HorizontalAlignment="Left" Width="62" Height="62" VerticalAlignment="Top">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="image/asme-c.png" Stretch="UniformToFill">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Ellipse.Fill>
+        </Ellipse>
         <Label x:Name="label" Content="ARRENA de Cafe" Margin="84,39,0,573.5" FontSize="14" HorizontalAlignment="Left" Width="116"/>
         <Label x:Name="label_Copy" Content="MANAGEMENT SYSTEM" Margin="86,60,0,0" VerticalAlignment="Top" FontSize="9" HorizontalAlignment="Left" Width="108"/>
         <Frame x:Name="frame1"  Margin="299,60,8.167,25.5" NavigationUIVisibility="Hidden"/>

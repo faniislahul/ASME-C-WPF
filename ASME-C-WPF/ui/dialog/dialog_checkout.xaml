@@ -40,7 +40,7 @@
                 <Label x:Name="total_disp"  Padding="0,0,0,0"  Content="" FontSize="30"  Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,25,0"/>
 
                 <Label x:Name="detail_Copy"  Padding="0,0,0,0"  Content="PEMBAYARAN" FontSize="11" HorizontalAlignment="Left" Height="15"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" VerticalAlignment="Bottom" Margin="15,5,0,0"/>
-                <TextBox x:Name="payment" HorizontalAlignment="Left" KeyUp="payment_KeyUp" TextWrapping="Wrap"  Width="213" FontSize="30" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
+                <TextBox x:Name="payment" MaxLength="9" HorizontalAlignment="Left" KeyUp="payment_KeyUp" TextWrapping="Wrap"  Width="213" FontSize="30" Height="auto" VerticalAlignment="Bottom" Margin="25,0,0,0"/>
                 <Label x:Name="detail_Copy1"  Padding="0,0,0,0"  Content="KEMBALIAN" FontSize="11" HorizontalAlignment="Left"  Width="auto" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="15" VerticalAlignment="Bottom" Margin="15,10,0,0"/>
                 <Label x:Name="kembalian"  Padding="0,0,0,0"  Content="" FontSize="30"  Foreground="White" VerticalAlignment="Bottom" Margin="0,0,25,0" HorizontalAlignment="Right"/>
 

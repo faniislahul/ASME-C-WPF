@@ -52,7 +52,15 @@ namespace ASME_C_WPF.ui.dialog
             {
                 if (rg.IsMatch(discount.Text))
                 {
-                    Pesan.IsEnabled = true;
+                    if (Int32.Parse(discount.Text) < 100)
+                    {
+                        Pesan.IsEnabled = true;
+                    }
+                    else
+                    {
+                        Pesan.IsEnabled = false;
+                    }
+                    
                 }
                 else
                 {

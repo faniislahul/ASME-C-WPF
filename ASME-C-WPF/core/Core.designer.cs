@@ -78,9 +78,6 @@ namespace ASME_C_WPF.core
     partial void Insertpos_table(pos_table instance);
     partial void Updatepos_table(pos_table instance);
     partial void Deletepos_table(pos_table instance);
-    partial void InsertProduk(Produk instance);
-    partial void UpdateProduk(Produk instance);
-    partial void DeleteProduk(Produk instance);
     partial void InsertSatuan_bb(Satuan_bb instance);
     partial void UpdateSatuan_bb(Satuan_bb instance);
     partial void DeleteSatuan_bb(Satuan_bb instance);
@@ -99,6 +96,12 @@ namespace ASME_C_WPF.core
     partial void InsertBahan_baku(Bahan_baku instance);
     partial void UpdateBahan_baku(Bahan_baku instance);
     partial void DeleteBahan_baku(Bahan_baku instance);
+    partial void InsertProduk(Produk instance);
+    partial void UpdateProduk(Produk instance);
+    partial void DeleteProduk(Produk instance);
+    partial void InsertCategory(Category instance);
+    partial void UpdateCategory(Category instance);
+    partial void DeleteCategory(Category instance);
     #endregion
 		
 		public CoreDataContext() : 
@@ -259,14 +262,6 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		public System.Data.Linq.Table<Produk> Produks
-		{
-			get
-			{
-				return this.GetTable<Produk>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Satuan_bb> Satuan_bbs
 		{
 			get
@@ -312,6 +307,22 @@ namespace ASME_C_WPF.core
 			get
 			{
 				return this.GetTable<Bahan_baku>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Produk> Produks
+		{
+			get
+			{
+				return this.GetTable<Produk>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Category> Categories
+		{
+			get
+			{
+				return this.GetTable<Category>();
 			}
 		}
 	}
@@ -1971,9 +1982,9 @@ namespace ASME_C_WPF.core
 		
 		private int _bb;
 		
-		private EntityRef<Produk> _Produk1;
-		
 		private EntityRef<Bahan_baku> _Bahan_baku;
+		
+		private EntityRef<Produk> _Produk1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1989,8 +2000,8 @@ namespace ASME_C_WPF.core
 		
 		public p_bb()
 		{
-			this._Produk1 = default(EntityRef<Produk>);
 			this._Bahan_baku = default(EntityRef<Bahan_baku>);
+			this._Produk1 = default(EntityRef<Produk>);
 			OnCreated();
 		}
 		
@@ -2062,40 +2073,6 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_p_bb", Storage="_Produk1", ThisKey="produk", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Produk Produk1
-		{
-			get
-			{
-				return this._Produk1.Entity;
-			}
-			set
-			{
-				Produk previousValue = this._Produk1.Entity;
-				if (((previousValue != value) 
-							|| (this._Produk1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Produk1.Entity = null;
-						previousValue.p_bbs.Remove(this);
-					}
-					this._Produk1.Entity = value;
-					if ((value != null))
-					{
-						value.p_bbs.Add(this);
-						this._produk = value.Id;
-					}
-					else
-					{
-						this._produk = default(int);
-					}
-					this.SendPropertyChanged("Produk1");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bahan_baku_p_bb", Storage="_Bahan_baku", ThisKey="bb", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public Bahan_baku Bahan_baku
 		{
@@ -2126,6 +2103,40 @@ namespace ASME_C_WPF.core
 						this._bb = default(int);
 					}
 					this.SendPropertyChanged("Bahan_baku");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_p_bb", Storage="_Produk1", ThisKey="produk", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Produk Produk1
+		{
+			get
+			{
+				return this._Produk1.Entity;
+			}
+			set
+			{
+				Produk previousValue = this._Produk1.Entity;
+				if (((previousValue != value) 
+							|| (this._Produk1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Produk1.Entity = null;
+						previousValue.p_bbs.Remove(this);
+					}
+					this._Produk1.Entity = value;
+					if ((value != null))
+					{
+						value.p_bbs.Add(this);
+						this._produk = value.Id;
+					}
+					else
+					{
+						this._produk = default(int);
+					}
+					this.SendPropertyChanged("Produk1");
 				}
 			}
 		}
@@ -3090,248 +3101,6 @@ namespace ASME_C_WPF.core
 		{
 			this.SendPropertyChanging();
 			entity.pos_table = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Produk")]
-	public partial class Produk : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _nama;
-		
-		private string _SKU;
-		
-		private long _harga_jual;
-		
-		private bool _active;
-		
-		private EntitySet<abc_log> _abc_logs;
-		
-		private EntitySet<p_bb> _p_bbs;
-		
-		private EntitySet<pos_order_list> _pos_order_lists;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnnamaChanging(string value);
-    partial void OnnamaChanged();
-    partial void OnSKUChanging(string value);
-    partial void OnSKUChanged();
-    partial void Onharga_jualChanging(long value);
-    partial void Onharga_jualChanged();
-    partial void OnactiveChanging(bool value);
-    partial void OnactiveChanged();
-    #endregion
-		
-		public Produk()
-		{
-			this._abc_logs = new EntitySet<abc_log>(new Action<abc_log>(this.attach_abc_logs), new Action<abc_log>(this.detach_abc_logs));
-			this._p_bbs = new EntitySet<p_bb>(new Action<p_bb>(this.attach_p_bbs), new Action<p_bb>(this.detach_p_bbs));
-			this._pos_order_lists = new EntitySet<pos_order_list>(new Action<pos_order_list>(this.attach_pos_order_lists), new Action<pos_order_list>(this.detach_pos_order_lists));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nama", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string nama
-		{
-			get
-			{
-				return this._nama;
-			}
-			set
-			{
-				if ((this._nama != value))
-				{
-					this.OnnamaChanging(value);
-					this.SendPropertyChanging();
-					this._nama = value;
-					this.SendPropertyChanged("nama");
-					this.OnnamaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SKU", DbType="VarChar(32) NOT NULL", CanBeNull=false)]
-		public string SKU
-		{
-			get
-			{
-				return this._SKU;
-			}
-			set
-			{
-				if ((this._SKU != value))
-				{
-					this.OnSKUChanging(value);
-					this.SendPropertyChanging();
-					this._SKU = value;
-					this.SendPropertyChanged("SKU");
-					this.OnSKUChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_harga_jual", DbType="BigInt NOT NULL")]
-		public long harga_jual
-		{
-			get
-			{
-				return this._harga_jual;
-			}
-			set
-			{
-				if ((this._harga_jual != value))
-				{
-					this.Onharga_jualChanging(value);
-					this.SendPropertyChanging();
-					this._harga_jual = value;
-					this.SendPropertyChanged("harga_jual");
-					this.Onharga_jualChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
-		public bool active
-		{
-			get
-			{
-				return this._active;
-			}
-			set
-			{
-				if ((this._active != value))
-				{
-					this.OnactiveChanging(value);
-					this.SendPropertyChanging();
-					this._active = value;
-					this.SendPropertyChanged("active");
-					this.OnactiveChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_abc_log", Storage="_abc_logs", ThisKey="Id", OtherKey="produk")]
-		public EntitySet<abc_log> abc_logs
-		{
-			get
-			{
-				return this._abc_logs;
-			}
-			set
-			{
-				this._abc_logs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_p_bb", Storage="_p_bbs", ThisKey="Id", OtherKey="produk")]
-		public EntitySet<p_bb> p_bbs
-		{
-			get
-			{
-				return this._p_bbs;
-			}
-			set
-			{
-				this._p_bbs.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_pos_order_list", Storage="_pos_order_lists", ThisKey="Id", OtherKey="peroduk")]
-		public EntitySet<pos_order_list> pos_order_lists
-		{
-			get
-			{
-				return this._pos_order_lists;
-			}
-			set
-			{
-				this._pos_order_lists.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_abc_logs(abc_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk1 = this;
-		}
-		
-		private void detach_abc_logs(abc_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk1 = null;
-		}
-		
-		private void attach_p_bbs(p_bb entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk1 = this;
-		}
-		
-		private void detach_p_bbs(p_bb entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk1 = null;
-		}
-		
-		private void attach_pos_order_lists(pos_order_list entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk = this;
-		}
-		
-		private void detach_pos_order_lists(pos_order_list entity)
-		{
-			this.SendPropertyChanging();
-			entity.Produk = null;
 		}
 	}
 	
@@ -5132,6 +4901,475 @@ namespace ASME_C_WPF.core
 		{
 			this.SendPropertyChanging();
 			entity.Bahan_baku = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Produk")]
+	public partial class Produk : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _nama;
+		
+		private string _SKU;
+		
+		private long _harga_jual;
+		
+		private bool _active;
+		
+		private int _category;
+		
+		private EntitySet<abc_log> _abc_logs;
+		
+		private EntitySet<p_bb> _p_bbs;
+		
+		private EntitySet<pos_order_list> _pos_order_lists;
+		
+		private EntityRef<Category> _Category1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnnamaChanging(string value);
+    partial void OnnamaChanged();
+    partial void OnSKUChanging(string value);
+    partial void OnSKUChanged();
+    partial void Onharga_jualChanging(long value);
+    partial void Onharga_jualChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OncategoryChanging(int value);
+    partial void OncategoryChanged();
+    #endregion
+		
+		public Produk()
+		{
+			this._abc_logs = new EntitySet<abc_log>(new Action<abc_log>(this.attach_abc_logs), new Action<abc_log>(this.detach_abc_logs));
+			this._p_bbs = new EntitySet<p_bb>(new Action<p_bb>(this.attach_p_bbs), new Action<p_bb>(this.detach_p_bbs));
+			this._pos_order_lists = new EntitySet<pos_order_list>(new Action<pos_order_list>(this.attach_pos_order_lists), new Action<pos_order_list>(this.detach_pos_order_lists));
+			this._Category1 = default(EntityRef<Category>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nama", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string nama
+		{
+			get
+			{
+				return this._nama;
+			}
+			set
+			{
+				if ((this._nama != value))
+				{
+					this.OnnamaChanging(value);
+					this.SendPropertyChanging();
+					this._nama = value;
+					this.SendPropertyChanged("nama");
+					this.OnnamaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SKU", DbType="VarChar(32) NOT NULL", CanBeNull=false)]
+		public string SKU
+		{
+			get
+			{
+				return this._SKU;
+			}
+			set
+			{
+				if ((this._SKU != value))
+				{
+					this.OnSKUChanging(value);
+					this.SendPropertyChanging();
+					this._SKU = value;
+					this.SendPropertyChanged("SKU");
+					this.OnSKUChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_harga_jual", DbType="BigInt NOT NULL")]
+		public long harga_jual
+		{
+			get
+			{
+				return this._harga_jual;
+			}
+			set
+			{
+				if ((this._harga_jual != value))
+				{
+					this.Onharga_jualChanging(value);
+					this.SendPropertyChanging();
+					this._harga_jual = value;
+					this.SendPropertyChanged("harga_jual");
+					this.Onharga_jualChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_category", DbType="Int NOT NULL")]
+		public int category
+		{
+			get
+			{
+				return this._category;
+			}
+			set
+			{
+				if ((this._category != value))
+				{
+					if (this._Category1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncategoryChanging(value);
+					this.SendPropertyChanging();
+					this._category = value;
+					this.SendPropertyChanged("category");
+					this.OncategoryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_abc_log", Storage="_abc_logs", ThisKey="Id", OtherKey="produk")]
+		public EntitySet<abc_log> abc_logs
+		{
+			get
+			{
+				return this._abc_logs;
+			}
+			set
+			{
+				this._abc_logs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_p_bb", Storage="_p_bbs", ThisKey="Id", OtherKey="produk")]
+		public EntitySet<p_bb> p_bbs
+		{
+			get
+			{
+				return this._p_bbs;
+			}
+			set
+			{
+				this._p_bbs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Produk_pos_order_list", Storage="_pos_order_lists", ThisKey="Id", OtherKey="peroduk")]
+		public EntitySet<pos_order_list> pos_order_lists
+		{
+			get
+			{
+				return this._pos_order_lists;
+			}
+			set
+			{
+				this._pos_order_lists.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Produk", Storage="_Category1", ThisKey="category", OtherKey="Id", IsForeignKey=true)]
+		public Category Category1
+		{
+			get
+			{
+				return this._Category1.Entity;
+			}
+			set
+			{
+				Category previousValue = this._Category1.Entity;
+				if (((previousValue != value) 
+							|| (this._Category1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Category1.Entity = null;
+						previousValue.Produks.Remove(this);
+					}
+					this._Category1.Entity = value;
+					if ((value != null))
+					{
+						value.Produks.Add(this);
+						this._category = value.Id;
+					}
+					else
+					{
+						this._category = default(int);
+					}
+					this.SendPropertyChanged("Category1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_abc_logs(abc_log entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk1 = this;
+		}
+		
+		private void detach_abc_logs(abc_log entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk1 = null;
+		}
+		
+		private void attach_p_bbs(p_bb entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk1 = this;
+		}
+		
+		private void detach_p_bbs(p_bb entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk1 = null;
+		}
+		
+		private void attach_pos_order_lists(pos_order_list entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk = this;
+		}
+		
+		private void detach_pos_order_lists(pos_order_list entity)
+		{
+			this.SendPropertyChanging();
+			entity.Produk = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Category")]
+	public partial class Category : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _nama;
+		
+		private bool _active;
+		
+		private int _pic;
+		
+		private EntitySet<Produk> _Produks;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnnamaChanging(string value);
+    partial void OnnamaChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
+    partial void OnpicChanging(int value);
+    partial void OnpicChanged();
+    #endregion
+		
+		public Category()
+		{
+			this._Produks = new EntitySet<Produk>(new Action<Produk>(this.attach_Produks), new Action<Produk>(this.detach_Produks));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nama", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string nama
+		{
+			get
+			{
+				return this._nama;
+			}
+			set
+			{
+				if ((this._nama != value))
+				{
+					this.OnnamaChanging(value);
+					this.SendPropertyChanging();
+					this._nama = value;
+					this.SendPropertyChanged("nama");
+					this.OnnamaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active", DbType="Bit NOT NULL")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pic", DbType="Int NOT NULL")]
+		public int pic
+		{
+			get
+			{
+				return this._pic;
+			}
+			set
+			{
+				if ((this._pic != value))
+				{
+					this.OnpicChanging(value);
+					this.SendPropertyChanging();
+					this._pic = value;
+					this.SendPropertyChanged("pic");
+					this.OnpicChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Category_Produk", Storage="_Produks", ThisKey="Id", OtherKey="category")]
+		public EntitySet<Produk> Produks
+		{
+			get
+			{
+				return this._Produks;
+			}
+			set
+			{
+				this._Produks.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Produks(Produk entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category1 = this;
+		}
+		
+		private void detach_Produks(Produk entity)
+		{
+			this.SendPropertyChanging();
+			entity.Category1 = null;
 		}
 	}
 }

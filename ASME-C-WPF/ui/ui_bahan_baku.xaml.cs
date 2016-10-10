@@ -25,23 +25,35 @@ namespace ASME_C_WPF.ui
         CoreDataContext db = new CoreDataContext();
         Core core = new Core();
         int selected_bb = 0;
-        int pointer = 0;
+        int pointer = -1;
         public ui_bahan_baku()
         {
             InitializeComponent();
             refresh_bb();
-            if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
-            {
-                edit.IsEnabled = true;
-                hapus.IsEnabled = true;
-            }
+            activate.IsEnabled = false;
+            edit.IsEnabled = false;
         }
 
         private void refresh_bb()
         {
             list_bb.Items.Clear();
             db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.Bahan_bakus);
-            var list = db.Bahan_bakus;
+           
+            /*
+            Label ls = new Label();
+            ls.Content = "AKTIF";
+            ls.FontSize = 10;
+            ls.Foreground = SystemColors.GrayTextBrush;
+            ls.Margin = new Thickness(0, 0, 0, 0); 
+            ls.Padding = new Thickness(0, 0, 0, 0);
+
+            ListBoxItem act = new ListBoxItem();
+            act.Content = ls;
+            act.IsEnabled = false;
+
+            list_bb.Items.Add(act);
+            */
+            var list = db.Bahan_bakus.Where(c => c.active == true);
             foreach (Bahan_baku bb in list)
             {
                 Thickness n = new Thickness(0, 0, 0, 0);
@@ -56,18 +68,34 @@ namespace ASME_C_WPF.ui
                 ln.Padding = n;
                 ln.Margin = n;
 
-                Label ls = new Label();
-                ls.Name = "Stock_" + id;
-                ls.Content = "Sisa Stok = " + quantity + " " + satuan;
-                ls.FontSize = 10;
-                ls.Foreground = SystemColors.GrayTextBrush;
-                ls.Margin = n;
-                ls.Padding = n;
+                Label lo = new Label();
+                lo.Name = "Stock_" + id;
+                lo.Content = "Sisa Stok = " + quantity + " " + satuan;
+                lo.FontSize = 10;
+                lo.Foreground = SystemColors.GrayTextBrush;
+                lo.Margin = n;
+                lo.Padding = n;
+
+                Label lx = new Label();
+                if (bb.active == true)
+                {
+                    lx.Content = "Status = AKTIF";
+                }
+                else
+                {
+                    lx.Content = "Status = NONAKTIF";
+                }
+                
+                lx.FontSize = 10;
+                lx.Foreground = SystemColors.GrayTextBrush;
+                lx.Margin = n;
+                lx.Padding = n;
 
 
                 StackPanel st = new StackPanel();
                 st.Children.Add(ln);
-                st.Children.Add(ls);
+                st.Children.Add(lo);
+                st.Children.Add(lx);
 
                 ListBoxItem lbi = new ListBoxItem();
                 lbi.Name = "__" + id + "__" + nama.Replace(' ', '_');
@@ -76,6 +104,59 @@ namespace ASME_C_WPF.ui
 
                 list_bb.Items.Add(lbi);
             }
+
+            var enlist = db.Bahan_bakus.Where(c => c.active == false);
+            foreach (Bahan_baku bb in enlist)
+            {
+                Thickness n = new Thickness(0, 0, 0, 0);
+                String nama = bb.nama;
+                int id = bb.Id;
+                long harga_beli = bb.harga_beli;
+                int quantity = bb.quantity;
+                String satuan = bb.Satuan_bb.nama;
+                Label ln = new Label();
+                ln.Name = "nama_" + id;
+                ln.Content = nama;
+                ln.Padding = n;
+                ln.Margin = n;
+                ln.Foreground = SystemColors.GrayTextBrush;
+
+                Label lo = new Label();
+                lo.Name = "Stock_" + id;
+                lo.Content = "Sisa Stok = " + quantity + " " + satuan;
+                lo.FontSize = 10;
+                lo.Foreground = SystemColors.GrayTextBrush;
+                lo.Margin = n;
+                lo.Padding = n;
+
+                Label lx = new Label();
+                if (bb.active == true)
+                {
+                    lx.Content = "Status = AKTIF";
+                }
+                else
+                {
+                    lx.Content = "Status = NONAKTIF";
+                }
+
+                lx.FontSize = 10;
+                lx.Foreground = SystemColors.GrayTextBrush;
+                lx.Margin = n;
+                lx.Padding = n;
+
+                StackPanel st = new StackPanel();
+                st.Children.Add(ln);
+                st.Children.Add(lo);
+                st.Children.Add(lx);
+
+                ListBoxItem lbi = new ListBoxItem();
+                lbi.Name = "__" + id + "__" + nama.Replace(' ', '_');
+                lbi.Content = st;
+
+
+                list_bb.Items.Add(lbi);
+            }
+
             if (pointer > -1)
             {
                 list_bb.SelectedItem = list_bb.Items.GetItemAt(pointer);
@@ -89,8 +170,35 @@ namespace ASME_C_WPF.ui
 
             stock_list.Children.Clear();
             db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.bb_stocks);
+            
+
             ListBoxItem nteu = list_bb.SelectedItem as ListBoxItem;
             Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+            if (bb.active == true)
+            {
+                if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+                {
+                    edit.IsEnabled = true;
+                    activate.IsEnabled = true;
+                    activate.IsChecked = true;
+                }
+                else
+                {
+                    activate.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+                {
+                    activate.IsEnabled = true;
+                    activate.IsChecked = false;
+                }
+                else
+                {
+                    activate.IsEnabled = false;
+                }
+            }
             bb_title.Content = bb.nama;
             bb_satuan.Content = "Satuan : " + bb.Satuan_bb.nama;
             var ez = db.bb_logs.Where(c => c.tipe == selected_bb && c.used > 0);
@@ -104,20 +212,20 @@ namespace ASME_C_WPF.ui
             var list = db.bb_stocks.Where(c => c.tipe == bb.Id);
             foreach (bb_stock stock in list)
             {
-                Thickness n = new Thickness(0, 5, 0, 0);
+                Thickness n = new Thickness(0, 0, 0, 0);
                 Label nama = new Label();
                 nama.Content = "Stok " + stock.Id;
-                nama.Margin = n;
+                nama.Margin = new Thickness(0, 5, 0, 0); ;
                 nama.Padding = n;
                 Label harga = new Label();
                 harga.Content = "Harga Beli : " + stock.harga_beli;
-                harga.FontSize = 10;
+                harga.FontSize = 11;
                 harga.Foreground = SystemColors.GrayTextBrush;
                 harga.Margin = n;
                 harga.Padding = n;
                 Label qty = new Label();
                 qty.Content = "Kuatitas : " + stock.quantity;
-                qty.FontSize = 10;
+                qty.FontSize = 11;
                 qty.Foreground = SystemColors.GrayTextBrush;
                 qty.Margin = n;
                 qty.Padding = n;
@@ -238,17 +346,114 @@ namespace ASME_C_WPF.ui
 
         private void edit_Click(object sender, RoutedEventArgs e)
         {
+            
+
+        }
+
+        private void hapus_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void activate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb).active == true)
+            {
+                if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+                {
+                    int countstock = db.bb_stocks.Where(c => c.tipe == selected_bb).Count();
+                    int count_product = db.p_bbs.Where(c => c.bb == selected_bb).Count();
+                    if (countstock > 0)
+                    {
+
+                        dialog_confirm dd = new dialog_confirm();
+                        dd.textBlock.Text = "Bahan baku masih memiliki stok aktif, habiskan stok sebelum melanjutkan";
+                        dd.Batal.Visibility = Visibility.Collapsed;
+                        dd.Title = "Warning";
+                        dd.ok.HorizontalAlignment = HorizontalAlignment.Center;
+                        dd.ok.Margin = new Thickness(0, 0, 0, 16);
+                        dd.ShowDialog();
+                        activate.IsChecked = true;
+                    }
+                    else
+                    {
+                        if (count_product > 0)
+                        {
+                            dialog_confirm dd = new dialog_confirm();
+                            dd.textBlock.Text = "Bahan baku masih memiliki produk aktif, produk akan dinonaktifkan";
+                            dd.Title = "Warning";
+                            dd.ShowDialog();
+                            if (dd.conrfirmed == true)
+                            {
+                                Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+                                bb.active = false;
+                                var list_p = db.p_bbs.Where(c => c.bb == selected_bb);
+                                foreach (p_bb pt in list_p)
+                                {
+                                    Produk pro = db.Produks.FirstOrDefault(c => c.Id == pt.produk);
+                                    pro.active = false;
+                                    db.SubmitChanges();
+                                }
+                                db.SubmitChanges();
+                                refresh_bb();
+                            }else
+                            {
+                                activate.IsChecked = true;
+                            }
+                        }
+                        else
+                        {
+                            dialog_confirm dd = new dialog_confirm();
+                            dd.textBlock.Text = "Bahan baku akan dinonaktifkan";
+                            dd.Title = "Warning";
+                            dd.ShowDialog();
+                            if (dd.conrfirmed == true)
+                            {
+                                Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+                                bb.active = false;
+                                db.SubmitChanges();
+                                refresh_bb();
+                            }else
+                            {
+                                activate.IsChecked = true;
+                            }
+                        }
+
+                    }
+                }
+            }
+            
+        }
+
+        private void activate_Checked(object sender, RoutedEventArgs e)
+        {
+            
+            if (db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb).active == false)
+            {
+                if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
+                {
+                    Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
+                    bb.active = true;
+                    db.SubmitChanges();
+                    refresh_bb();
+                }
+            }
+                
+        }
+
+        private void edit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
             if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
             {
-                Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c=>c.Id == selected_bb);
+                Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
                 dialog_bb_baru dd = new dialog_bb_baru();
                 dd.nama_f.Text = bb.nama;
                 dd.Pesan.IsEnabled = true;
                 var list = dd.comboBox.Items;
-                foreach(Label s in list)
+                foreach (Label s in list)
                 {
                     string s_id = "_" + bb.satuan;
-                    if(s.Name == s_id)
+                    if (s.Name == s_id)
                     {
                         dd.comboBox.SelectedItem = s;
                     }
@@ -256,70 +461,26 @@ namespace ASME_C_WPF.ui
                 dd.ShowDialog();
                 if (dd.done != false)
                 {
-                    
+
                     bb.nama = dd.nama;
                     bb.satuan = dd.satuan;
-                    db.Bahan_bakus.InsertOnSubmit(bb);
+                    
                     db.SubmitChanges();
                     refresh_bb();
                 }
             }
-
         }
 
-        private void hapus_Click(object sender, RoutedEventArgs e)
+        private void edit_hover(object sender, MouseEventArgs e)
         {
-            if (db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).role < 3)
-            {
-                int countstock = db.bb_stocks.Where(c => c.tipe == selected_bb).Count();
-                int count_product = db.p_bbs.Where(c => c.bb == selected_bb).Count();
-                if (countstock > 0)
-                {
-                    dialog_confirm dd = new dialog_confirm();
-                    dd.textBlock.Text = "Bahan baku masih memiliki stok aktif, habiskan stok sebelum melanjutkan";
-                    dd.Batal.Visibility = Visibility.Collapsed;
-                    dd.Title = "Warning";
-                    dd.ShowDialog();
-                }else
-                {
-                    if (count_product > 0)
-                    {
-                        dialog_confirm dd = new dialog_confirm();
-                        dd.textBlock.Text = "Bahan baku masih memiliki produk aktif, produk akan dinonaktifkan";
-                        dd.Title = "Warning";
-                        dd.ShowDialog();
-                        if(dd.conrfirmed == true)
-                        {
-                            Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
-                            bb.active = false;
-                            var list_p = db.p_bbs.Where(c => c.bb == selected_bb);
-                            foreach(p_bb pt in list_p)
-                            {
-                                Produk pro = db.Produks.FirstOrDefault(c => c.Id == pt.produk);
-                                pro.active = false;
-                                db.SubmitChanges();
-                            }
-                            db.SubmitChanges();
-                            refresh_bb();
-                        }
-                    }
-                    else
-                    {
-                        dialog_confirm dd = new dialog_confirm();
-                        dd.textBlock.Text = "Bahan baku akan dinonaktifkan";
-                        dd.Title = "Warning";
-                        dd.ShowDialog();
-                        if (dd.conrfirmed == true)
-                        {
-                            Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == selected_bb);
-                            bb.active = false;
-                            db.SubmitChanges();
-                            refresh_bb();
-                        }
-                    }
-                    
-                }
-            }
+            edit.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF2196F3"));
         }
+
+        private void edit_losthover(object sender, MouseEventArgs e)
+        {
+            edit.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFFFF"));
+
+        }
+
     }
 }

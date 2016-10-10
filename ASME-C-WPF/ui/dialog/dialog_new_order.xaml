@@ -22,7 +22,7 @@
         </ListBox>
         <Label Content="DAFTAR MEJA" HorizontalAlignment="Left" Margin="18,16,0,0" Padding="0" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="22" VerticalAlignment="Top" />
         <Label Content="PEMESAN" HorizontalAlignment="Left" Margin="18,280,0,122" Padding="0" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-        <TextBox x:Name="pemesan" HorizontalAlignment="Left" Height="23" Margin="22,306,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="226" Foreground="White" Keyboard.KeyUp="pemesan_KeyUp"/>
+        <TextBox x:Name="pemesan" MaxLength="99" HorizontalAlignment="Left" Height="23" Margin="22,306,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="226" Foreground="White" Keyboard.KeyUp="pemesan_KeyUp"/>
 
         <Button x:Name="baru" IsEnabled="False" Content="Baru" HorizontalAlignment="Left" Margin="196,0,0,18" VerticalAlignment="Bottom" Width="75" Click="baru_Click" IsDefault="True"/>
         <Button x:Name="batal" Content="Batal" HorizontalAlignment="Left" Margin="110,0,0,18" VerticalAlignment="Bottom" Width="75" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" Click="batal_Click" IsCancel="True"/>
