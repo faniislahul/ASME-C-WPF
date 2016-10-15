@@ -31,6 +31,31 @@ namespace ASME_C_WPF.core
 
         });
 
+        public static Dictionary<String, String> accountlist = new Dictionary<string, string>()
+        {
+            {"1.1.1","Kas" },
+            {"1.1.2","Piutang Usaha" },
+            {"1.1.3","Persediaan Bahan Baku" },
+            {"1.1.4","Perlengkapan" },
+            {"1.1.5","Piutang Penjualan" },
+            {"1.2.1","Peralatan" },
+            {"2.1.1","Utang Lancar" },
+            {"3.1.1","Modal Pemilik" },
+            {"3.1.2","Prive" },
+            {"4.1.1","Penjualan" },
+            {"4.1.2","Harga Pokok Produksi" },
+            {"5.1.1","Beban Umum" },
+            {"5.1.2","Biaya Bahan Baku" },
+            {"5.1.3","Beban Tak Tertagih" },
+            {"5.1.4","PPN" },
+            {"5.1.5","Pajak" },
+            {"5.1.6","Biaya Lain-Lain" },
+            {"6.1.1","Laba" },
+            {"6.1.2","Rugi" },
+
+
+        };
+
 
         public string calculateMD5(string text)
         {

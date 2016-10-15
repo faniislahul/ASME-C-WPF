@@ -1,0 +1,48 @@
+﻿<Window x:Class="ASME_C_WPF.ui.report.buku_besar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui.report"
+        mc:Ignorable="d" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="#FF303030"
+      TextElement.FontWeight="Normal"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" 
+       Height="300" Width="300" MinWidth="1366" MinHeight="758" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
+    <Grid>
+
+        <Grid>
+            <TextBox x:Name="horas" Background="{x:Null}"></TextBox>
+            <Label Content="BUKU BESAR" FontSize="25" Margin="589,15,589,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Center"></Label>
+            <DataGrid 
+                x:Name="datagrid" 
+                Margin="74,110,74,-19" 
+                
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                HeadersVisibility="Column" Background="#FF232323"
+                >
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Tanggal" Binding="{Binding Date }" Width="auto">
+                        
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Debit" Binding="{Binding Debit }" Width="100" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Kredit" Binding="{Binding Kredit }" Width="100" ></DataGridTextColumn>
+                    <DataGridTextColumn Header="Keterangan" Binding="{Binding Details }" Width="auto"></DataGridTextColumn>
+                </DataGrid.Columns>
+
+
+            </DataGrid>
+            <ComboBox x:Name="akun_type" HorizontalAlignment="Left" Margin="82,60,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox x:Name="month" HorizontalAlignment="Left" Margin="218,60,0,0" VerticalAlignment="Top" Width="120" />
+            <Label x:Name="label" Content="AKUN" FontSize="11" HorizontalAlignment="Left" Margin="70,40,0,0" VerticalAlignment="Top" Width="41" Height="22" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            <Label x:Name="label_Copy" Content="BULAN" FontSize="11" HorizontalAlignment="Left" Margin="208,40,0,0" VerticalAlignment="Top" Width="48" Height="22" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            <Button x:Name="show" Content="Tampilkan" HorizontalAlignment="Left" Margin="354,62,0,0" VerticalAlignment="Top" Width="99" Click="show_Click"/>
+
+        </Grid>
+    </Grid>
+</Window>

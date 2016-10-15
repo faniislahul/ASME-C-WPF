@@ -8,7 +8,6 @@
       xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
       xmlns:mi="clr-namespace:MaterialIcons;assembly=MaterialIcons"
       xmlns:ct ="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-      xmlns:ctc ="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{x:Null}"
       TextElement.FontWeight="Normal"
@@ -22,9 +21,15 @@
         <Grid Margin="0,0,338,0" MinWidth="328">
             <Grid  Margin="-1,-1,-5,-1" MinHeight="10" Background="#FF303030">
                 <Label Content="RIWAYAT PEMASUKAN DARI PENJUALAN" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Grid.Row="0" />
-                
-                <Grid MinHeight="140" VerticalAlignment="Stretch"  Background="#FF232323" Grid.Row="1"/>
-             
+
+                <Grid MinHeight="140" VerticalAlignment="Stretch"  Background="#FF232323" Grid.Row="1">
+                    <ct:CartesianChart x:Name="penjualan_chart">
+                        <ct:CartesianChart.Series>
+                            <ct:LineSeries x:Name="z" Tag="Penjualan" Stroke="#FF0097FF" StrokeThickness="2" Fill="#FF0097FF" LineSmoothness="0" PointGeometrySize="3" ></ct:LineSeries>
+                        </ct:CartesianChart.Series>
+                    </ct:CartesianChart>
+                </Grid>
+
                 <Label Content="RIWAYAT PEMASUKAN LAIN" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Grid.Row="2"/>
                 <Grid  MinHeight="140" VerticalAlignment="Stretch" Background="#FF232323" Grid.Row="3"/>
                 <Label Content="RIWAYAT PEMASUKAN TOTAL" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Grid.Row="4" />

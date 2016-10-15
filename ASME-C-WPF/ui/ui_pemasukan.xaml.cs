@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using ASME_C_WPF.core;
 using ASME_C_WPF.ui.dialog;
 using System.Text.RegularExpressions;
+using LiveCharts;
 namespace ASME_C_WPF.ui
 {
     /// <summary>
@@ -25,11 +26,16 @@ namespace ASME_C_WPF.ui
         CoreDataContext db = new CoreDataContext();
         Core core = new Core();
         Regex rg = new Regex("^[0-9]+$");
+        public ChartValues<long> v1 { set; get; }
         public ui_pemasukan()
         {
             InitializeComponent();
             refresh_list();
             refresh_history();
+            set_penjualan_chart();
+            z.Values = v1;
+            
+            
         }
         private void refresh_list()
         {
@@ -55,6 +61,7 @@ namespace ASME_C_WPF.ui
             jenis.Items.Add(la);
             jenis.Items.Add(lb);
 
+            
          
             jenis.SelectedItem = jenis.Items.GetItemAt(0);
             total.Clear();
@@ -97,6 +104,35 @@ namespace ASME_C_WPF.ui
 
             }
             history_channel.Content = container;
+        }
+
+        private void set_penjualan_chart()
+        {
+            DateTime dt = DateTime.Now;
+            v1 = new ChartValues<long>();
+            v1.Add(0);
+            for (int i = 1;i<= dt.Day;i++)
+            {
+                if(db.Transactions.Where(c => c.type.StartsWith("4.1.1.") && c.date.Day == i &&c.date.Month == dt.Month) != null)
+                {
+                    var soe = db.Transactions.Where(c => c.type.StartsWith("4.1.1.") && c.date.Day == i && c.date.Month == dt.Month);
+                    long sum = 0;
+                    foreach(Transaction tr in soe)
+                    {
+                        sum += (tr.jumlah*-1);
+                    }
+                    v1.Add(sum);
+                }
+                else
+                {
+                    long sum = 0;
+                    v1.Add(sum);
+                }
+                
+            }
+           
+
+
         }
 
         private void terima_Click(object sender, RoutedEventArgs e)
@@ -191,4 +227,19 @@ namespace ASME_C_WPF.ui
             }
         }
     }
+
+    public class rt_penjualan
+    {
+        public long value { set; get; }
+        public int sales { set; get; }
+        public rt_penjualan(long v)
+        {
+            value = v;
+        }
+        public rt_penjualan(int s)
+        {
+            sales = s;
+        }
+    }
+
 }

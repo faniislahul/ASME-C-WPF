@@ -50,5 +50,33 @@ namespace ASME_C_WPF.Properties {
                 return ((int)(this["tax_ppn"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-RRU5OR4\\SQLEXPRESS;Integrated Security=True")]
+        public string DataSourceConnectionString1 {
+            get {
+                return ((string)(this["DataSourceConnectionString1"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int Initial_month {
+            get {
+                return ((int)(this["Initial_month"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2016")]
+        public int Initial_year {
+            get {
+                return ((int)(this["Initial_year"]));
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@ namespace ASME_C_WPF
 
         private void ui_control_neraca_saldo_Selected(object sender, RoutedEventArgs e)
         {
-            ASME_C_WPF.ui.report.neraca_saldo nc = new ui.report.neraca_saldo();
+            ASME_C_WPF.ui.report.buku_besar nc = new ui.report.buku_besar();
             nc.ShowDialog();
         }
     }
