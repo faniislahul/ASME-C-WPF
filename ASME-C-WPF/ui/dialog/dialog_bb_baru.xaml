@@ -16,7 +16,7 @@
         
         <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
         <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left"  Margin="29,102,0,0" VerticalAlignment="Top" Width="151" Foreground="White">
+        <ComboBox x:Name="comboBox" SelectionChanged="comboBox_SelectionChanged" HorizontalAlignment="Left"  Margin="29,102,0,0" VerticalAlignment="Top" Width="151" Foreground="White">
             
         </ComboBox>
 

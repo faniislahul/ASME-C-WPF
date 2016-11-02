@@ -20,10 +20,11 @@
 
 
         <Grid Height="51" VerticalAlignment="Top" Margin="294,0,0.167,0" MinHeight="60" Background="#FF303030">
-            <StackPanel ToolTip="Active User" Orientation="Horizontal" Margin="0,27,21.833,0" Height="26" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="auto">
+            <StackPanel ToolTip="Login as" Orientation="Horizontal" Margin="0,27,21.833,0" Height="26" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="auto">
                 <mi:MaterialIcon Icon="ic_account_circle" Foreground="Azure" Margin="0,0,0,2" HorizontalAlignment="Right" Width="23"/>
                 <Label x:Name="user" FontSize="11" Content="User Selected" Margin="5,0,0,0" Padding="0,0,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
                 <Ellipse Height="7" Width="7" Fill="#FF32DE32" Margin="5,9,0,10"></Ellipse>
+                <mi:MaterialIcon x:Name="logout_buton" Icon="ic_lock_open" ToolTip="Logout" Cursor="Hand" Foreground="Azure" Margin="5,0,0,2" HorizontalAlignment="Right" Width="23" MouseEnter="MaterialIcon_MouseEnter" MouseLeftButtonUp="MaterialIcon_MouseLeftButtonUp" MouseLeave="logout_buton_MouseLeave" />
             </StackPanel>
 
         </Grid>
@@ -32,7 +33,7 @@
             <ListBoxItem IsEnabled="False">
                 <Label Content="MAIN"  Height="13" FontSize="12" Padding="0,0,0,0" Width="82"/>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_dash"  Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="dash_control" >
+            <ListBoxItem x:Name="ui_control_dash" IsEnabled="True" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="dash_control" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <mi:MaterialIcon Icon="ic_dashboard" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,93,0"/>
                     <Label Content="Dashboard" Padding="0,0,0,0" Margin="40,8,7,8"/>
@@ -47,84 +48,97 @@
                     <Label Content="Kasir" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_reservasi" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_reservasi" Visibility="Collapsed" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <mi:MaterialIcon Icon="ic_people" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Reservasi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem IsEnabled="False">
+            <ListBoxItem IsEnabled="False" x:Name="stock" Visibility="Collapsed" >
                 <Label Content="PERSEDIAAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184"/>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_bahan_baku" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="_ui_bb" >
+            <ListBoxItem x:Name="ui_control_bahan_baku" Visibility="Collapsed"  Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="_ui_bb" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <mi:MaterialIcon Icon="ic_style" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Bahan Baku" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_product" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="ui_product" >
+            <ListBoxItem x:Name="ui_control_product" Visibility="Collapsed"  Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="ui_product" >
                 <Grid Height="30" Width="auto" Margin="0,2,0,0">
                     <mi:MaterialIcon Icon="ic_local_bar" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Produk" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem IsEnabled="False">
+            <ListBoxItem IsEnabled="False" x:Name="finance" Visibility="Collapsed" >
                 <Label Content="KEUANGAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184"/>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_pengeluaran" Selected="ui_control_pengeluaran_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_pengeluaran" Visibility="Collapsed"  Selected="ui_control_pengeluaran_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <mi:MaterialIcon Icon="ic_receipt" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Pengeluran" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_pemasukan" Selected="ui_control_pemasukan_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_pemasukan" Visibility="Collapsed" Selected="ui_control_pemasukan_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <mi:MaterialIcon Icon="ic_account_balance_wallet" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
                     <Label Content="Pemasukan" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem IsEnabled="False">
+            <ListBoxItem IsEnabled="False" x:Name="report" Visibility="Collapsed" >
                 <Label Content="LAPORAN" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184" Selector.IsSelected="False"/>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_neraca_saldo" Selected="ui_control_neraca_saldo_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_finance_dash" Visibility="Collapsed" Selected="ui_control_finance_dash_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+                <Grid Height="30" Width="auto" Margin="0,1,0,0">
+                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
+                    <Label Content="Buku Besar" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
+                </Grid>
+            </ListBoxItem>
+            <ListBoxItem x:Name="ui_control_neraca_saldo" Visibility="Collapsed"  Selected="ui_control_neraca_saldo_Selected" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+                <Grid Height="30" Width="auto" Margin="0,1,0,0">
+                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
+                    <Label Content="Buku Besar" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
+                </Grid>
+            </ListBoxItem>
+            <ListBoxItem x:Name="ui_control_laporan_laba_rugi" Visibility="Collapsed"  IsEnabled="False" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
                     <Label Content="Laporan Laba Rugi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_laporan_laba_rugi" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
-                <Grid Height="30" Width="auto" Margin="0,1,0,0">
-                    <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
-                    <Label Content="Laporan Laba Rugi" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
-                </Grid>
-            </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_laporan_perubahan_ekuitas" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_laporan_perubahan_ekuitas" Visibility="Collapsed"  IsEnabled="False" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
                     <Label Content="Laporan Perubahan Ekuitas" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_Neraca" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_Neraca" Visibility="Collapsed"  IsEnabled="False" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
                     <Label Content="Neraca" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_neraca_sa" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_neraca_sa" Visibility="Collapsed"  IsEnabled="False" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
                     <Label Content="Neraca Saldo" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            <ListBoxItem x:Name="ui_control_laporan_arus_kas" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
+            <ListBoxItem x:Name="ui_control_laporan_arus_kas" Visibility="Collapsed"  IsEnabled="False" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" >
                 <Grid Height="30" Width="auto" Margin="0,1,0,0">
                     <Ellipse Height="30" Width="30" Fill="#FF404040" Margin="3,0,46,0" HorizontalAlignment="Left"/>
                     <Label Content="Laporan Arus Kas" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-
-
-
+            <ListBoxItem IsEnabled="False">
+                <Label Content="SETTINGS" IsEnabled="False" Height="13" FontSize="12" Padding="0,0,0,0" Width="184" Selector.IsSelected="False"/>
+            </ListBoxItem>
+            <ListBoxItem x:Name="ui_setting" Margin="0,0,0,0" Padding="10,3,5,4" MinHeight="30" Height="40" Selected="ui_setting_Selected" >
+                <Grid Height="30" Width="auto" Margin="0,1,0,0">
+                    <mi:MaterialIcon Icon="ic_settings" Height="30" Width="30" Foreground="#FF404040" Margin="0,0,49,0"/>
+                    <Label Content="Settings" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
+                </Grid>
+            </ListBoxItem>
+            
         </ListBox>
 
         <Rectangle Fill="#FF303030" HorizontalAlignment="Right" Margin="0,54,-0.833,4.5" Width="10" MinWidth="10"/>
@@ -137,7 +151,7 @@
         </StatusBar>
         <Ellipse Margin="14,30,0,0" HorizontalAlignment="Left" Width="62" Height="62" VerticalAlignment="Top">
             <Ellipse.Fill>
-                <ImageBrush ImageSource="image/asme-c.png" Stretch="UniformToFill">
+                <ImageBrush ImageSource="image/asme-c.png" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality">
                     <ImageBrush.RelativeTransform>
                         <TransformGroup>
                             <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>

@@ -11,29 +11,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Timers;
 
-namespace ASME_C_WPF
+namespace ASME_C_WPF.ui.dialog
 {
     /// <summary>
-    /// Interaction logic for splash.xaml
+    /// Interaction logic for dialog_login.xaml
     /// </summary>
-    public partial class splash : Window
+    public partial class dialog_login : Window
     {
-        public splash()
+        
+        public dialog_login()
         {
-            InitializeComponent();
-            nteu();
-            Login log = new Login();
-            log.Show();
-            this.Close();
-            
+            InitializeComponent();            
         }
 
-        public void nteu()
+        public void setmessage(String s)
         {
-            this.Show();
-            System.Threading.Thread.Sleep(2500);
+            warn.Content = s;
+        }
+
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

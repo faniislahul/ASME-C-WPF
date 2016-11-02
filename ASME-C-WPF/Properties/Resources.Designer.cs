@@ -59,14 +59,5 @@ namespace ASME_C_WPF.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1.
-        /// </summary>
-        internal static string Active_user {
-            get {
-                return ResourceManager.GetString("Active_user", resourceCulture);
-            }
-        }
     }
 }

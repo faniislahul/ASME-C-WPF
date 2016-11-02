@@ -47,9 +47,8 @@
             </StackPanel>
 
         </StackPanel>
-        <Button x:Name="OK" Content="OK" Margin="0,0,21,22" IsDefault="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="OK_Click"/>
-        <Button x:Name="Print" Content="Print" Margin="0,0,107,22" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
-        <Button x:Name="Batal" Content="Batal" Margin="0,0,213,22" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" IsCancel="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+        <Button x:Name="OK" Content="OK" Margin="0,0,21,22" IsDefault="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom" Click="OK_Click" IsEnabled="False" />
+        <Button x:Name="Batal" Content="Batal" Margin="0,0,120,22" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" IsCancel="True" Height="32" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

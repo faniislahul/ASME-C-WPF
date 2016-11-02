@@ -30,7 +30,7 @@ namespace ASME_C_WPF.ui.dialog
             nama_f.Focus();
             Pesan.IsEnabled = false;
 
-            var st = db.Satuan_bbs;
+            var st = db.Satuan_bbs.Where(c=>c.active==true);
             foreach(Satuan_bb sat in st)
             {
                 Label n = new Label();
@@ -60,8 +60,6 @@ namespace ASME_C_WPF.ui.dialog
             if (nama_f.Text != "")
             {
                 nama = nama_f.Text;
-                Label combo = comboBox.SelectedItem as Label;
-                satuan = Int32.Parse(combo.Name.Substring(1).ToString());
                 done = true;
                 this.Close();
 
@@ -83,6 +81,10 @@ namespace ASME_C_WPF.ui.dialog
             }
         }
 
-       
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Label combo = (Label) comboBox.SelectedItem;
+            satuan = Int32.Parse(combo.Name.Substring(1).ToString());
+        }
     }
 }

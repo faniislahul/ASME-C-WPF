@@ -23,7 +23,7 @@ namespace ASME_C_WPF.core
             int table_id;
             DateTime date;
             dynamic value;
-            if(data.TryGetValue("details", out value));
+            if (data.TryGetValue("details", out value)) ;
             {
                 details = value;
             }
@@ -52,7 +52,7 @@ namespace ASME_C_WPF.core
 
                 db.SubmitChanges();
                 result = 4;
-            }catch(Exception e)
+            } catch (Exception e)
             {
                 throw e;
             }
@@ -66,10 +66,10 @@ namespace ASME_C_WPF.core
         public int cancel_reservation(int id)
         {
             int result = 0;
-            
+
             try
             {
-                db.pos_reservations.DeleteOnSubmit(db.pos_reservations.FirstOrDefault(c=>c.Id == id));
+                db.pos_reservations.DeleteOnSubmit(db.pos_reservations.FirstOrDefault(c => c.Id == id));
                 pos_log log = new pos_log();
                 log.user_id = user;
                 log.action = "POS DELETE RESERVATION";
@@ -77,7 +77,7 @@ namespace ASME_C_WPF.core
 
                 result = 4;
 
-            }catch(Exception e)
+            } catch (Exception e)
             {
                 throw e;
             }
@@ -95,7 +95,7 @@ namespace ASME_C_WPF.core
             int result = 0;
             String details;
             int table_id;
-            
+
             dynamic value;
             if (data.TryGetValue("details", out value)) ;
             {
@@ -113,9 +113,9 @@ namespace ASME_C_WPF.core
                 reserve.table_id = table_id;
                 reserve.details = details;
                 reserve.status = "PENDING";
-                reserve.user = user;              
+                reserve.user = user;
 
-                pos_table table = db.pos_tables.FirstOrDefault(c=>c.Id == table_id);
+                pos_table table = db.pos_tables.FirstOrDefault(c => c.Id == table_id);
                 table.is_empty = false;
                 pos_log log = new pos_log();
                 log.user_id = user;
@@ -187,7 +187,7 @@ namespace ASME_C_WPF.core
                 log.user_id = user;
                 log.action = "POS ADD PRODUCT";
                 db.pos_logs.InsertOnSubmit(log);
-                
+
                 db.pos_order_lists.InsertOnSubmit(list);
                 db.SubmitChanges();
                 result = 4;
@@ -215,46 +215,46 @@ namespace ASME_C_WPF.core
             {
                 order_id = value;
             }
-            if (data.TryGetValue("quantity", out value)) 
+            if (data.TryGetValue("quantity", out value))
             {
                 quantity = value;
             }
-            
-            if (data.TryGetValue("produk", out value)) 
+
+            if (data.TryGetValue("produk", out value))
             {
                 produk = value;
             }
             try
             {
-                int count = db.pos_order_lists.Where(c => c.order_id == order_id && c.peroduk == produk && c.status == "PENDING").Sum(c=>c.quantity);
+                int count = db.pos_order_lists.Where(c => c.order_id == order_id && c.peroduk == produk && c.status == "PENDING").Sum(c => c.quantity);
                 int temp = quantity;
                 if (count >= quantity)
                 {
-                    
-                        while (temp > 0)
-                        {
+
+                    while (temp > 0)
+                    {
                         pos_order_list en = db.pos_order_lists.FirstOrDefault(c => c.order_id == order_id && c.peroduk == produk && c.status == "PENDING");
+                        {
+                            if (temp >= en.quantity)
                             {
-                                if (temp >= en.quantity)
-                                {
-                                    en.status = "VOID";
-                                    temp -= en.quantity;
-                                    db.SubmitChanges();
-                                }
-                                else
-                                {
-                                    en.quantity -= temp;
-                                    pos_order_list pol = new pos_order_list();
-                                    pol.order_id = order_id;
-                                    pol.peroduk = produk;
-                                    pol.quantity = temp;
-                                    pol.status = "VOID";
-                                    db.pos_order_lists.InsertOnSubmit(pol);
-                                    db.SubmitChanges();
-                                    temp = 0;
-                                }
+                                en.status = "VOID";
+                                temp -= en.quantity;
+                                db.SubmitChanges();
+                            }
+                            else
+                            {
+                                en.quantity -= temp;
+                                pos_order_list pol = new pos_order_list();
+                                pol.order_id = order_id;
+                                pol.peroduk = produk;
+                                pol.quantity = temp;
+                                pol.status = "VOID";
+                                db.pos_order_lists.InsertOnSubmit(pol);
+                                db.SubmitChanges();
+                                temp = 0;
                             }
                         }
+                    }
                     Transaction trany = new Transaction();
                     trany.details = "Penjualan " + db.Produks.FirstOrDefault(c => c.Id == produk).nama;
                     trany.jumlah = db.Produks.FirstOrDefault(c => c.Id == produk).harga_jual * quantity;
@@ -277,13 +277,13 @@ namespace ASME_C_WPF.core
                     db.pos_logs.InsertOnSubmit(log);
                     db.SubmitChanges();
                     result = 4;
-                }else
+                } else
                 {
                     result = 5;
                 }
 
-                
-                
+
+
             }
             catch (Exception e)
             {
@@ -304,9 +304,9 @@ namespace ASME_C_WPF.core
                 db.SubmitChanges();
 
 
-                var listorder = db.pos_order_lists.Where(c=>c.order_id==id&&c.status=="PENDING");
+                var listorder = db.pos_order_lists.Where(c => c.order_id == id && c.status == "PENDING");
 
-                foreach(pos_order_list list in listorder)
+                foreach (pos_order_list list in listorder)
                 {
                     list.status = "VOID";
                     Transaction trany = new Transaction();
@@ -421,7 +421,7 @@ namespace ASME_C_WPF.core
             try
             {
                 db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_tables);
-                pos_order order = db.pos_orders.FirstOrDefault(c=>c.Id == id);
+                pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == id);
                 order.status = "COMPLETED";
                 order.pos_table.is_empty = true;
                 db.SubmitChanges();
@@ -475,7 +475,7 @@ namespace ASME_C_WPF.core
                 order.pos_table.is_empty = true;
                 db.SubmitChanges();
 
-                var listorder = db.pos_order_lists.Where(c => c.order_id == id&&c.status=="PENDING");
+                var listorder = db.pos_order_lists.Where(c => c.order_id == id && c.status == "PENDING");
 
                 foreach (pos_order_list list in listorder)
                 {
@@ -518,4 +518,21 @@ namespace ASME_C_WPF.core
 
 
     }
+
+    class SalesAdapter
+    {
+        public Produk product { set; get; }
+        public int count { set; get; }
+        public long total { set; get; }
+
+        public String status { set; get;}
+        public SalesAdapter(Produk n, int c, String s)
+        {
+            status = s;
+            product = n;
+            count = c;
+            total = product.harga_jual * count;
+        }
+    }
+
 }

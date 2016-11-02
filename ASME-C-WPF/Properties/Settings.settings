@@ -10,11 +10,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=localhost\SQLEXPRESS;Integrated Security=True</Value>
     </Setting>
-    <Setting Name="Active_user" Type="System.Int32" Scope="Application">
+    <Setting Name="Active_user" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="tax_ppn" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="tax_ppn" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="DataSourceConnectionString1" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -24,10 +24,10 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=DESKTOP-RRU5OR4\SQLEXPRESS;Integrated Security=True</Value>
     </Setting>
-    <Setting Name="Initial_month" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="Initial_month" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">11</Value>
     </Setting>
-    <Setting Name="Initial_year" Type="System.Int32" Scope="Application">
+    <Setting Name="Initial_year" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2016</Value>
     </Setting>
   </Settings>

@@ -50,9 +50,7 @@
         <Grid Height="59" VerticalAlignment="Bottom" MinHeight="100" MinWidth="300" MaxHeight="100" Background="#FF303030">
             <Button x:Name="tambah" Content="Tambah Stok" Margin="0,0,20,20"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="auto" Click="tambah_Click"/>
             <Button x:Name="penggunaan" Content="Penggunaan" Margin="0,0,148,20"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="auto" Click="penggunaan_Click"/>
-            
-            <Button x:Name="hapus" IsEnabled="False" Content="Deactive" Margin="109,0,0,20" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="96" Background="{DynamicResource warningbuttonred}" BorderBrush="{DynamicResource warningbuttonred}" Click="hapus_Click"/>
-            <Button x:Name="button" Content="Tak Terpakai" HorizontalAlignment="Right" Margin="0,0,273,20" Width="109" RenderTransformOrigin="0.627,0.875" Height="32" VerticalAlignment="Bottom"/>
+            <Button x:Name="button" IsEnabled="False" Content="Tak Terpakai" HorizontalAlignment="Right" Margin="0,0,273,20" Width="109" RenderTransformOrigin="0.627,0.875" Height="32" VerticalAlignment="Bottom"/>
         </Grid>
 
     </Grid>

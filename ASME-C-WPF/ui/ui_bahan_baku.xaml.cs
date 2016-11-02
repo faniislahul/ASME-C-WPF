@@ -344,11 +344,7 @@ namespace ASME_C_WPF.ui
             }
         }
 
-        private void edit_Click(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
+        
 
         private void hapus_Click(object sender, RoutedEventArgs e)
         {
@@ -463,8 +459,8 @@ namespace ASME_C_WPF.ui
                 {
 
                     bb.nama = dd.nama;
-                    bb.satuan = dd.satuan;
-                    
+                    bb.Satuan_bb = db.Satuan_bbs.Single(c => c.Id == dd.satuan);
+                    //bb.Satuan_bb = db.Satuan_bbs.Single(c => c.Id == dd.satuan);
                     db.SubmitChanges();
                     refresh_bb();
                 }

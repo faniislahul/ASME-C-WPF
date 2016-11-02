@@ -33,21 +33,27 @@ namespace ASME_C_WPF.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int Active_user {
             get {
                 return ((int)(this["Active_user"]));
             }
+            set {
+                this["Active_user"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int tax_ppn {
             get {
                 return ((int)(this["tax_ppn"]));
+            }
+            set {
+                this["tax_ppn"] = value;
             }
         }
         
@@ -61,21 +67,27 @@ namespace ASME_C_WPF.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
         public int Initial_month {
             get {
                 return ((int)(this["Initial_month"]));
             }
+            set {
+                this["Initial_month"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2016")]
         public int Initial_year {
             get {
                 return ((int)(this["Initial_year"]));
+            }
+            set {
+                this["Initial_year"] = value;
             }
         }
     }

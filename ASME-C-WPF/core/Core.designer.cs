@@ -787,13 +787,9 @@ namespace ASME_C_WPF.core
 		
 		private long _hpp_digunakan;
 		
-		private int _satuan;
-		
 		private int _quantity;
 		
 		private int _used;
-		
-		private EntityRef<Satuan_bb> _Satuan_bb;
 		
 		private EntityRef<Bahan_baku> _Bahan_baku;
 		
@@ -809,8 +805,6 @@ namespace ASME_C_WPF.core
     partial void Onharga_beliChanged();
     partial void Onhpp_digunakanChanging(long value);
     partial void Onhpp_digunakanChanged();
-    partial void OnsatuanChanging(int value);
-    partial void OnsatuanChanged();
     partial void OnquantityChanging(int value);
     partial void OnquantityChanged();
     partial void OnusedChanging(int value);
@@ -819,7 +813,6 @@ namespace ASME_C_WPF.core
 		
 		public bb_stock()
 		{
-			this._Satuan_bb = default(EntityRef<Satuan_bb>);
 			this._Bahan_baku = default(EntityRef<Bahan_baku>);
 			OnCreated();
 		}
@@ -908,30 +901,6 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_satuan", DbType="Int NOT NULL")]
-		public int satuan
-		{
-			get
-			{
-				return this._satuan;
-			}
-			set
-			{
-				if ((this._satuan != value))
-				{
-					if (this._Satuan_bb.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnsatuanChanging(value);
-					this.SendPropertyChanging();
-					this._satuan = value;
-					this.SendPropertyChanged("satuan");
-					this.OnsatuanChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int NOT NULL")]
 		public int quantity
 		{
@@ -968,40 +937,6 @@ namespace ASME_C_WPF.core
 					this._used = value;
 					this.SendPropertyChanged("used");
 					this.OnusedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_stock", Storage="_Satuan_bb", ThisKey="satuan", OtherKey="Id", IsForeignKey=true)]
-		public Satuan_bb Satuan_bb
-		{
-			get
-			{
-				return this._Satuan_bb.Entity;
-			}
-			set
-			{
-				Satuan_bb previousValue = this._Satuan_bb.Entity;
-				if (((previousValue != value) 
-							|| (this._Satuan_bb.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Satuan_bb.Entity = null;
-						previousValue.bb_stocks.Remove(this);
-					}
-					this._Satuan_bb.Entity = value;
-					if ((value != null))
-					{
-						value.bb_stocks.Add(this);
-						this._satuan = value.Id;
-					}
-					else
-					{
-						this._satuan = default(int);
-					}
-					this.SendPropertyChanged("Satuan_bb");
 				}
 			}
 		}
@@ -1411,6 +1346,8 @@ namespace ASME_C_WPF.core
 		
 		private System.Nullable<System.DateTime> _last_login;
 		
+		private bool _active;
+		
 		private EntitySet<master_user_log> _master_user_logs;
 		
 		private EntitySet<pos_log> _pos_logs;
@@ -1433,6 +1370,8 @@ namespace ASME_C_WPF.core
     partial void OnroleChanged();
     partial void Onlast_loginChanging(System.Nullable<System.DateTime> value);
     partial void Onlast_loginChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
     #endregion
 		
 		public master_user()
@@ -1540,6 +1479,26 @@ namespace ASME_C_WPF.core
 					this._last_login = value;
 					this.SendPropertyChanged("last_login");
 					this.Onlast_loginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active")]
+		public bool active
+		{
+			get
+			{
+				return this._active;
+			}
+			set
+			{
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
 				}
 			}
 		}
@@ -3114,9 +3073,7 @@ namespace ASME_C_WPF.core
 		
 		private string _nama;
 		
-		private EntitySet<bb_stock> _bb_stocks;
-		
-		private EntitySet<bb_log> _bb_logs;
+		private bool _active;
 		
 		private EntitySet<Bahan_baku> _Bahan_bakus;
 		
@@ -3128,12 +3085,12 @@ namespace ASME_C_WPF.core
     partial void OnIdChanged();
     partial void OnnamaChanging(string value);
     partial void OnnamaChanged();
+    partial void OnactiveChanging(bool value);
+    partial void OnactiveChanged();
     #endregion
 		
 		public Satuan_bb()
 		{
-			this._bb_stocks = new EntitySet<bb_stock>(new Action<bb_stock>(this.attach_bb_stocks), new Action<bb_stock>(this.detach_bb_stocks));
-			this._bb_logs = new EntitySet<bb_log>(new Action<bb_log>(this.attach_bb_logs), new Action<bb_log>(this.detach_bb_logs));
 			this._Bahan_bakus = new EntitySet<Bahan_baku>(new Action<Bahan_baku>(this.attach_Bahan_bakus), new Action<Bahan_baku>(this.detach_Bahan_bakus));
 			OnCreated();
 		}
@@ -3178,29 +3135,23 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_stock", Storage="_bb_stocks", ThisKey="Id", OtherKey="satuan")]
-		public EntitySet<bb_stock> bb_stocks
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_active")]
+		public bool active
 		{
 			get
 			{
-				return this._bb_stocks;
+				return this._active;
 			}
 			set
 			{
-				this._bb_stocks.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_bb_logs", ThisKey="Id", OtherKey="satuan")]
-		public EntitySet<bb_log> bb_logs
-		{
-			get
-			{
-				return this._bb_logs;
-			}
-			set
-			{
-				this._bb_logs.Assign(value);
+				if ((this._active != value))
+				{
+					this.OnactiveChanging(value);
+					this.SendPropertyChanging();
+					this._active = value;
+					this.SendPropertyChanged("active");
+					this.OnactiveChanged();
+				}
 			}
 		}
 		
@@ -3235,30 +3186,6 @@ namespace ASME_C_WPF.core
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_bb_stocks(bb_stock entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = this;
-		}
-		
-		private void detach_bb_stocks(bb_stock entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = null;
-		}
-		
-		private void attach_bb_logs(bb_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = this;
-		}
-		
-		private void detach_bb_logs(bb_log entity)
-		{
-			this.SendPropertyChanging();
-			entity.Satuan_bb = null;
 		}
 		
 		private void attach_Bahan_bakus(Bahan_baku entity)
@@ -4231,13 +4158,9 @@ namespace ASME_C_WPF.core
 		
 		private System.DateTime _date;
 		
-		private int _satuan;
-		
 		private int _add;
 		
 		private int _used;
-		
-		private EntityRef<Satuan_bb> _Satuan_bb;
 		
 		private EntityRef<Bahan_baku> _Bahan_baku;
 		
@@ -4257,8 +4180,6 @@ namespace ASME_C_WPF.core
     partial void Onhpp_digunakanChanged();
     partial void OndateChanging(System.DateTime value);
     partial void OndateChanged();
-    partial void OnsatuanChanging(int value);
-    partial void OnsatuanChanged();
     partial void OnaddChanging(int value);
     partial void OnaddChanged();
     partial void OnusedChanging(int value);
@@ -4267,7 +4188,6 @@ namespace ASME_C_WPF.core
 		
 		public bb_log()
 		{
-			this._Satuan_bb = default(EntityRef<Satuan_bb>);
 			this._Bahan_baku = default(EntityRef<Bahan_baku>);
 			OnCreated();
 		}
@@ -4396,30 +4316,6 @@ namespace ASME_C_WPF.core
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_satuan", DbType="Int NOT NULL")]
-		public int satuan
-		{
-			get
-			{
-				return this._satuan;
-			}
-			set
-			{
-				if ((this._satuan != value))
-				{
-					if (this._Satuan_bb.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnsatuanChanging(value);
-					this.SendPropertyChanging();
-					this._satuan = value;
-					this.SendPropertyChanged("satuan");
-					this.OnsatuanChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[add]", Storage="_add", DbType="Int NOT NULL")]
 		public int add
 		{
@@ -4456,40 +4352,6 @@ namespace ASME_C_WPF.core
 					this._used = value;
 					this.SendPropertyChanged("used");
 					this.OnusedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Satuan_bb_bb_log", Storage="_Satuan_bb", ThisKey="satuan", OtherKey="Id", IsForeignKey=true)]
-		public Satuan_bb Satuan_bb
-		{
-			get
-			{
-				return this._Satuan_bb.Entity;
-			}
-			set
-			{
-				Satuan_bb previousValue = this._Satuan_bb.Entity;
-				if (((previousValue != value) 
-							|| (this._Satuan_bb.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Satuan_bb.Entity = null;
-						previousValue.bb_logs.Remove(this);
-					}
-					this._Satuan_bb.Entity = value;
-					if ((value != null))
-					{
-						value.bb_logs.Add(this);
-						this._satuan = value.Id;
-					}
-					else
-					{
-						this._satuan = default(int);
-					}
-					this.SendPropertyChanged("Satuan_bb");
 				}
 			}
 		}

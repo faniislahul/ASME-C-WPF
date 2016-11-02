@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ASME_C_WPF</RootNamespace>
-    <AssemblyName>ASME-C-WPF</AssemblyName>
+    <AssemblyName>ASME Coffeeshop</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -25,9 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>0.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,16 +52,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>asme-c-dark.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BDA94E7B526EB7010DF6AB1D257805A5BE5A0FB4</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Insight.Database, Version=5.2.8.0, Culture=neutral, PublicKeyToken=f35c6ef87e515afc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Insight.Database.Core.5.2.8\lib\NET45\Insight.Database.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="LiveCharts, Version=0.7.17.0, Culture=neutral, PublicKeyToken=c5935629d38af058, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.7.17\lib\portable-net40+sl5+win8+wp8+wpa81\LiveCharts.dll</HintPath>
       <Private>True</Private>
@@ -88,8 +104,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,8 +127,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Installer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Installer.Designer.cs">
+      <DependentUpon>Installer.cs</DependentUpon>
+    </Compile>
     <Compile Include="splash.xaml.cs">
       <DependentUpon>splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_add_user.xaml.cs">
+      <DependentUpon>dialog_add_user.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\dialog\dialog_checkout.xaml.cs">
       <DependentUpon>dialog_checkout.xaml</DependentUpon>
@@ -118,11 +145,23 @@
     <Compile Include="ui\dialog\dialog_confirm.xaml.cs">
       <DependentUpon>dialog_confirm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\dialog\dialog_login.xaml.cs">
+      <DependentUpon>dialog_login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\dialog\dialog_new_order.xaml.cs">
       <DependentUpon>dialog_new_order.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\dialog\dialog_bb_baru.xaml.cs">
       <DependentUpon>dialog_bb_baru.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_new_table.xaml.cs">
+      <DependentUpon>dialog_new_table.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_new_unit.xaml.cs">
+      <DependentUpon>dialog_new_unit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_order_list.xaml.cs">
+      <DependentUpon>dialog_order_list.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\dialog\dialog_penambahan_bb.xaml.cs">
       <DependentUpon>dialog_penambahan_bb.xaml</DependentUpon>
@@ -141,6 +180,9 @@
     </Compile>
     <Compile Include="ui\dialog\dialog_set_discount.xaml.cs">
       <DependentUpon>dialog_set_discount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui\dialog\dialog_switch_table.xaml.cs">
+      <DependentUpon>dialog_switch_table.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\report\buku_besar.xaml.cs">
       <DependentUpon>buku_besar.xaml</DependentUpon>
@@ -167,6 +209,9 @@
     <Compile Include="ui\ui_produk.xaml.cs">
       <DependentUpon>ui_produk.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\ui_settings.xaml.cs">
+      <DependentUpon>ui_settings.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -191,11 +236,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ui\dialog\dialog_add_user.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui\dialog\dialog_checkout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\dialog\dialog_confirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +259,18 @@
     <Page Include="ui\dialog\dialog_bb_baru.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui\dialog\dialog_new_table.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_new_unit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_order_list.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\dialog\dialog_penambahan_bb.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -228,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\dialog\dialog_set_discount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_switch_table.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,6 +332,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ui\ui_settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -278,6 +351,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="ASME-C-WPF_TemporaryKey.pfx" />
     <None Include="core\Core.dbml.layout">
       <DependentUpon>Core.dbml</DependentUpon>
     </None>
@@ -291,6 +365,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -328,6 +403,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="asme-c-dark.ico" />
     <Content Include="image\asme-c.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

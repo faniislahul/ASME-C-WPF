@@ -11,17 +11,27 @@
       Background="{x:Null}"
       TextElement.FontWeight="Normal"
       TextElement.FontSize="14"
-      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" Foreground="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="600" MinHeight="300" d:DesignWidth="713.83" d:DesignHeight="510.638" 
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" Foreground="{x:Null}" MinWidth="600" MinHeight="300" 
       >
 
-    <Grid Margin="0">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="602"/>
-        </Grid.ColumnDefinitions>
-        <Label x:Name="label" Content="Hello World" Foreground="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" VerticalAlignment="Top" Height="27" HorizontalAlignment="Left" Margin="41,38,0,0"/>
-        <Button x:Name="button" Content="Click me" HorizontalAlignment="Left" Margin="46,75,0,0" VerticalAlignment="Top" Width="94" Click="button_Click"/>
+    <Grid>
+        <Grid Margin="0,0,338,0">
+            <Label x:Name="bb_title_Copy" Content="Penjualan" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="auto" RenderTransformOrigin="0.495,0.469" FontSize="20"/>
+            <ScrollViewer x:Name="penjualan_list" Margin="10,44,10,100" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            <Grid Height="101" VerticalAlignment="Bottom" MinHeight="100" MinWidth="300" MaxHeight="100" Background="#FF303030" Margin="0,0,-4,-1">
+                <Button x:Name="export" IsEnabled="False" Click="export_Click" Content="Export" HorizontalAlignment="Left" Margin="14,60,0,0" VerticalAlignment="Top" Width="75"/>
+                <Label Content="EXPORT TO EXCEL" HorizontalAlignment="Left" Padding="0" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Height="16" VerticalAlignment="Top" Margin="10,8,0,0" />
+                <DatePicker x:Name="date" SelectedDateChanged="date_SelectedDateChanged" HorizontalAlignment="Left" Margin="10,0,0,48" Height="26" VerticalAlignment="Bottom" Foreground="White"/>
+            </Grid>
+
+        </Grid>
+        <Rectangle x:Name="gridSplitter" Margin="0,-1,328,0" MinWidth="10" MaxWidth="10" Fill="#FF303030" HorizontalAlignment="Right" Width="10"  />
+        <Grid HorizontalAlignment="Right" Width="329">
+            <Label x:Name="bb_title" Content="Riwayat Transaksi" Margin="9,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.495,0.469" FontSize="20" HorizontalAlignment="Left" Width="215"/>
+
+            <ScrollViewer x:Name="transaction_list" Margin="0,50,1,119" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Right" Width="315" />
+            <Label x:Name="bb_title_Copy1" Content="Total Penjualan" Margin="9,0,0,76" VerticalAlignment="Bottom"  RenderTransformOrigin="0.495,0.469" FontSize="20" HorizontalAlignment="Left" Width="243"/>
+            <Label x:Name="revenue" Content="" Margin="22,0,0,28" VerticalAlignment="Bottom"  RenderTransformOrigin="0.495,0.469" FontSize="25" HorizontalAlignment="Left" Width="186" />
+        </Grid>
     </Grid>
 </Page>

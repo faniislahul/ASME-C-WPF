@@ -309,7 +309,7 @@ namespace ASME_C_WPF.ui
                 if(pt !=null)
                 {
                     string s = pt.nama + pt.Id;
-                    pt.SKU = core.calculateMD5(s);
+                    pt.SKU = Core.calculateMD5(s);
                     db.SubmitChanges();
                 }
                 foreach(p_bb link in dd.pbb)
@@ -391,7 +391,7 @@ namespace ASME_C_WPF.ui
             {
                 pt.nama = dd.prd.nama;
                 pt.harga_jual = dd.prd.harga_jual;
-                pt.category = dd.prd.category;
+                pt.Category1 = db.Categories.Single(c=> c.Id==dd.prd.category);
                 foreach (p_bb bb in list)
                 {
                     int c = 0;

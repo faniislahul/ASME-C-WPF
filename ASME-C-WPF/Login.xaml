@@ -8,8 +8,9 @@
         Title="Asme Coffeeshop Login" Height="500" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF232323">
         <Ellipse Fill="#FF404040" Margin="72,54,72,267"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="35,309,0,0" VerticalAlignment="Top" Width="228"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="37,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="226" Foreground="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+        
+        <TextBox x:Name="uname" HorizontalAlignment="Left" Height="25" Margin="37,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="226" Foreground="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}"/>
+        <PasswordBox x:Name="pass" HorizontalAlignment="Left" Margin="35,309,0,0" VerticalAlignment="Top" Width="228" Foreground="White"/>
         <Label x:Name="label" Content="Username" HorizontalAlignment="Left" Margin="27,221,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="26,284,0,0" VerticalAlignment="Top"/>
         <Button x:Name="button" Content="Login" Margin="82,379,82,0" VerticalAlignment="Top" Click="clicked" IsDefault="True"/>

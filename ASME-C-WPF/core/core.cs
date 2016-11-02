@@ -57,7 +57,7 @@ namespace ASME_C_WPF.core
         };
 
 
-        public string calculateMD5(string text)
+        public static string calculateMD5(string text)
         {
             MD5 md5 = System.Security.Cryptography.MD5.Create();
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(text);
@@ -545,7 +545,6 @@ namespace ASME_C_WPF.core
                                     st.used += quantity;
                                     bb_log log = new bb_log();
                                     log.used = quantity;
-                                    log.Satuan_bb = some.Satuan_bb;
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
@@ -560,7 +559,6 @@ namespace ASME_C_WPF.core
                                     db.bb_stocks.DeleteOnSubmit(db.bb_stocks.FirstOrDefault(c => c.Id == some.Id));
                                     bb_log log = new bb_log();
                                     log.used = some.quantity;
-                                    log.Satuan_bb = some.Satuan_bb;
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
@@ -673,7 +671,6 @@ namespace ASME_C_WPF.core
                         stock.quantity = quantity;
                         stock.hpp_digunakan = hpp;
                         stock.used = 0;
-                        stock.satuan = bb.satuan;
                         db.bb_stocks.InsertOnSubmit(stock);
                         db.SubmitChanges();
 
@@ -682,7 +679,6 @@ namespace ASME_C_WPF.core
                         log.kode_stock = stock.Id;
                         log.harga_beli = jumlah;
                         log.hpp_digunakan = hpp;
-                        log.satuan = bb.satuan;
                         log.add = quantity;
                         log.used = 0;
                         db.bb_logs.InsertOnSubmit(log);

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="CoreDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-RRU5OR4\SQLEXPRESS;Integrated Security=True" SettingsObjectName="ASME_C_WPF.Properties.Settings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Integrated Security=True" SettingsObjectName="ASME_C_WPF.Properties.Settings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.abc_log" Member="abc_logs">
     <Type Name="abc_log">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -28,10 +28,8 @@
       <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Satuan_bb_bb_stock" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
       <Association Name="Bahan_baku_bb_stock" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -63,6 +61,7 @@
       <Column Name="pass" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
       <Column Name="role" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="last_login" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="active" Type="System.Boolean" CanBeNull="false" />
       <Association Name="master_user_master_user_log" Member="master_user_logs" ThisKey="Id" OtherKey="user" Type="master_user_log" />
       <Association Name="master_user_pos_log" Member="pos_logs" ThisKey="Id" OtherKey="user_id" Type="pos_log" />
       <Association Name="master_user_Transaction" Member="Transactions" ThisKey="Id" OtherKey="user" Type="Transaction" />
@@ -151,8 +150,7 @@
     <Type Name="Satuan_bb">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Association Name="Satuan_bb_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="satuan" Type="bb_stock" />
-      <Association Name="Satuan_bb_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="satuan" Type="bb_log" />
+      <Column Name="active" Type="System.Boolean" CanBeNull="false" />
       <Association Name="Satuan_bb_Bahan_baku" Member="Bahan_bakus" ThisKey="Id" OtherKey="satuan" Type="Bahan_baku" />
     </Type>
   </Table>
@@ -207,10 +205,8 @@
       <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Satuan_bb_bb_log" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
       <Association Name="Bahan_baku_bb_log" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" />
     </Type>
   </Table>

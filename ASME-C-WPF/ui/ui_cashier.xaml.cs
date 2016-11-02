@@ -250,9 +250,8 @@ namespace ASME_C_WPF
                 int id = Int32.Parse(order.Name.Substring(6));
                 void_button.IsEnabled = true;
                 hold_button.IsEnabled = true;
-                pos_order oz = db.pos_orders.FirstOrDefault(c => c.Id == id);
-                reciept_head.Content = "#"+id+" "+oz.details;
-                receipt_details.Content = oz.pos_table.name+" "+oz.date;
+                switch_button.IsEnabled = true;
+                
                 product_list.SelectedItem = null;
                 receipt_refresh(id);
                 selected_order = id;
@@ -265,6 +264,9 @@ namespace ASME_C_WPF
             reciept_list.SelectedItem = null; 
             reciept_list.Items.Clear();
             db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues,db.pos_order_lists);
+            pos_order oz = db.pos_orders.FirstOrDefault(c => c.Id == o_id);
+            reciept_head.Content = "#" + o_id + " " + oz.details;
+            receipt_details.Content = oz.pos_table.name + " " + oz.date;
             var list = db.pos_order_lists.Where(c=>c.order_id == o_id&& c.status=="PENDING").GroupBy(c=>c.peroduk);
             long stotal = 0;
             Thickness n = new Thickness(0, 0, 0, 0);
@@ -496,13 +498,11 @@ namespace ASME_C_WPF
             {
                 dialog_set_discount dd = new dialog_set_discount();
                 dd.ShowDialog();
-                if (dd.qty > 0)
-                {
                     pos_order ord = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
                     ord.discount = dd.qty;
                     db.SubmitChanges();
                     receipt_refresh(selected_order);
-                }
+                
             }
         }
 
@@ -672,6 +672,7 @@ namespace ASME_C_WPF
                     db.SubmitChanges();
                     pos.checkout(selected_order);
                     refresh_order();
+                   
                     receipt_null();
                 }
                 else
@@ -690,6 +691,331 @@ namespace ASME_C_WPF
                         receipt_null();
                     }
                 }
+            }
+            
+        }
+
+        private void history_Click(object sender, RoutedEventArgs e)
+        {
+            dialog_order_list dd = new dialog_order_list();
+            dd.ShowDialog();
+        }
+
+        private void switch_Click(object sender, RoutedEventArgs e)
+        {
+            dialog_switch_table dd = new dialog_switch_table();
+            
+            dd.order = selected_order;
+            dd.ShowDialog();
+            refresh_order();
+            receipt_refresh(selected_order);
+        }
+
+        private void print_Click(object sender, RoutedEventArgs e)
+        {
+            if (selected_order > 0)
+            {
+                var orders = db.pos_order_lists.Where(c => c.Id == selected_order && c.status == "PENDING");
+                pos_order po = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
+
+                PrintDialog pd = new PrintDialog();
+                StackPanel lv = new StackPanel();
+                Label title = new Label();
+                title.Padding = new Thickness(0, 0, 20, 0);
+                title.FontSize = 20;
+                title.Foreground = SystemColors.ActiveCaptionTextBrush;
+                title.HorizontalAlignment = HorizontalAlignment.Center;
+                title.Content = "ARRENA de Cafe";
+                title.FontWeight = FontWeights.Bold;
+
+                Label add = new Label();
+                add.FontSize = 12;
+                add.Padding = new Thickness(0,0,20,0);
+                add.Foreground = SystemColors.ActiveCaptionTextBrush;
+                add.HorizontalAlignment = HorizontalAlignment.Center;
+                add.Content = "Jl. Bandung No. 36 Malang";
+
+                Label telp = new Label();
+                telp.FontSize = 12;
+                telp.Padding = new Thickness(0, 0, 20, 0);
+                telp.Foreground = SystemColors.ActiveCaptionTextBrush;
+                telp.HorizontalAlignment = HorizontalAlignment.Center;
+                telp.Content = "Telp. 081806666656";
+
+                Rectangle devider3 = new Rectangle();
+                devider3.Margin = new Thickness(0);
+                devider3.MinHeight = 1;
+                devider3.Width = 300;
+                devider3.Fill = SystemColors.GrayTextBrush;
+
+                Rectangle devider4 = new Rectangle();
+                devider4.Margin = new Thickness(0);
+                devider4.MinHeight = 1;
+                devider4.Width = 300;
+                devider4.Fill = SystemColors.GrayTextBrush;
+
+                Label a1 = new Label();
+                a1.FontSize = 11;
+                a1.Padding = new Thickness(0);
+                a1.Foreground = SystemColors.ActiveCaptionTextBrush;
+                a1.HorizontalAlignment = HorizontalAlignment.Left;
+                a1.Content = po.date.ToString("dd/MM/yyyy");
+
+                Label a2 = new Label();
+                a2.FontSize = 11;
+                a2.Padding = new Thickness(0);
+                a2.Foreground = SystemColors.ActiveCaptionTextBrush;
+                a2.HorizontalAlignment = HorizontalAlignment.Left;
+                a2.Content = "#"+po.Id;
+
+                Label a3 = new Label();
+                a3.FontSize = 11;
+                a3.Padding = new Thickness(0);
+                a3.Foreground = SystemColors.ActiveCaptionTextBrush;
+                a3.HorizontalAlignment = HorizontalAlignment.Right;
+                a3.Content = po.details;
+
+                Label a4 = new Label();
+                a4.FontSize = 11;
+                a4.Padding = new Thickness(0);
+                a4.Foreground = SystemColors.ActiveCaptionTextBrush;
+                a4.HorizontalAlignment = HorizontalAlignment.Right;
+                a4.Content = po.pos_table.name;
+
+                StackPanel al = new StackPanel();
+                al.Children.Add(a1);
+                al.Children.Add(a2);
+                al.HorizontalAlignment = HorizontalAlignment.Right;
+
+                StackPanel az = new StackPanel();
+                az.Children.Add(a3);
+                az.Children.Add(a4);
+                al.HorizontalAlignment = HorizontalAlignment.Left;
+
+                Grid aw = new Grid();
+                aw.Children.Add(al);
+                aw.Children.Add(az);
+                aw.HorizontalAlignment = HorizontalAlignment.Stretch;
+                aw.Margin = new Thickness(20,0,50,0);
+
+                lv.Width = pd.PrintableAreaWidth;
+                lv.Margin = new Thickness(15,0,35,0);
+                lv.Children.Add(title);
+                lv.Children.Add(add);
+                lv.Children.Add(telp);
+                lv.Children.Add(devider3);
+                lv.Children.Add(aw);
+                lv.Children.Add(devider4);
+
+               
+
+                var list = db.pos_order_lists.Where(c => c.order_id == selected_order && c.status == "PENDING").GroupBy(c => c.peroduk);
+                long stotal = 0;
+                Thickness n = new Thickness(0, 0, 0, 0);
+                foreach (var enlist in list)
+                {
+                    String name = "";
+                    long harga = 0;
+                    int qty = 0;
+                    int p_id = 0;
+                    foreach (pos_order_list nested in enlist)
+                    {
+                        name = nested.Produk.nama;
+                        harga = nested.Produk.harga_jual;
+                        qty += nested.quantity;
+                        p_id = nested.peroduk;
+                    }
+
+
+                    Label ln = new Label();
+                    ln.Content =  name;
+                    ln.FontSize = 11;
+                    ln.Foreground = SystemColors.ActiveCaptionTextBrush;
+                    ln.HorizontalAlignment = HorizontalAlignment.Left;
+
+
+                    Label ls = new Label();
+                    ls.Content = qty + " x " + harga.ToString("C");
+                    ls.FontSize = 11;
+                    ls.Foreground = SystemColors.ActiveCaptionTextBrush;
+                    ls.HorizontalAlignment = HorizontalAlignment.Center;
+
+                    Label lq = new Label();
+                    lq.Margin = new Thickness(0, 0, 10, 0);
+                    lq.Content = (qty * harga).ToString("C");
+                    lq.FontSize = 11;
+                    lq.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                    lq.HorizontalAlignment = HorizontalAlignment.Right;
+
+                    
+
+                    Grid line3 = new Grid();
+                    line3.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    //line.Orientation = Orientation.Horizontal;
+                    line3.Children.Add(ln);
+                    line3.Children.Add(ls);
+                    line3.Children.Add(lq);
+                    line3.Margin = new Thickness(15, 0, 40, 0);
+
+
+                    //toplist;
+
+                    lv.Children.Add(line3);
+                    stotal += harga * qty;
+
+
+                }
+                subtotal = stotal;
+
+                ///static portion
+                n = new Thickness(10,0,25,0);
+                pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
+                long discount = (order.discount * stotal) / 100;
+                long serv_total = order.service;
+                long ppn_total = ((Properties.Settings.Default.tax_ppn) * stotal) / 100;
+
+                Label dsc = new Label();
+                dsc.Content = "(" + (discount).ToString("C") + ")";
+                dsc.Margin = n;
+                dsc.Padding = n;
+                dsc.HorizontalAlignment = HorizontalAlignment.Right;
+                dsc.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Label dscText = new Label();
+                dscText.Content = "Discount " + order.discount + "%";
+                dscText.Margin = n;
+                dscText.Padding = n;
+                dscText.HorizontalAlignment = HorizontalAlignment.Left;
+                dscText.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Grid dsc_temp = new Grid();
+                dsc_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                dsc_temp.Children.Add(dscText);
+                dsc_temp.Children.Add(dsc);
+
+                Label service = new Label();
+                service.Content = (serv_total).ToString("C");
+                service.Margin = n;
+                service.Padding = n;
+                service.HorizontalAlignment = HorizontalAlignment.Right;
+                service.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Label servText = new Label();
+                servText.Content = "Service";
+                servText.Margin = n;
+                servText.Padding = n;
+                servText.HorizontalAlignment = HorizontalAlignment.Left;
+                servText.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Grid serv_temp = new Grid();
+                serv_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                serv_temp.Children.Add(servText);
+                serv_temp.Children.Add(service);
+
+                Label ppn = new Label();
+                ppn.Content = (ppn_total).ToString("C");
+                ppn.Margin = n;
+                ppn.Padding = n;
+                ppn.HorizontalAlignment = HorizontalAlignment.Right;
+                ppn.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Label ppnText = new Label();
+                ppnText.Content = "PPN " + Properties.Settings.Default.tax_ppn + "%";
+                ppnText.Margin = n;
+                ppnText.Padding = n;
+                ppnText.HorizontalAlignment = HorizontalAlignment.Left;
+                ppnText.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Grid ppn_temp = new Grid();
+                ppn_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                ppn_temp.Children.Add(ppnText);
+                ppn_temp.Children.Add(ppn);
+
+                Label sub = new Label();
+                sub.Content = (stotal).ToString("C");
+                sub.FontSize = 13;
+                sub.Margin = n;
+                sub.Padding = n;
+                sub.HorizontalAlignment = HorizontalAlignment.Right;
+                sub.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Label subText = new Label();
+                subText.Margin = n;
+                subText.Padding = n;
+                subText.Content = "SUBTOTAL";
+                subText.FontSize = 13;
+                subText.Foreground = SystemColors.ActiveCaptionTextBrush;
+                subText.HorizontalAlignment = HorizontalAlignment.Left;
+
+                Grid sub_temp = new Grid();
+                sub_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                sub_temp.Children.Add(subText);
+                sub_temp.Children.Add(sub);
+
+                Label tot = new Label();
+                tot.Content = ((stotal - discount) + ppn_total).ToString("C");
+                tot.FontSize = 13;
+                tot.Margin = n;
+                tot.Padding = n;
+                tot.HorizontalAlignment = HorizontalAlignment.Right;
+                tot.Foreground = SystemColors.ActiveCaptionTextBrush;
+
+                Label totText = new Label();
+                totText.Content = "TOTAL";
+                totText.FontSize = 13;
+                totText.Foreground = SystemColors.ActiveCaptionTextBrush;
+                totText.Margin = n;
+                totText.Padding = n;
+                totText.HorizontalAlignment = HorizontalAlignment.Left;
+
+                Grid tot_temp = new Grid();
+                tot_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                tot_temp.Children.Add(totText);
+                tot_temp.Children.Add(tot);
+
+                Rectangle devider = new Rectangle();
+                devider.Margin = n;
+                devider.MinHeight = 1;
+                devider.Width = 300;
+                devider.Fill = SystemColors.GrayTextBrush;
+                Rectangle devider2 = new Rectangle();
+                devider2.Margin = n;
+                devider2.MinHeight = 1;
+                devider2.Width = 300;
+                devider2.Fill = SystemColors.GrayTextBrush;
+
+                Label subfooter = new Label();
+                subfooter.Content = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")+" "+db.master_users.FirstOrDefault(c=>c.Id==ASME_C_WPF.Properties.Settings.Default.Active_user).name;
+                subfooter.FontSize = 11;
+                subfooter.Foreground = SystemColors.ActiveCaptionTextBrush;
+                subfooter.HorizontalAlignment = HorizontalAlignment.Left;
+
+                Label subfooter2 = new Label();
+         
+                subfooter2.Content = "Terima kasih atas kunjungan Anda";
+                subfooter2.FontSize = 11;
+                subfooter2.Foreground = SystemColors.ActiveCaptionTextBrush;
+                subfooter2.HorizontalAlignment = HorizontalAlignment.Center;
+
+                lv.Children.Add(devider);
+                lv.Children.Add(sub_temp);
+                lv.Children.Add(dsc_temp);
+                lv.Children.Add(ppn_temp);
+                lv.Children.Add(serv_temp);
+                lv.Children.Add(tot_temp);
+                lv.Children.Add(devider2);
+                lv.Children.Add(subfooter);
+                lv.Children.Add(subfooter2);
+
+
+
+
+
+                //lv.Height = pd.PrintableAreaHeight;
+
+
+                pd.PrintVisual(lv, "Lets Print Something");
             }
             
         }

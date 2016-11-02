@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,43 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ASME_C_WPF.core;
-
 namespace ASME_C_WPF.ui.dialog
 {
     /// <summary>
-    /// Interaction logic for dialog_checkout.xaml
+    /// Interaction logic for dialog_order_list.xaml
     /// </summary>
-    /// 
-
-    
-    public partial class dialog_checkout : Window
+    public partial class dialog_order_list : Window
     {
         CoreDataContext db = new CoreDataContext();
-        Regex rg = new Regex("^[0-9]+$");
-        long total_val = 0;
-        int selected = 0;
-        public bool done = false;
-        public int choice = 0;
-        public long pembayaran = 0;
-        public long change = 0;
-        public String cardnumber = "";
-        public String transaction = "";
-        public dialog_checkout()
+        int selected_order = 0;
+        public dialog_order_list()
         {
             InitializeComponent();
-            cardlist.Visibility = Visibility.Collapsed;
-            cashlist.Visibility = Visibility.Visible;
-
+            refresh_order();
         }
 
         public void receipt_refresh(int o_id)
         {
-            header.Content = "#"+o_id+" "+db.pos_orders.FirstOrDefault(c => c.Id == o_id).details;
+            header.Content = "#" + o_id + " " + db.pos_orders.FirstOrDefault(c => c.Id == o_id).details;
             detail.Content = db.pos_orders.FirstOrDefault(c => c.Id == o_id).pos_table.name;
             receipt.SelectedItem = null;
             receipt.Items.Clear();
             db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_order_lists);
-            var list = db.pos_order_lists.Where(c => c.order_id == o_id && c.status == "PENDING").GroupBy(c => c.peroduk);
+            var list = db.pos_order_lists.Where(c => c.order_id == o_id && (c.status == "HOLD" || c.status == "COMPLETED")).GroupBy(c => c.peroduk);
             long stotal = 0;
             Thickness n = new Thickness(0, 0, 0, 0);
             foreach (var enlist in list)
@@ -103,7 +89,7 @@ namespace ASME_C_WPF.ui.dialog
                 ListBoxItem lbi = new ListBoxItem();
                 lbi.Name = "__" + p_id + "__" + name.Replace(' ', '_');
                 lbi.Content = line;
-                
+
                 receipt.Items.Add(lbi);
 
                 stotal += harga * qty;
@@ -112,10 +98,12 @@ namespace ASME_C_WPF.ui.dialog
 
 
             ///static portion
+            
             pos_order order = db.pos_orders.FirstOrDefault(c => c.Id == o_id);
             long discount = (order.discount * stotal) / 100;
             long serv_total = order.service;
             long ppn_total = ((Properties.Settings.Default.tax_ppn) * stotal) / 100;
+            long bayar = order.pembayaran;
             Label dsc = new Label();
             dsc.Content = "(" + (discount).ToString("C") + ")";
             dsc.Margin = n;
@@ -198,6 +186,13 @@ namespace ASME_C_WPF.ui.dialog
             tot.Padding = n;
             tot.HorizontalAlignment = HorizontalAlignment.Right;
 
+            Label pem = new Label();
+            pem.Content = (bayar).ToString("C");
+            pem.FontSize = 15;
+            pem.Margin = n;
+            pem.Padding = n;
+            pem.HorizontalAlignment = HorizontalAlignment.Right;
+
             Label totText = new Label();
             totText.Content = "TOTAL";
             totText.FontSize = 11;
@@ -206,11 +201,26 @@ namespace ASME_C_WPF.ui.dialog
             totText.Padding = n;
             totText.HorizontalAlignment = HorizontalAlignment.Left;
 
+            Label pemText = new Label();
+            pemText.Content = "PEMBAYARAN";
+            pemText.FontSize = 11;
+            pemText.Foreground = SystemColors.GrayTextBrush;
+            pemText.Margin = n;
+            pemText.Padding = n;
+            pemText.HorizontalAlignment = HorizontalAlignment.Left;
+
+
             Grid tot_temp = new Grid();
             tot_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
             tot_temp.Width = 300;
             tot_temp.Children.Add(totText);
             tot_temp.Children.Add(tot);
+
+            Grid pem_temp = new Grid();
+            pem_temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+            pem_temp.Width = 300;
+            pem_temp.Children.Add(pemText);
+            pem_temp.Children.Add(pem);
 
             Rectangle devider = new Rectangle();
             devider.Margin = n;
@@ -241,6 +251,9 @@ namespace ASME_C_WPF.ui.dialog
             ListBoxItem totlist = new ListBoxItem();
             totlist.Content = tot_temp;
             totlist.IsEnabled = false;
+            ListBoxItem bayar_t = new ListBoxItem();
+            bayar_t.Content = pem_temp;
+            bayar_t.IsEnabled = false;
 
 
             receipt.Items.Add(dev2);
@@ -250,87 +263,93 @@ namespace ASME_C_WPF.ui.dialog
             receipt.Items.Add(servlis);
             receipt.Items.Add(dev1);
             receipt.Items.Add(totlist);
-            long total_value = (stotal - discount) + serv_total + ppn_total;
-            total_val = total_value;
-            total_disp.Content = total_value.ToString("C");
-            selected = o_id;
+            receipt.Items.Add(bayar_t);
+
         }
 
-        private void payment_KeyUp(object sender, KeyEventArgs e)
+        public void refresh_order()
         {
-            if (payment.Text != "")
+            order_list.Items.Clear();
+            db.Refresh(System.Data.Linq.RefreshMode.OverwriteCurrentValues, db.pos_orders);
+            var list = db.pos_orders;
+            foreach (pos_order order in list)
             {
-                if (rg.IsMatch(payment.Text))
-                {
-                    if (Int32.Parse(payment.Text) < 999999999)
-                    {
-                        OK.IsEnabled = true;
-                        kembalian.Content = (Int64.Parse(payment.Text) - total_val).ToString("C");
-                    }
-                    else
-                    {
-                        OK.IsEnabled = false;
-                    }
-                    
-                    
-                    
-                }
-                else
-                {
-                    OK.IsEnabled = false;
-                }
+                    Thickness n = new Thickness(0, 0, 0, 0);
+                    String nama = order.pos_table.name;
+                    String details = order.details;
+                    String date = order.date.ToString("dd/MMM/yyyy");
+                    String ordeid = "#" + order.Id;
+                    int id = order.Id;
+                    String created = order.date.ToString();
 
-            }
-            else
-            {
-                OK.IsEnabled = false;
+                    Label ln = new Label();
+                    ln.Content = details;
+                    ln.Padding = n;
+                    ln.Margin = n;
+
+                    Label ls = new Label();
+                    ls.Content = nama;
+                    ls.FontSize = 12;
+                    ls.Foreground = SystemColors.GrayTextBrush;
+                    ls.Margin = n;
+                    ls.Padding = n;
+
+                    Label lq = new Label();
+                    lq.Content = "Order #" + ordeid;
+                    lq.FontSize = 10;
+                    lq.Foreground = SystemColors.GrayTextBrush;
+                    lq.Margin = n;
+                    lq.Padding = n;
+
+                    Label lt = new Label();
+                    lt.Content = date;
+                    lt.FontSize = 10;
+                    lt.Foreground = SystemColors.GrayTextBrush;
+                    lt.Margin = n;
+                    lt.Padding = n;
+
+
+
+                    StackPanel st = new StackPanel();
+                    st.Children.Add(ln);
+                    st.Children.Add(ls);
+                    st.Children.Add(lq);
+                    st.Children.Add(lt);
+
+                    //stp.Children.Add(st);
+
+                    ListBoxItem lbi = new ListBoxItem();
+                    lbi.Name = "order_" + id;
+                    lbi.Content = st;
+
+
+                    order_list.Items.Add(lbi);
+                
             }
         }
 
-        private void cashradio_Checked(object sender, RoutedEventArgs e)
+        private void order_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cardlist != null)
-            {
-                cardlist.Visibility = Visibility.Collapsed;
-                cashlist.Visibility = Visibility.Visible;
-            }
-        }
 
-        private void cardradio_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cashlist != null)
+            ListBoxItem order = order_list.SelectedItem as ListBoxItem;
+            if (order != null)
             {
-                cashlist.Visibility = Visibility.Collapsed;
-                cardlist.Visibility = Visibility.Visible;
+                int id = Int32.Parse(order.Name.Substring(6));
+                pos_order oz = db.pos_orders.FirstOrDefault(c => c.Id == id);
+                selected_order = id;
+                receipt_refresh(selected_order);
             }
+
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
-            if (cashradio.IsChecked == true)
-            {
-                done = true;
-                choice = 1;
-                pembayaran = Int64.Parse(payment.Text);
-                change = Int64.Parse(payment.Text) - total_val;
-                print();
-                this.Close();
-            }
-            else
-            {
-                done = true;
-                choice = 2;
-                pembayaran = total_val;
-                change = 0;
-                cardnumber = card_no.Text;
-                transaction = tx_id.Text;
-                this.Close();
-            }
+            print();
         }
 
         private void print()
         {
-            int selected_order = selected; 
+            
             if (selected_order > 0)
             {
                 var orders = db.pos_order_lists.Where(c => c.Id == selected_order && c.status == "PENDING");
@@ -592,7 +611,7 @@ namespace ASME_C_WPF.ui.dialog
                 tot_temp.Children.Add(tot);
 
                 Label pem = new Label();
-                pem.Content = pembayaran.ToString("C");
+                pem.Content = po.pembayaran.ToString("C");
                 pem.FontSize = 13;
                 pem.Margin = n;
                 pem.Padding = n;
@@ -613,7 +632,7 @@ namespace ASME_C_WPF.ui.dialog
                 pem_temp.Children.Add(pem);
 
                 Label kem = new Label();
-                kem.Content = change.ToString("C");
+                kem.Content = (po.pembayaran-po.total).ToString("C");
                 kem.FontSize = 13;
                 kem.Margin = n;
                 kem.Padding = n;
@@ -649,7 +668,7 @@ namespace ASME_C_WPF.ui.dialog
                 devider5.MinHeight = 1;
                 devider5.Width = 300;
                 devider5.Fill = SystemColors.GrayTextBrush;
-                
+
 
                 Label subfooter = new Label();
                 subfooter.Content = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss") + " " + db.master_users.FirstOrDefault(c => c.Id == ASME_C_WPF.Properties.Settings.Default.Active_user).name;
@@ -676,10 +695,15 @@ namespace ASME_C_WPF.ui.dialog
                 lv.Children.Add(devider5);
                 lv.Children.Add(subfooter);
                 lv.Children.Add(subfooter2);
-                
+
 
                 pd.PrintVisual(lv, "Lets Print Something");
             }
+
+        }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

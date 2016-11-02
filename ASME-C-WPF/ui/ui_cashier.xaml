@@ -21,15 +21,16 @@
             <Grid Height="124" VerticalAlignment="Bottom" MinHeight="125" MinWidth="300" MaxHeight="100" Background="#FF303030" Margin="-2,0,0,0">
                 <Label x:Name="label" Content="TOTAL :" Margin="2,15,0,63" RenderTransformOrigin="0.465,0.481" FontSize="12" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" HorizontalAlignment="Left" Width="111"/>
                 <Label x:Name="receipt_total" Content="" Margin="0,13,19,38" FontSize="36" HorizontalAlignment="Right"/>
-                <Button x:Name="checkout_button" IsEnabled="False" Content="Checkout" Margin="0,75,23,18" Width="92"  Height="Auto" HorizontalAlignment="Right" Click="checkout_button_Click"/>
-                <Button x:Name="void_button" Click="void_Click" IsEnabled="False" Content="Void" HorizontalAlignment="Left" Margin="11,75,0,18" Width="auto"  Height="Auto"/>
-                <Button x:Name="hold_button" Click="hold_Click" IsEnabled="False" Content="Hold" HorizontalAlignment="Left" Margin="79,75,0,18" Width="auto"  Height="Auto"/>
+                <Button x:Name="checkout_button" IsEnabled="False" Content="Checkout" Margin="0,75,6,18" Width="92"  Height="Auto" HorizontalAlignment="Right" Click="checkout_button_Click"/>
+                <Button x:Name="void_button" Click="void_Click" IsEnabled="False" Content="Void" HorizontalAlignment="Left" Margin="86,75,0,18" Width="auto"  Height="Auto"/>
+                <Button x:Name="hold_button" Click="hold_Click" IsEnabled="False" Content="Hold" HorizontalAlignment="Left" Margin="154,75,0,18" Width="auto"  Height="Auto"/>
+                <Button x:Name="switch_button" Click="switch_Click" IsEnabled="False" Content="Switch" HorizontalAlignment="Left" Margin="4,75,0,18" Width="auto"  Height="Auto"/>
             </Grid>
             <Label x:Name="reciept_head" Content="No Order Selected" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Width="auto" RenderTransformOrigin="0.495,0.469" FontSize="20"/>
             <ListBox x:Name="reciept_list" Margin="-1,78,1,125"/>
 
             <Label x:Name="receipt_details" Content="" HorizontalAlignment="Left" Margin="5,46,0,0" VerticalAlignment="Top" Width="auto" FontSize="11" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-            <Button x:Name="print" IsEnabled="True" Content="Print" Margin="0,14,23,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="76"/>
+            <Button x:Name="print" Click="print_Click" IsEnabled="True" Content="Print" Margin="0,14,23,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right" Width="76"/>
         </Grid>
         <Grid Margin="0,0,339,0">
             <TextBox x:Name="search" Margin="14,232,0,0" TextWrapping="Wrap"  HorizontalAlignment="Left" Width="239" Height="33" VerticalAlignment="Top" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" TextChanged="search_TextChanged" />
@@ -55,6 +56,7 @@
 
                 </ListBox>
                 <Button x:Name="create_order" Content="Baru" Margin="0,14,24,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="create_order_Click"/>
+                <Button x:Name="history" Content="History" Margin="0,14,110,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="84" Click="history_Click"/>
             </Grid>
             <MaterialIcons:MaterialIcon Icon="ic_search" Margin="228,242,0,0" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="23"/>
         </Grid>
