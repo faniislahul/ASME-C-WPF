@@ -138,7 +138,7 @@
                     <Label Content="Settings" Padding="0,0,0,0" Margin="41,8,-41,-8"/>
                 </Grid>
             </ListBoxItem>
-            
+
         </ListBox>
 
         <Rectangle Fill="#FF303030" HorizontalAlignment="Right" Margin="0,54,-0.833,4.5" Width="10" MinWidth="10"/>
@@ -163,7 +163,7 @@
                 </ImageBrush>
             </Ellipse.Fill>
         </Ellipse>
-        <Label x:Name="label" Content="ARRENA de Cafe" Margin="84,39,0,573.5" FontSize="14" HorizontalAlignment="Left" Width="116"/>
+        <Label x:Name="client_name" Content="" Margin="84,39,0,574.5" FontSize="14" HorizontalAlignment="Left" Width="182"/>
         <Label x:Name="label_Copy" Content="MANAGEMENT SYSTEM" Margin="86,60,0,0" VerticalAlignment="Top" FontSize="9" HorizontalAlignment="Left" Width="108"/>
         <Frame x:Name="frame1"  Margin="299,60,8.167,25.5" NavigationUIVisibility="Hidden"/>
 

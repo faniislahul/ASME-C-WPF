@@ -90,5 +90,17 @@ namespace ASME_C_WPF.Properties {
                 this["Initial_year"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASME Coffeeshop")]
+        public string Client_Name {
+            get {
+                return ((string)(this["Client_Name"]));
+            }
+            set {
+                this["Client_Name"] = value;
+            }
+        }
     }
 }

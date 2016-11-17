@@ -25,9 +25,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ProductName>ASME-C</ProductName>
+    <PublisherName>Protech</PublisherName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -178,6 +182,9 @@
     <Compile Include="ui\dialog\dialog_produk_baru.xaml.cs">
       <DependentUpon>dialog_produk_baru.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\dialog\dialog_setting_system.xaml.cs">
+      <DependentUpon>dialog_setting_system.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\dialog\dialog_set_discount.xaml.cs">
       <DependentUpon>dialog_set_discount.xaml</DependentUpon>
     </Compile>
@@ -289,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\dialog\dialog_produk_baru.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\dialog\dialog_setting_system.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

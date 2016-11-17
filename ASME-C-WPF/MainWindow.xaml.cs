@@ -32,6 +32,7 @@ namespace ASME_C_WPF
             listBox.SelectedItem = listBox.Items.GetItemAt(1);
             user.Content = db.master_users.FirstOrDefault(c => c.Id == Properties.Settings.Default.Active_user).name;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
+            client_name.Content = ASME_C_WPF.Properties.Settings.Default.Client_Name;
             security_barrier();
         }
 

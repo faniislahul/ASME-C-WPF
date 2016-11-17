@@ -28,6 +28,10 @@ namespace ASME_C_WPF.ui
             InitializeComponent();
             security_barrier();
 
+            if (active_user == 1)
+            {
+                settings_system.Visibility = Visibility.Visible;
+            }
         }
 
         private void security_barrier()
@@ -104,6 +108,12 @@ namespace ASME_C_WPF.ui
         private void settings_backup_Selected(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void settings_system_Selected(object sender, RoutedEventArgs e)
+        {
+            dialog_setting_system dd = new dialog_setting_system();
+            dd.ShowDialog();
         }
     }
 }
