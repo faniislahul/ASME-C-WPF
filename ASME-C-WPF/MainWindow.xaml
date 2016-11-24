@@ -8,7 +8,7 @@
         xmlns:mi="clr-namespace:MaterialIcons;assembly=MaterialIcons"
         x:Name="A_C" x:Class="ASME_C_WPF.MainWindow"
         mc:Ignorable="d"
-        Title="ASME-C"
+        Title="ASME Coffeeshop"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{x:Null}"
         TextElement.FontWeight="Regular"
@@ -149,20 +149,9 @@
                 <Ellipse Height="7" Width="7" Fill="#FF32DE32" Margin="5,7,0,10"/>
             </StackPanel>
         </StatusBar>
-        <Ellipse Margin="14,30,0,0" HorizontalAlignment="Left" Width="62" Height="62" VerticalAlignment="Top">
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="image/asme-c.png" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality">
-                    <ImageBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.7" ScaleY="0.7"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </ImageBrush.RelativeTransform>
-                </ImageBrush>
-            </Ellipse.Fill>
-        </Ellipse>
+        <Image Source="image/asme-c.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="21,37,0,0" HorizontalAlignment="Left" Width="48" Height="48" VerticalAlignment="Top">
+
+        </Image>
         <Label x:Name="client_name" Content="" Margin="84,39,0,574.5" FontSize="14" HorizontalAlignment="Left" Width="182"/>
         <Label x:Name="label_Copy" Content="MANAGEMENT SYSTEM" Margin="86,60,0,0" VerticalAlignment="Top" FontSize="9" HorizontalAlignment="Left" Width="108"/>
         <Frame x:Name="frame1"  Margin="299,60,8.167,25.5" NavigationUIVisibility="Hidden"/>

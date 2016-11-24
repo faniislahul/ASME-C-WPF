@@ -49,7 +49,7 @@ namespace ASME_C_WPF.ui
                 {
                     settings_general.Visibility = Visibility.Collapsed;
                     settings_user.Visibility = Visibility.Collapsed;
-                    settings_multi_user.Visibility = Visibility.Collapsed;
+                    settings_category.Visibility = Visibility.Collapsed;
                     settings_database.Visibility = Visibility.Collapsed;
                     settings_backup.Visibility = Visibility.Collapsed;
                     settings_payment.Visibility = Visibility.Collapsed;
@@ -114,6 +114,18 @@ namespace ASME_C_WPF.ui
         {
             dialog_setting_system dd = new dialog_setting_system();
             dd.ShowDialog();
+        }
+
+        private void settings_category_Selected(object sender, RoutedEventArgs e)
+        {
+            settings.SelectedItem = null;
+            dialog_new_category dd = new dialog_new_category();
+            dd.ShowDialog();
+            if (settings.SelectedItems != null)
+            {
+                settings.SelectedItem = null;
+            }
+            
         }
     }
 }

@@ -167,10 +167,17 @@ namespace ASME_C_WPF
 
         private void export_Click(object sender, RoutedEventArgs e)
         {
-            
-            DateTime dt = (DateTime) date.SelectedDate;
+            this.Cursor = Cursors.Wait;
+            export_action();
+            this.Cursor = Cursors.Arrow; 
+           
+        }
+
+        private void export_action()
+        {
+            DateTime dt = (DateTime)date.SelectedDate;
             sales2.Clear();
-            var salesx = db.pos_order_lists.Where(c => (c.status == "COMPLETED" || c.status=="HOLD") && c.date.Day == dt.Day);
+            var salesx = db.pos_order_lists.Where(c => (c.status == "COMPLETED" || c.status == "HOLD") && c.date.Day == dt.Day);
             var pt = db.Produks.Where(c => c.active == true);
 
             foreach (Produk prod in pt)
@@ -204,7 +211,7 @@ namespace ASME_C_WPF
 
             Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
 
-            if(xlApp == null)
+            if (xlApp == null)
             {
                 MessageBox.Show("Excel isn't available");
                 return;
@@ -216,37 +223,50 @@ namespace ASME_C_WPF
 
             xlWorkBook = xlApp.Workbooks.Add(misValue);
             xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            xlWorkSheet.Cells[1, 1] = "PENJUALAN "+dt.ToString("dd/MMM/yyyy");
+            xlWorkSheet.Cells[1, 1] = "PENJUALAN " + dt.ToString("dd/MMM/yyyy");
             xlWorkSheet.Cells[3, 1] = "NAMA PRODUK";
             xlWorkSheet.Cells[3, 2] = "Quantity";
             xlWorkSheet.Cells[3, 3] = "Total";
             int sum1 = 0;
             long sum2 = 0;
+            long sum3 = 0;
+            int counthold = 0;
             int row = 4;
-            for(int i = 0; i < sales2.Count; i++)
+            for (int i = 0; i < sales2.Count; i++)
             {
                 if (sales2[i].count > 0)
                 {
                     if (sales2[i].status == "HOLD")
                     {
-                        xlWorkSheet.Cells[row, 1] = sales2[i].product.nama+"(HOLD)";
-                    }else
+                        xlWorkSheet.Cells[row, 1] = sales2[i].product.nama + "(HOLD)";
+                        xlWorkSheet.Cells[row, 3] = sales2[i].total * -1;
+                        sum3 += sales2[i].total;
+                        counthold += sales2[i].count;
+                    }
+                    else
                     {
                         xlWorkSheet.Cells[row, 1] = sales2[i].product.nama;
+                        xlWorkSheet.Cells[row, 3] = sales2[i].total;
+                        sum2 += sales2[i].total;
+                        sum1 += sales2[i].count;
                     }
                     xlWorkSheet.Cells[row, 2] = sales2[i].count;
-                    xlWorkSheet.Cells[row, 3] = sales2[i].total*-1;
+
                     row += 1;
-                    sum1 += sales2[i].count;
-                    sum2 += sales2[i].total;
+                    
+                    
                 }
 
             }
             xlWorkSheet.Cells[row, 1] = "Total";
             xlWorkSheet.Cells[row, 2] = sum1;
             xlWorkSheet.Cells[row, 3] = sum2;
+            row += 1;
+            xlWorkSheet.Cells[row, 1] = "Total(HOLD)";
+            xlWorkSheet.Cells[row, 2] = counthold;
+            xlWorkSheet.Cells[row, 3] = sum3 * -1;
 
-            xlWorkBook.SaveAs(("ASME_BACKUP_" + dt.ToString("ddMMMyyyy")),Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,misValue,misValue,misValue,misValue,Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive,misValue,misValue,misValue,misValue,misValue);
+            xlWorkBook.SaveAs(("ASME_BACKUP_" + dt.ToString("ddMMMyyyy")), Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
 

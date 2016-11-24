@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ASME_C_WPF.ui"
         mc:Ignorable="d"
-        Title="Penambahan Bahan Baku" Height="170" Width="220" MinWidth="220" MinHeight="250" Background="#FF232323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Penambahan Bahan Baku" Height="280" Width="220" MinWidth="220" MinHeight="280" Background="#FF232323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>
@@ -16,6 +16,8 @@
         <TextBox x:Name="jumlah" MaxLength="9" HorizontalAlignment="Left" Margin="29,99,0,0" TextWrapping="Wrap" Width="151" KeyUp="jumlah_KeyUp" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Height="24" VerticalAlignment="Top"/>
         <Button x:Name="Pesan" Content="OK" Margin="0,0,18,16" RenderTransformOrigin="-0.784,0.469" Height="34" Click="Pesan_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
         <Button x:Name="cancel" Content="Batal" Margin="18,0,0,16" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Left" Width="75" VerticalAlignment="Bottom"/>
+        <RadioButton x:Name="radio_beli_baru" Content="Beli Baru" IsChecked="True" HorizontalAlignment="Left" Margin="27,0,0,93" VerticalAlignment="Bottom" Foreground="White"/>
+        <RadioButton x:Name="radio_modal" Content="Modal" IsChecked="False" HorizontalAlignment="Left" Margin="27,0,0,69" VerticalAlignment="Bottom" Foreground="White"/>
 
     </Grid>
 </Window>

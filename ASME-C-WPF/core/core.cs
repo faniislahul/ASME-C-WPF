@@ -548,6 +548,7 @@ namespace ASME_C_WPF.core
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
+                                    log.satuan = some.satuan;
                                     log.tipe = db.Bahan_bakus.FirstOrDefault(c=>c.Id == some.tipe).Id;
                                     db.bb_logs.InsertOnSubmit(log);
                                     db.SubmitChanges();
@@ -562,6 +563,7 @@ namespace ASME_C_WPF.core
                                     log.kode_stock = some.Id;
                                     log.hpp_digunakan = some.hpp_digunakan;
                                     log.harga_beli = some.harga_beli;
+                                    log.satuan = some.satuan;
                                     log.tipe = db.Bahan_bakus.FirstOrDefault(c => c.Id == some.tipe).Id;
                                     db.bb_logs.InsertOnSubmit(log);
                                     db.SubmitChanges();
@@ -671,6 +673,7 @@ namespace ASME_C_WPF.core
                         stock.quantity = quantity;
                         stock.hpp_digunakan = hpp;
                         stock.used = 0;
+                        stock.satuan = bb.satuan;
                         db.bb_stocks.InsertOnSubmit(stock);
                         db.SubmitChanges();
 
@@ -681,6 +684,7 @@ namespace ASME_C_WPF.core
                         log.hpp_digunakan = hpp;
                         log.add = quantity;
                         log.used = 0;
+                        log.satuan = bb.satuan;
                         db.bb_logs.InsertOnSubmit(log);
                         db.SubmitChanges();
 
@@ -693,10 +697,107 @@ namespace ASME_C_WPF.core
                     ///success
                     result = 4;
                 }
-                catch
+                catch(Exception e)
                 {
-
+                    throw e;
                     
+                }
+
+            }
+            else
+            {
+                ///missing reference
+                result = 2;
+            };
+
+            return result;
+        }
+
+        public dynamic Penambahan_stock_modal(Dictionary<String, dynamic> Data)
+        {
+            ///result initialized
+            var result = 0;
+            dynamic value;
+            int bb_id = -1;
+            String id = null;
+            long jumlah = -1;
+            int quantity = -1;
+
+            if (Data.TryGetValue("jumlah", out value))
+            {
+                jumlah = value;
+            };
+
+            if (Data.TryGetValue("quantity", out value))
+            {
+                quantity = value;
+            };
+
+            if (Data.TryGetValue("id", out value))
+            {
+                id = "1.1.3." + value;
+                bb_id = value;
+            };
+            if ((jumlah >= 0) && (id != null) && (user > 0) && (quantity >= 0))
+            {
+                try
+                {
+                    Transaction trans1 = new Transaction();
+                    trans1.details = "Pembelian " + db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id).nama;
+                    trans1.jumlah = jumlah;
+                    trans1.type = id;
+                    trans1.user = user;
+                    trans1.quantity = quantity;
+                    db.Transactions.InsertOnSubmit(trans1);
+                    db.SubmitChanges();
+
+                    Transaction trans2 = new Transaction();
+                    trans2.details = "Modal " + db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id).nama;
+                    trans2.jumlah = jumlah * -1;
+                    trans2.type = "3.1.1";
+                    trans2.user = user;
+                    trans2.quantity = quantity;
+                    db.Transactions.InsertOnSubmit(trans2);
+                    db.SubmitChanges();
+
+                    long hpp = jumlah / quantity;
+                    Bahan_baku bb = db.Bahan_bakus.FirstOrDefault(c => c.Id == bb_id);
+                    if (bb != null)
+                    {
+                        bb_stock stock = new bb_stock();
+                        stock.tipe = bb.Id;
+                        stock.harga_beli = jumlah;
+                        stock.quantity = quantity;
+                        stock.hpp_digunakan = hpp;
+                        stock.used = 0;
+                        stock.satuan = bb.satuan;
+                        db.bb_stocks.InsertOnSubmit(stock);
+                        db.SubmitChanges();
+
+                        bb_log log = new bb_log();
+                        log.tipe = bb.Id;
+                        log.kode_stock = stock.Id;
+                        log.harga_beli = jumlah;
+                        log.hpp_digunakan = hpp;
+                        log.add = quantity;
+                        log.used = 0;
+                        log.satuan = bb.satuan;
+                        db.bb_logs.InsertOnSubmit(log);
+                        db.SubmitChanges();
+
+                        bb.quantity += quantity;
+                        bb.harga_beli = db.bb_stocks.First(c => c.tipe == bb.Id).harga_beli;
+                        bb.hpp_digunakan = db.bb_stocks.First(c => c.tipe == bb.Id).hpp_digunakan;
+                        db.SubmitChanges();
+                    }
+
+                    ///success
+                    result = 4;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+
                 }
 
             }

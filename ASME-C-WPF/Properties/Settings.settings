@@ -33,5 +33,17 @@
     <Setting Name="Client_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">ASME Coffeeshop</Value>
     </Setting>
+    <Setting Name="licence" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Client_address_1" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Client_address_2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="print_enable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

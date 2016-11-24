@@ -22,7 +22,7 @@ namespace ASME_C_WPF.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ASME_C_WPF.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ASME_C_WPF.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,29 @@ namespace ASME_C_WPF.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USE [master]
+        ///GO
+        ////****** Object:  User [##MS_PolicyEventProcessingLogin##]    Script Date: 11/1/2016 3:31:33 PM ******/
+        ///CREATE USER [##MS_PolicyEventProcessingLogin##] FOR LOGIN [##MS_PolicyEventProcessingLogin##] WITH DEFAULT_SCHEMA=[dbo]
+        ///GO
+        ////****** Object:  User [##MS_AgentSigningCertificate##]    Script Date: 11/1/2016 3:31:34 PM ******/
+        ///CREATE USER [##MS_AgentSigningCertificate##] FOR LOGIN [##MS_AgentSigningCertificate##]
+        ///GO
+        ////****** Object:  Table [dbo].[abc_log]    Script Date: 11/1/2016 3:31:3 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string asme {
+            get {
+                return ResourceManager.GetString("asme", resourceCulture);
             }
         }
     }

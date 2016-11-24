@@ -130,7 +130,7 @@ namespace ASME_C_WPF.ui
                     stp.Children.Add(st);
 
                     ListBoxItem lbi = new ListBoxItem();
-                    lbi.Name = "__" + id + "__" + nama.Replace(' ', '_')+"__"+cat.nama.Replace(' ','_');
+                    lbi.Name = "__" + id + "__" + nama.Replace(' ', '_').Replace('&', '_') + "__"+cat.nama.Replace(' ','_').Replace('&','_');
                     lbi.Content = stp;
                     lbi.Selected += Lbi_Selected;
 

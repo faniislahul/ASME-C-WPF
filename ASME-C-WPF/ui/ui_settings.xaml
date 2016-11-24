@@ -35,10 +35,10 @@
                     <Label Content="User" HorizontalContentAlignment="Center" FontSize="15"></Label>
                 </StackPanel>                
             </ListBoxItem>
-            <ListBoxItem MinHeight="150" x:Name="settings_multi_user" Selected="settings_multi_user_Selected" IsEnabled="False">
+            <ListBoxItem MinHeight="150" x:Name="settings_category" Selected="settings_category_Selected">
                 <StackPanel MaxWidth="80">
-                    <mi:MaterialIcon Icon="ic_people" Height="100" Width="80" MaxWidth="80" Foreground="#FF404040"/>
-                    <Label Content="Multi User" HorizontalContentAlignment="Center" FontSize="15"></Label>
+                    <mi:MaterialIcon Icon="ic_adjust" Height="100" Width="80" MaxWidth="80" Foreground="#FF404040"/>
+                    <Label Content="Category" HorizontalContentAlignment="Center" FontSize="15"></Label>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem MinHeight="150" x:Name="settings_database" Selected="settings_database_Selected" IsEnabled="False">

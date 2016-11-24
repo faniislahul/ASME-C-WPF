@@ -87,7 +87,7 @@ namespace ASME_C_WPF.ui.dialog
                 //toplist;
 
                 ListBoxItem lbi = new ListBoxItem();
-                lbi.Name = "__" + p_id + "__" + name.Replace(' ', '_');
+                lbi.Name = "__" + p_id + "__" + name.Replace(' ', '_').Replace('&', '_');
                 lbi.Content = line;
 
                 receipt.Items.Add(lbi);
@@ -349,8 +349,8 @@ namespace ASME_C_WPF.ui.dialog
 
         private void print()
         {
-            
-            if (selected_order > 0)
+
+            if (selected_order > 0 && ASME_C_WPF.Properties.Settings.Default.print_enable == true)
             {
                 var orders = db.pos_order_lists.Where(c => c.Id == selected_order && c.status == "PENDING");
                 pos_order po = db.pos_orders.FirstOrDefault(c => c.Id == selected_order);
@@ -362,7 +362,7 @@ namespace ASME_C_WPF.ui.dialog
                 title.FontSize = 20;
                 title.Foreground = SystemColors.ActiveCaptionTextBrush;
                 title.HorizontalAlignment = HorizontalAlignment.Center;
-                title.Content = "ARRENA de Cafe";
+                title.Content = ASME_C_WPF.Properties.Settings.Default.Client_Name.ToString();
                 title.FontWeight = FontWeights.Bold;
 
                 Label add = new Label();
@@ -370,14 +370,14 @@ namespace ASME_C_WPF.ui.dialog
                 add.Padding = new Thickness(0, 0, 20, 0);
                 add.Foreground = SystemColors.ActiveCaptionTextBrush;
                 add.HorizontalAlignment = HorizontalAlignment.Center;
-                add.Content = "Jl. Bandung No. 36 Malang";
+                add.Content = ASME_C_WPF.Properties.Settings.Default.Client_address_1.ToString();
 
                 Label telp = new Label();
                 telp.FontSize = 12;
                 telp.Padding = new Thickness(0, 0, 20, 0);
                 telp.Foreground = SystemColors.ActiveCaptionTextBrush;
                 telp.HorizontalAlignment = HorizontalAlignment.Center;
-                telp.Content = "Telp. 081806666656";
+                telp.Content = ASME_C_WPF.Properties.Settings.Default.Client_address_2.ToString();
 
                 Rectangle devider3 = new Rectangle();
                 devider3.Margin = new Thickness(0);

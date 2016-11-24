@@ -294,12 +294,24 @@ namespace ASME_C_WPF.ui
                 dd.ShowDialog();
                 if (dd.done == true)
                 {
-                    Dictionary<String, dynamic> data = new Dictionary<string, dynamic>();
-                    data.Add("jumlah", dd.total);
-                    data.Add("quantity", dd.qty);
-                    data.Add("id", selected_bb);
-                    core.Penambahan_stock(data);
-                    refresh_bb();
+                    if (dd.belibaru == true)
+                    {
+                        Dictionary<String, dynamic> data = new Dictionary<string, dynamic>();
+                        data.Add("jumlah", dd.total);
+                        data.Add("quantity", dd.qty);
+                        data.Add("id", selected_bb);
+                        core.Penambahan_stock(data);
+                        refresh_bb();
+                    }else
+                    {
+                        Dictionary<String, dynamic> data = new Dictionary<string, dynamic>();
+                        data.Add("jumlah", dd.total);
+                        data.Add("quantity", dd.qty);
+                        data.Add("id", selected_bb);
+                        core.Penambahan_stock_modal(data);
+                        refresh_bb();
+                    }
+                    
                 }
             }
         }

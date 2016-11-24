@@ -120,7 +120,8 @@ namespace ASME_C_WPF
 
         private void ui_control_finance_dash_Selected(object sender, RoutedEventArgs e)
         {
-
+            ASME_C_WPF.ui.report.buku_besar nc = new ui.report.buku_besar();
+            nc.ShowDialog();
         }
 
         private void MaterialIcon_MouseEnter(object sender, MouseEventArgs e)

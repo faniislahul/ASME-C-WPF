@@ -24,7 +24,21 @@ namespace ASME_C_WPF
         public Login()
         {
             InitializeComponent();
-            
+            security();
+        }
+
+        /// <summary>
+        /// hardwire security 
+        /// </summary>
+        private void security()
+        {
+            DateTime dt = new DateTime(2017, 1, 1);
+            if (DateTime.Now > dt)
+            {
+                uname.IsEnabled = false;
+                pass.IsEnabled = false;
+                button.IsEnabled = false;
+            }
         }
 
         private void clicked(object sender, RoutedEventArgs e)
@@ -63,5 +77,7 @@ namespace ASME_C_WPF
             }
             
         }
+
+       
     }
 }

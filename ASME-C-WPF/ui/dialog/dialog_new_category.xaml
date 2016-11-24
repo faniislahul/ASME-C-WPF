@@ -1,0 +1,26 @@
+﻿<Window x:Class="ASME_C_WPF.ui.dialog.dialog_new_category"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ASME_C_WPF.ui.dialog"
+        mc:Ignorable="d"
+        Title="Kategori Baru" Height="510" Width="300" MaxHeight="510" MaxWidth="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FF232323">
+        <Label x:Name="cat" Content="DAFTAR KATEGORI" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="115" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <Label x:Name="cat_Copy" Content="NAMA" HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" Width="115" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <ScrollViewer x:Name="cat_list" Height="187" Margin="5,26,0,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="cat_name" Height="31" Margin="29,250,29,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="cat_Copy1" Content="ICON" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="115" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        <ListBox x:Name="icon_list" Height="96" Margin="29,310,29,0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <Button x:Name="ok" Content="OK" Margin="0,0,16,23" RenderTransformOrigin="-0.784,0.469" Height="34" Click="ok_Click" IsDefault="True" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="cancel" Content="Batal" Margin="0,0,106,23" RenderTransformOrigin="-0.784,0.469" Height="34" BorderBrush="{DynamicResource warningbuttonred}" Background="{DynamicResource warningbuttonred}" Click="cancel_Click" IsCancel="True" HorizontalAlignment="Right" Width="75" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>

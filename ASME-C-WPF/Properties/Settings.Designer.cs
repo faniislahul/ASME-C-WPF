@@ -102,5 +102,53 @@ namespace ASME_C_WPF.Properties {
                 this["Client_Name"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string licence {
+            get {
+                return ((string)(this["licence"]));
+            }
+            set {
+                this["licence"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_address_1 {
+            get {
+                return ((string)(this["Client_address_1"]));
+            }
+            set {
+                this["Client_address_1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_address_2 {
+            get {
+                return ((string)(this["Client_address_2"]));
+            }
+            set {
+                this["Client_address_2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool print_enable {
+            get {
+                return ((bool)(this["print_enable"]));
+            }
+            set {
+                this["print_enable"] = value;
+            }
+        }
     }
 }

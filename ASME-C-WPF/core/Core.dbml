@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataSource" Class="CoreDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost\SQLEXPRESS;Integrated Security=True" SettingsObjectName="ASME_C_WPF.Properties.Settings" SettingsPropertyName="DataSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-RRU5OR4\SQLEXPRESS;Integrated Security=True" SettingsObjectName="ASME_C_WPF.Properties.Settings" SettingsPropertyName="DataSourceConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.abc_log" Member="abc_logs">
     <Type Name="abc_log">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -20,17 +20,6 @@
       <Column Name="jumlah" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="terbayar" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.bb_stock" Member="bb_stocks">
-    <Type Name="bb_stock">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Bahan_baku_bb_stock" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Beban" Member="Bebans">
@@ -152,6 +141,7 @@
       <Column Name="nama" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" CanBeNull="false" />
       <Association Name="Satuan_bb_Bahan_baku" Member="Bahan_bakus" ThisKey="Id" OtherKey="satuan" Type="Bahan_baku" />
+      <Association Name="Satuan_bb_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="satuan" Type="bb_log" />
     </Type>
   </Table>
   <Table Name="dbo.[Transaction]" Member="Transactions">
@@ -197,19 +187,6 @@
       <Association Name="Produk_pos_order_list" Member="Produk" ThisKey="peroduk" OtherKey="Id" Type="Produk" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.bb_log" Member="bb_logs">
-    <Type Name="bb_log">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="kode_stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Bahan_baku_bb_log" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Bahan_baku" Member="Bahan_bakus">
     <Type Name="Bahan_baku">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -220,8 +197,8 @@
       <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="Bahan_baku_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="tipe" Type="bb_stock" />
       <Association Name="Bahan_baku_p_bb" Member="p_bbs" ThisKey="Id" OtherKey="bb" Type="p_bb" />
+      <Association Name="Bahan_baku_bb_stock" Member="bb_stocks" ThisKey="Id" OtherKey="tipe" Type="bb_stock" />
       <Association Name="Bahan_baku_bb_log" Member="bb_logs" ThisKey="Id" OtherKey="tipe" Type="bb_log" />
       <Association Name="Satuan_bb_Bahan_baku" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
     </Type>
@@ -247,6 +224,33 @@
       <Column Name="active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="pic" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Category_Produk" Member="Produks" ThisKey="Id" OtherKey="category" Type="Produk" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bb_stock" Member="bb_stocks">
+    <Type Name="bb_stock">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Bahan_baku_bb_stock" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.bb_log" Member="bb_logs">
+    <Type Name="bb_log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipe" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="kode_stock" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="harga_beli" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="hpp_digunakan" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="date" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="satuan" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[add]" Member="add" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="used" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Satuan_bb_bb_log" Member="Satuan_bb" ThisKey="satuan" OtherKey="Id" Type="Satuan_bb" IsForeignKey="true" />
+      <Association Name="Bahan_baku_bb_log" Member="Bahan_baku" ThisKey="tipe" OtherKey="Id" Type="Bahan_baku" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

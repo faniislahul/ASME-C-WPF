@@ -22,6 +22,7 @@ namespace ASME_C_WPF.ui.dialog
         public int qty = 0;
         public long total = 0;
         public bool done = false;
+        public bool belibaru = true;
         Regex rg = new Regex("^[0-9]+$");
         public dialog_penambahan_bb()
         {
@@ -41,6 +42,15 @@ namespace ASME_C_WPF.ui.dialog
             qty = Int32.Parse(quantity.Text);
             total = Int64.Parse(jumlah.Text);
             done = true;
+
+            if (radio_beli_baru.IsChecked == true)
+            {
+                belibaru = true;
+            }
+            else
+            {
+                belibaru = false;
+            }
             this.Close();
         }
 

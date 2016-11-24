@@ -14,12 +14,6 @@
         <elementListCompartment Id="9eff0f86-911f-4cf6-bc8b-ba87a1474828" absoluteBounds="9.015, 5.2100000000000009, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d6ebae9d-8b93-486a-8cd4-71f21aa2fac2" absoluteBounds="6.125, 2.875, 2, 1.9631982421874996">
-      <DataClassMoniker Name="/CoreDataContext/bb_stock" />
-      <nestedChildShapes>
-        <elementListCompartment Id="470e1ac1-3c5e-42cd-9193-ace15065276b" absoluteBounds="6.14, 3.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="4e10c327-c0d8-4a47-a068-ff01801c479c" absoluteBounds="9, 2.875, 2, 1.3862939453124987">
       <DataClassMoniker Name="/CoreDataContext/Beban" />
       <nestedChildShapes>
@@ -178,37 +172,17 @@
         <classShapeMoniker Id="a0a4e1e8-b294-4878-a5d1-1393976eb978" />
       </nodes>
     </associationConnector>
-    <classShape Id="4a9af94f-df5c-40be-a1f5-e1df80edbdb3" absoluteBounds="0.5, 0.625, 2, 2.3478011067708335">
-      <DataClassMoniker Name="/CoreDataContext/bb_log" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c31aa631-ec67-4ee2-a46c-88beb593569e" absoluteBounds="0.51500000000000012, 1.085, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" absoluteBounds="0.5, 4.375, 2, 2.3478011067708335">
       <DataClassMoniker Name="/CoreDataContext/Bahan_baku" />
       <nestedChildShapes>
         <elementListCompartment Id="23d62924-5d2c-433c-acad-90cbaeb4b055" absoluteBounds="0.51500000000000012, 4.835, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 4.63785162109375); (6.125 : 4.63785162109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CoreDataContext/Bahan_baku/Bahan_baku_bb_stock" />
-      <nodes>
-        <classShapeMoniker Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" />
-        <classShapeMoniker Id="d6ebae9d-8b93-486a-8cd4-71f21aa2fac2" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(1.5 : 6.72280110677083); (1.5 : 8.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/CoreDataContext/Bahan_baku/Bahan_baku_p_bb" />
       <nodes>
         <classShapeMoniker Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" />
         <classShapeMoniker Id="5e95019f-ee03-4e64-93f2-eba473bf47ad" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(1.4687475 : 4.375); (1.4687475 : 2.97280110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/CoreDataContext/Bahan_baku/Bahan_baku_bb_log" />
-      <nodes>
-        <classShapeMoniker Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" />
-        <classShapeMoniker Id="4a9af94f-df5c-40be-a1f5-e1df80edbdb3" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(3.125 : 4.1362939453125); (2.5 : 4.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -256,6 +230,39 @@
       <nodes>
         <classShapeMoniker Id="329f0132-cf4d-486e-9a00-5ba3682d09bb" />
         <classShapeMoniker Id="54dfa652-75cd-4e12-95e3-519c60df17ac" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="65732db3-2aa8-47bc-bfc7-fc2e6121ebc8" absoluteBounds="6.125, 2.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CoreDataContext/bb_stock" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bae143d0-8eba-4020-a8ae-8806d5d4b606" absoluteBounds="6.14, 3.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 4.73400233723958); (6.125 : 4.73400233723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CoreDataContext/Bahan_baku/Bahan_baku_bb_stock" />
+      <nodes>
+        <classShapeMoniker Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" />
+        <classShapeMoniker Id="65732db3-2aa8-47bc-bfc7-fc2e6121ebc8" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b2ad9081-76ac-4045-a4b0-8b568164a486" absoluteBounds="0.625, 0.875, 2, 2.5401025390625">
+      <DataClassMoniker Name="/CoreDataContext/bb_log" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7ae79499-10a0-4b06-8b7d-ce98a2d9aeb6" absoluteBounds="0.64000000000000012, 1.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.125 : 3.08255126953125); (2.625 : 3.08255126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CoreDataContext/Satuan_bb/Satuan_bb_bb_log" />
+      <nodes>
+        <classShapeMoniker Id="cdf0cc49-d414-4e2e-b1b8-5874031a83dc" />
+        <classShapeMoniker Id="b2ad9081-76ac-4045-a4b0-8b568164a486" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.5312475 : 4.375); (1.5312475 : 3.4151025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CoreDataContext/Bahan_baku/Bahan_baku_bb_log" />
+      <nodes>
+        <classShapeMoniker Id="a75753b4-e9c8-4dc6-a292-3b08cca910b3" />
+        <classShapeMoniker Id="b2ad9081-76ac-4045-a4b0-8b568164a486" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
